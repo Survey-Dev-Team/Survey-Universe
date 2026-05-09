@@ -1,6 +1,5 @@
-package com.survey.universe.api.web.dto.controller.auth;
+package com.survey.universe.api.web.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,21 +26,18 @@ public class AuthController {
 	
 	
 	@PostMapping(path = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> registerUser(@Valid  @RequestBody UserRegisterRequestDto registerDto) {
-		UserRegisterResponseDto responseDto =  userAuthService.registerUser(registerDto);
-		return new ResponseEntity<>(responseDto, HttpStatus.OK);
+	public ResponseEntity<UserRegisterResponseDto> registerUser(@Valid  @RequestBody UserRegisterRequestDto registerDto) {
+		return ResponseEntity.ok(userAuthService.registerUser(registerDto));
 	}
 	
 	@PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> loginUser(@Valid  @RequestBody UserLoginRequestDto loginDto) {
-		UserLoginResponseDto responseDto =  userAuthService.loginUser(loginDto);
-		return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
+	public ResponseEntity<UserLoginResponseDto> loginUser(@Valid  @RequestBody UserLoginRequestDto loginDto) {
+		return ResponseEntity.ok(userAuthService.loginUser(loginDto));
 	}
 	
 	@PostMapping(path = "/refresh", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> refresh(@Valid @RequestBody RefreshRequestDto refreshDto) {
-		UserLoginResponseDto responseDto = userAuthService.refreshAccessToken(refreshDto);
-	    return new ResponseEntity<>(responseDto, HttpStatus.OK);
+	public ResponseEntity<UserLoginResponseDto> refresh(@Valid @RequestBody RefreshRequestDto refreshDto) {
+	    return ResponseEntity.ok(userAuthService.refreshAccessToken(refreshDto));
 	}
 
 }

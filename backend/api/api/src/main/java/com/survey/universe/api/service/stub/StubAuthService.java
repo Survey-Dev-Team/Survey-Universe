@@ -1,22 +1,24 @@
 package com.survey.universe.api.service.stub;
 
 import java.time.Instant;
-import java.util.Optional;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.survey.universe.api.exception.type.InternalConflictException;
 import com.survey.universe.api.exception.type.InvalidCredentialsException;
 import com.survey.universe.api.exception.type.UserAlreadyExistsException;
+import com.survey.universe.api.persistence.constant.DocType;
 import com.survey.universe.api.persistence.entity.RefreshToken;
 import com.survey.universe.api.persistence.entity.User;
 import com.survey.universe.api.service.RefreshTokenService;
 import com.survey.universe.api.service.UserAuthService;
 import com.survey.universe.api.service.UserService;
 import com.survey.universe.api.spring.configuration.bean.UUIDGenerator;
+import com.survey.universe.api.spring.util.Base64UrlUtil;
 import com.survey.universe.api.spring.util.JwtTokenUtil;
-import com.survey.universe.api.web.dto.UserSummaryDto;
+import com.survey.universe.api.web.dto.UserPrivateSummaryDto;
 import com.survey.universe.api.web.dto.request.RefreshRequestDto;
 import com.survey.universe.api.web.dto.request.UserLoginRequestDto;
 import com.survey.universe.api.web.dto.request.UserRegisterRequestDto;
@@ -36,6 +38,7 @@ public class StubAuthService implements UserAuthService {
 	private final JwtTokenUtil jwtTokenUtil;
 	private final PasswordEncoder passwordEncoder;
 	private final RefreshTokenService refreshTokens;
+	private final Base64UrlUtil base64Url;
 
 	@PostConstruct
 	private void init() {
@@ -47,71 +50,57 @@ public class StubAuthService implements UserAuthService {
 		user1.setLastName("Stokes");
 		user1.setRole("admin");
 		userService.add(user1);
-		
+
 		User user2 = new User();
-		user1.setId("user:019de94a-d11f-761e-ba08-8f389fa1c4ff");
-		user1.setEmail("bv7oo@deltajohnsons.com");
-		user1.setPassword(passwordEncoder.encode("49Z=g6Yl,gX~"));
-		user1.setFirstName("Emily");
-		user1.setLastName("Bean");
-		user1.setRole("user");
+		user2.setId("user:019de94a-d11f-761e-ba08-8f389fa1c4ff");
+		user2.setEmail("bv7oo@deltajohnsons.com");
+		user2.setPassword(passwordEncoder.encode("49Z=g6Yl,gX~"));
+		user2.setFirstName("Emily");
+		user2.setLastName("Bean");
+		user2.setRole("user");
 		userService.add(user2);
-		
+
 		User user3 = new User();
-		user1.setId("user:019de94b-06be-7bf6-a972-ce3da920d965");
-		user1.setEmail("2ft12@deltajohnsons.com");
-		user1.setPassword(passwordEncoder.encode("7;8Sf1uVrQQD"));
-		user1.setFirstName("Edie");
-		user1.setLastName("Levine");
-		user1.setRole("admin");
+		user3.setId("user:019de94b-06be-7bf6-a972-ce3da920d965");
+		user3.setEmail("2ft12@deltajohnsons.com");
+		user3.setPassword(passwordEncoder.encode("7;8Sf1uVrQQD"));
+		user3.setFirstName("Edie");
+		user3.setLastName("Levine");
+		user3.setRole("admin");
 		userService.add(user3);
-		
+
 	}
-	
+
 	@Override
 	public UserRegisterResponseDto registerUser(UserRegisterRequestDto registerDto) {
 		User user = new User();
-		user.setId("user:" + uuidGenerator.generateUUIDv7());
+		user.setId(DocType.USER.join(uuidGenerator.generateUUIDv7()));
 		user.setEmail(registerDto.email());
 		user.setPassword(passwordEncoder.encode(registerDto.password()));
 		user.setFirstName(registerDto.firstName());
 		user.setLastName(registerDto.lastName());
 		user.setRole("user");
 
-		Optional<User> addedUser = userService.add(user);
-		if (addedUser.isEmpty()) {
-			throw new UserAlreadyExistsException("User with these primary credentials already exists");
-		}
+		userService.add(user).orElseThrow(
+				() -> new UserAlreadyExistsException("User with these primary credentials already exists"));
+
 		return new UserRegisterResponseDto(user.getEmail(), user.getFirstName(), user.getLastName());
 	}
 
 	@Override
 	public UserLoginResponseDto loginUser(UserLoginRequestDto loginDto) {
-		Optional<User> user = userService.findByEmail(loginDto.email());
+		User user = userService.findByEmail(loginDto.email())
+				.orElseThrow(() -> new InvalidCredentialsException("Invalid login credentials"));
 
-		if (user.isEmpty()) {
-			throw new InvalidCredentialsException("Invalid login credentials");
-		}
-		User userDocument = user.get();
-		if (!passwordEncoder.matches(loginDto.password(), userDocument.getPassword())) {
+		if (!passwordEncoder.matches(loginDto.password(), user.getPassword())) {
 			throw new InvalidCredentialsException("Invalid login credentials");
 		}
 
-		userDocument.setLastSession(Instant.now());
-		userService.update(userDocument);
+		user.setLastSession(Instant.now());
+		user = userService.update(user)
+				.orElseThrow(() -> new InternalConflictException("Internal error while logging in, try again later"));
 
-		UserSummaryDto userSummary = new UserSummaryDto(userDocument.getId(), userDocument.getFirstName(),
-				userDocument.getLastName(), userDocument.getRole(), userDocument.getEmail());
-
-		String jwtToken = jwtTokenUtil.generateAccessToken(userDocument.getEmail());
-		String refreshToken = jwtTokenUtil.generateRefreshToken(userDocument.getEmail());
-
-		refreshTokens.add(refreshToken, Instant.now().plusMillis(jwtTokenUtil.getRefreshTokenExpirationTime()),
-				userDocument.getId());
-
-		long expirationTimeMs = jwtTokenUtil.getAccessTokenExpirationTime();
-
-		return new UserLoginResponseDto(jwtToken, refreshToken, "Bearer", expirationTimeMs, userSummary);
+		return toLoginDto(user);
 	}
 
 	@Override
@@ -127,18 +116,24 @@ public class StubAuthService implements UserAuthService {
 
 		String email = jwtTokenUtil.getEmail(refreshToken);
 
-		User userDocument = userService.findByEmail(email).orElseThrow(() -> new InvalidCredentialsException("User not found"));
+		User user = userService.findByEmail(email).orElseThrow(() -> new InvalidCredentialsException("User not found"));
 
-		String newAccessToken = jwtTokenUtil.generateAccessToken(email);
-		String newRefreshToken = jwtTokenUtil.generateRefreshToken(email);
+		return toLoginDto(user);
+	}
 
-		refreshTokens.add(newRefreshToken, Instant.now().plusMillis(jwtTokenUtil.getRefreshTokenExpirationTime()),
-				userDocument.getId());
-		
-		UserSummaryDto userSummary = new UserSummaryDto(userDocument.getId(), userDocument.getFirstName(), userDocument.getLastName(),
-				userDocument.getRole(), userDocument.getEmail());
+	private UserLoginResponseDto toLoginDto(User user) {
+		UserPrivateSummaryDto userSummary = new UserPrivateSummaryDto(user.getId(),
+				base64Url.encode(user.getId(), DocType.USER), user.getProfileImage(), user.getFirstName(),
+				user.getLastName(), user.getRole(), user.getEmail());
 
-		return new UserLoginResponseDto(newAccessToken, newRefreshToken, "Bearer",
-				jwtTokenUtil.getAccessTokenExpirationTime(), userSummary);
+		String accessToken = jwtTokenUtil.generateAccessToken(user.getEmail());
+		String refreshToken = jwtTokenUtil.generateRefreshToken(user.getEmail());
+
+		refreshTokens.add(refreshToken, Instant.now().plusMillis(jwtTokenUtil.getRefreshTokenExpirationTime()),
+				user.getId());
+
+		long expirationTimeMs = jwtTokenUtil.getAccessTokenExpirationTime();
+
+		return new UserLoginResponseDto(accessToken, refreshToken, "Bearer", expirationTimeMs, userSummary);
 	}
 }
