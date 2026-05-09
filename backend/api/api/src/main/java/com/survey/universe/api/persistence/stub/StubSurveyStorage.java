@@ -115,4 +115,8 @@ public class StubSurveyStorage {
 		return surveyStorage.values().stream().filter(s -> s.getStatus().equals(status)).filter(s -> !s.isDeleted())
 				.toList();
 	}
+
+	public List<Survey> getAll() {
+		return (List<Survey>) surveyStorage.values();
+	}
 }

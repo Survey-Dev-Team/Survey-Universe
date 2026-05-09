@@ -17,6 +17,8 @@ public interface SurveyService {
 	
 	public Optional<Survey> update(Survey survey);
 	
+	public List<Survey> getAll();
+	
 	public List<Survey> findAllActive();
 	
 	public List<Survey> findAllHome();

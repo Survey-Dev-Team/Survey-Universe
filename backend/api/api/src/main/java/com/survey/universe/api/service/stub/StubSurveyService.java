@@ -71,5 +71,10 @@ public class StubSurveyService implements SurveyService {
 		return surveys.findByStatus(status);
 	}
 
+	@Override
+	public List<Survey> getAll() {
+		return surveys.getAll();
+	}
+
 	
 }

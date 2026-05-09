@@ -1,25 +1,27 @@
 package com.survey.universe.api.service.stub;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.survey.universe.api.exception.type.BadRequestException;
 import com.survey.universe.api.exception.type.ForbiddenException;
-import com.survey.universe.api.exception.type.InternalConflictException;
 import com.survey.universe.api.exception.type.ResourceNotFoundException;
 import com.survey.universe.api.persistence.constant.DocType;
+import com.survey.universe.api.persistence.constant.SortOption;
+import com.survey.universe.api.persistence.constant.TimeRange;
 import com.survey.universe.api.persistence.entity.ResponseAnswer;
 import com.survey.universe.api.persistence.entity.SurveyResponse;
-import com.survey.universe.api.persistence.entity.survey.Option;
-import com.survey.universe.api.persistence.entity.survey.Question;
 import com.survey.universe.api.persistence.entity.survey.RangeQuestion;
 import com.survey.universe.api.persistence.entity.survey.SelectionQuestion;
 import com.survey.universe.api.persistence.entity.survey.Survey;
@@ -36,9 +38,7 @@ import com.survey.universe.api.web.dto.QuestionStatsDto;
 import com.survey.universe.api.web.dto.SurveyStatsDto;
 import com.survey.universe.api.web.dto.SurveySummaryDto;
 import com.survey.universe.api.web.dto.UserSurveyResponseDto;
-import com.survey.universe.api.web.dto.request.SurveyCreateRequestDto;
 import com.survey.universe.api.web.dto.request.SurveySubmitDto;
-import com.survey.universe.api.web.dto.request.SurveyUpdateRequestDto;
 import com.survey.universe.api.web.dto.response.PagedResponseDto;
 import com.survey.universe.api.web.dto.response.SurveyResponseDto;
 
@@ -56,75 +56,6 @@ public class StubSurveyFacadeService implements SurveyFacadeService {
 	private SurveyResponseService responseService;
 	private UserService userService;
 
-	@Override
-	public SurveyResponseDto createSurvey(SurveyCreateRequestDto surveyCreateDto) {
-		Survey survey = new Survey();
-
-		survey.setId(DocType.SURVEY.join(uuidGenerator.generateUUIDv7()));
-		survey.setTitle(surveyCreateDto.title());
-		survey.setDescription(surveyCreateDto.description());
-		survey.setCategory(surveyCreateDto.category());
-		survey.setEstimatedTime(surveyCreateDto.estimatedTime());
-		survey.setHome(surveyCreateDto.isHome());
-		survey.setStatus("draft");
-		survey.setIcon(surveyCreateDto.icon());
-		survey.setCreatorId(UserAuthContextUtil.getCurrentUserId());
-		survey.setCreatedAt(Instant.now());
-		survey.setModifiedAt(Instant.now());
-
-		normalizeQuestionIds(surveyCreateDto.questions());
-		survey.setQuestions(surveyCreateDto.questions());
-
-		Survey savedSurvey = surveyService.add(survey)
-				.orElseThrow(() -> new InternalConflictException("Could not create survey, ID already exists"));
-
-		return toResponseDto(savedSurvey);
-	}
-
-	@Override
-	public SurveyResponseDto updateSurvey(String urlId, SurveyUpdateRequestDto surveyUpdateDto) {
-		String id = base64Url.decode(urlId, DocType.SURVEY);
-
-		Survey survey = surveyService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Survey not found"));
-
-		String currentUserId = UserAuthContextUtil.getCurrentUserId();
-		if (!survey.getCreatorId().equals(currentUserId)) {
-			throw new ForbiddenException("You can only edit your own surveys");
-		}
-
-		if (!survey.getRevision().equals(surveyUpdateDto.revision())) {
-			throw new InternalConflictException("Survey was modified by someone else. Please refresh");
-		}
-
-		normalizeQuestionIds(surveyUpdateDto.questions());
-		applyUpdates(surveyUpdateDto, survey);
-
-		Survey updatedSurvey = surveyService.update(survey)
-				.orElseThrow(() -> new InternalConflictException("Could not update survey"));
-
-		return toResponseDto(updatedSurvey);
-	}
-
-	private void applyUpdates(SurveyUpdateRequestDto updateRequestDto, Survey survey) {
-		Optional.ofNullable(updateRequestDto.title()).ifPresent(survey::setTitle);
-		Optional.ofNullable(updateRequestDto.description()).ifPresent(survey::setDescription);
-		Optional.ofNullable(updateRequestDto.category()).ifPresent(survey::setCategory);
-		Optional.ofNullable(updateRequestDto.estimatedTime()).ifPresent(survey::setEstimatedTime);
-		Optional.ofNullable(updateRequestDto.isHome()).ifPresent(survey::setHome);
-		Optional.ofNullable(updateRequestDto.status()).ifPresent(s -> {
-			if (s.equals("published")) {
-				survey.setPublishedAt(Instant.now());
-			} else if (s.equals("closed")) {
-				survey.setClosedAt(Instant.now());
-			} else {
-				throw new InternalConflictException("Invalid request");
-			}
-			survey.setStatus(s);
-		});
-		Optional.ofNullable(updateRequestDto.questions()).ifPresent(survey::setQuestions);
-		Optional.ofNullable(updateRequestDto.icon()).ifPresent(survey::setIcon);
-	}
-
 	private SurveyResponseDto toResponseDto(Survey savedSurvey) {
 		String urlId = base64Url.encode(savedSurvey.getId(), DocType.SURVEY);
 
@@ -133,55 +64,13 @@ public class StubSurveyFacadeService implements SurveyFacadeService {
 				savedSurvey.getEstimatedTime(), savedSurvey.getQuestions(), savedSurvey.getCreatedAt());
 	}
 
-	private void normalizeQuestionIds(List<Question> questions) {
-		if (questions == null || questions.isEmpty()) {
-			return;
-		}
-		for (int i = 0; i < questions.size(); i++) {
-			Question q = questions.get(i);
-			q.setId("q" + (i + 1));
-			q.setSortOrder(i + 1);
-			if (q instanceof SelectionQuestion sq) {
-				List<Option> options = sq.getOptions();
-				if (options != null) {
-					for (int j = 0; j < options.size(); j++) {
-						Option opt = options.get(j);
-						opt.setId("opt" + (j + 1));
-						opt.setSortOrder(j + 1);
-					}
-				}
-			}
-		}
-	}
-
-	@Override
-	public MessageDto deleteSurvey(String urlId) {
-		String id = base64Url.decode(urlId, DocType.USER);
-
-		Survey survey = surveyService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Survey not found"));
-
-		String currentUserId = UserAuthContextUtil.getCurrentUserId();
-		if (!survey.getCreatorId().equals(currentUserId)) {
-			throw new ForbiddenException("You can only edit your own surveys");
-		}
-
-		survey.setDeleted(true);
-		surveyService.update(survey).orElseThrow(
-				() -> new InternalConflictException("User could not be deleted at this time, please try again"));
-
-		return new MessageDto("Survey successfully deleted");
-	}
-
-	@Override
-	public List<SurveySummaryDto> getAllSurveys() {
-		return surveyService.findAllActive().stream().map(s -> toSummaryDto(s)).toList();
-	}
-
 	private SurveySummaryDto toSummaryDto(Survey survey) {
 		String urlId = base64Url.encode(survey.getId(), DocType.SURVEY);
+		String creatorId = survey.getCreatorId();
 
-		return new SurveySummaryDto(urlId, survey.getTitle(), survey.getDescription(), survey.getIcon(),
-				survey.getCategory(), survey.getEstimatedTime(), survey.getStatus(), survey.getCreatedAt());
+		return new SurveySummaryDto(urlId, base64Url.encode(creatorId, DocType.USER), survey.getTitle(),
+				survey.getDescription(), survey.getIcon(), survey.getCategory(), survey.getEstimatedTime(),
+				survey.getPublishedAt());
 	}
 
 	@Override
@@ -191,26 +80,49 @@ public class StubSurveyFacadeService implements SurveyFacadeService {
 		Survey survey = surveyService.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
 
+		if (survey.isDeleted() || !survey.getStatus().equals("published")) {
+			throw new ForbiddenException("You do not have authority to access this survey");
+		}
+
 		return toResponseDto(survey);
 	}
 
 	@Override
-	public PagedResponseDto<SurveySummaryDto> getFilteredSurveys(int page, int size, String category, String status,
-			String search, String creator) {
+	public PagedResponseDto<SurveySummaryDto> getFilteredSurveys(String category, String search, String creator,
+			SortOption sortBy, TimeRange timeRange, int page, int size) {
 		List<Survey> filteredSurveys = surveyService.findAllActive().stream()
 				.filter(s -> category == null || s.getCategory().stream().anyMatch(c -> c.equalsIgnoreCase(category)))
-				.filter(s -> status == null ? "published".equals(s.getStatus())
-						: status.equalsIgnoreCase(s.getStatus()))
+				.filter(s -> "published".equals(s.getStatus())).filter(s -> !s.isDeleted())
 				.filter(s -> search == null || s.getTitle().toLowerCase().contains(search.toLowerCase())
 						|| s.getDescription().toLowerCase().contains(search.toLowerCase()))
-				.filter(s -> creator == null || s.getCreatorId().equals(creator)).toList();
+				.filter(s -> creator == null || s.getCreatorId().equals(creator)).filter(s -> {
+					if (timeRange == null)
+						return true;
+					Instant now = Instant.now();
+					return switch (timeRange) {
+					case TimeRange.today -> s.getCreatedAt().isAfter(now.minus(1, ChronoUnit.DAYS));
+					case TimeRange.week -> s.getCreatedAt().isAfter(now.minus(7, ChronoUnit.DAYS));
+					case TimeRange.month -> s.getCreatedAt().isAfter(now.minus(30, ChronoUnit.DAYS));
+					default -> true;
+					};
+				}).toList();
+
+		Map<String, Integer> responseCounts = filteredSurveys.stream()
+				.collect(Collectors.toMap(Survey::getId, s -> responseService.findAllBySurveyId(s.getId()).size()));
+
+		Comparator<Survey> comparator = switch (sortBy) {
+		case SortOption.oldest -> Comparator.comparing(Survey::getCreatedAt);
+		case SortOption.popular ->
+			Comparator.comparing((Survey s) -> responseCounts.getOrDefault(s.getId(), 0)).reversed();
+		default -> Comparator.comparing(Survey::getCreatedAt).reversed();
+		};
 
 		int totalElements = filteredSurveys.size();
 		int totalPages = (int) Math.ceil((double) totalElements / size);
 		int fromIndex = page * size;
 
-		List<SurveySummaryDto> content = filteredSurveys.stream().skip(fromIndex).limit(size).map(this::toSummaryDto)
-				.toList();
+		List<SurveySummaryDto> content = filteredSurveys.stream().sorted(comparator).skip(fromIndex).limit(size)
+				.map(this::toSummaryDto).toList();
 
 		return new PagedResponseDto<>(content, page, totalPages, totalElements, page < totalPages - 1);
 	}
