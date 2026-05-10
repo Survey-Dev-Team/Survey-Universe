@@ -1,9 +1,14 @@
 FROM eclipse-temurin:25-jdk AS build
 WORKDIR /app
 
-COPY backend/api/api/.mvn/ .mvn
+COPY backend/api/api/.mvn .mvn
+
 COPY backend/api/api/mvnw backend/api/api/pom.xml ./
+
+RUN chmod +x ./mvnw
+
 RUN ./mvnw dependency:go-offline
+
 
 COPY backend/api/api/src ./src
 RUN ./mvnw clean package -DskipTests
