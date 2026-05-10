@@ -1,0 +1,45 @@
+package com.survey.universe.mapper;
+
+import java.time.Instant;
+import java.util.Optional;
+
+import org.springframework.stereotype.Component;
+
+import com.survey.universe.domain.constant.SurveyStatus;
+import com.survey.universe.domain.model.survey.Survey;
+import com.survey.universe.spring.util.UserAuthContextUtil;
+import com.survey.universe.web.dto.request.SurveyCreateRequestDto;
+import com.survey.universe.web.dto.request.SurveyUpdateRequestDto;
+
+@Component
+public class DtoToSurveyMapper {
+	
+	public void mapUpdate(SurveyUpdateRequestDto updateDto, Survey survey) {
+		Optional.ofNullable(updateDto.title()).ifPresent(survey::setTitle);
+		Optional.ofNullable(updateDto.description()).ifPresent(survey::setDescription);
+		Optional.ofNullable(updateDto.category()).ifPresent(survey::setCategory);
+		Optional.ofNullable(updateDto.estimatedTime()).ifPresent(survey::setEstimatedTime);
+		Optional.ofNullable(updateDto.isHome()).ifPresent(survey::setHome);
+		Optional.ofNullable(updateDto.questions()).ifPresent(survey::setQuestions);
+		Optional.ofNullable(updateDto.icon()).ifPresent(survey::setIcon);
+	}
+
+	
+	public Survey mapPost(SurveyCreateRequestDto surveyCreateDto, String id, String userId) {
+		Survey survey = new Survey();
+
+		survey.setId(id);
+		survey.setTitle(surveyCreateDto.title());
+		survey.setDescription(surveyCreateDto.description());
+		survey.setCategory(surveyCreateDto.category());
+		survey.setEstimatedTime(surveyCreateDto.estimatedTime());
+		survey.setHome(surveyCreateDto.isHome());
+		survey.setStatus(SurveyStatus.DRAFT);
+		survey.setIcon(surveyCreateDto.icon());
+		survey.setCreatorId(userId);
+		survey.setCreatedAt(Instant.now());
+		survey.setQuestions(surveyCreateDto.questions());
+		
+		return survey;
+	}
+}
