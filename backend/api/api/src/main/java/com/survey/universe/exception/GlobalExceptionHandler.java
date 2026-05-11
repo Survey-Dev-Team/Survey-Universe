@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -39,17 +40,17 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<String> handleInternalConflictException(InternalConflictException ex) {
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
 	}
-	
-	@ExceptionHandler(UnauthorizedException.class)
-	public ResponseEntity<String> handleUnauthorizedException(UnauthorizedException ex) {
+
+	@ExceptionHandler({ UnauthorizedException.class, AuthorizationDeniedException.class })
+	public ResponseEntity<String> handleUnauthorizedException(Exception ex) {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
 	}
-	
+
 	@ExceptionHandler(ForbiddenException.class)
 	public ResponseEntity<String> handleForbiddenException(ForbiddenException ex) {
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
 	}
-	
+
 	@ExceptionHandler(BadRequestException.class)
 	public ResponseEntity<String> handleBadRequestException(BadRequestException ex) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());

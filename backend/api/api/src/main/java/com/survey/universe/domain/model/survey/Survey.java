@@ -1,5 +1,6 @@
 package com.survey.universe.domain.model.survey;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.survey.universe.domain.constant.SurveyStatus;
@@ -38,7 +39,7 @@ public class Survey {
     @JsonProperty("status")
     private SurveyStatus status;
     
-    @JsonProperty
+    @JsonProperty("survey_type")
     private SurveyType surveyType;
     
     @JsonProperty("category")
@@ -51,6 +52,7 @@ public class Survey {
     private String icon;
     
     @JsonProperty("estimated_time")
+    @JsonFormat(shape = JsonFormat.Shape.ANY)
     private Integer estimatedTime;
     
     @JsonProperty("created_at")

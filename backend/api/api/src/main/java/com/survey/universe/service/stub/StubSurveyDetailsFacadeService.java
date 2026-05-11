@@ -1,37 +1,43 @@
 package com.survey.universe.service.stub;
 
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.survey.universe.domain.constant.DocType;
+import com.survey.universe.domain.constant.SurveyStatus;
+import com.survey.universe.domain.constant.SurveyType;
 import com.survey.universe.domain.model.survey.Survey;
 import com.survey.universe.domain.service.SurveyDomainService;
+import com.survey.universe.exception.type.BadRequestException;
 import com.survey.universe.exception.type.InternalConflictException;
 import com.survey.universe.exception.type.ResourceNotFoundException;
+import com.survey.universe.exception.type.UnauthorizedException;
 import com.survey.universe.mapper.DtoToSurveyMapper;
+import com.survey.universe.mapper.PagedDtoMapper;
 import com.survey.universe.mapper.SurveyToDtoMapper;
 import com.survey.universe.service.SurveyDetailsFacadeService;
 import com.survey.universe.service.SurveyResponseService;
 import com.survey.universe.service.SurveyService;
-import com.survey.universe.service.constant.SortOption;
+import com.survey.universe.service.constant.SurveySortOption;
 import com.survey.universe.service.constant.TimeRange;
 import com.survey.universe.spring.configuration.bean.UUIDGenerator;
 import com.survey.universe.spring.util.Base64UrlUtil;
 import com.survey.universe.spring.util.UserAuthContextUtil;
-import com.survey.universe.web.dto.MessageDto;
 import com.survey.universe.web.dto.SurveyDetailsSummaryDto;
-import com.survey.universe.web.dto.request.SurveyCreateRequestDto;
-import com.survey.universe.web.dto.request.SurveyUpdateRequestDto;
-import com.survey.universe.web.dto.response.PagedResponseDto;
-import com.survey.universe.web.dto.response.SurveyDetailsResponseDto;
+import com.survey.universe.web.dto.auth.request.SurveyHomePatchDto;
+import com.survey.universe.web.dto.generic.MessageDto;
+import com.survey.universe.web.dto.generic.PagedResponseDto;
+import com.survey.universe.web.dto.generic.RevisionMessageDto;
+import com.survey.universe.web.dto.generic.RevisionRecordDto;
+import com.survey.universe.web.dto.request.survey.SurveyCreateRequestDto;
+import com.survey.universe.web.dto.request.survey.SurveyDetailsResponseDto;
+import com.survey.universe.web.dto.request.survey.SurveyUpdateRequestDto;
 
 import lombok.AllArgsConstructor;
 
@@ -40,6 +46,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class StubSurveyDetailsFacadeService implements SurveyDetailsFacadeService {
 
+	private static List<SurveyStatus> ALLOWED_STATUSES = List.of(SurveyStatus.CLOSED, SurveyStatus.DRAFT,
+			SurveyStatus.PUBLISHED);
+
 	private SurveyService surveyService;
 	private Base64UrlUtil base64Url;
 	private UUIDGenerator uuidGenerator;
@@ -47,6 +56,7 @@ public class StubSurveyDetailsFacadeService implements SurveyDetailsFacadeServic
 	private SurveyDomainService domainService;
 	private DtoToSurveyMapper dtoToSurvey;
 	private SurveyToDtoMapper surveyToDto;
+	private PagedDtoMapper toPaged;
 
 	@Override
 	public SurveyDetailsResponseDto createSurvey(SurveyCreateRequestDto surveyCreateDto) {
@@ -56,8 +66,8 @@ public class StubSurveyDetailsFacadeService implements SurveyDetailsFacadeServic
 		domainService.normalizeQuestionIds(survey.getQuestions());
 		domainService.setSurveyType(survey);
 
-		Survey savedSurvey = surveyService.add(survey)
-				.orElseThrow(() -> new InternalConflictException("Could not create survey, ID already exists"));
+		Survey savedSurvey = surveyService.add(survey).orElseThrow(
+				() -> new InternalConflictException("Could not create survey at this time, please try again"));
 
 		return surveyToDto.toAdminResponseDto(savedSurvey,
 				responseService.findAllBySurveyId(savedSurvey.getId()).size());
@@ -70,7 +80,11 @@ public class StubSurveyDetailsFacadeService implements SurveyDetailsFacadeServic
 		Survey survey = surveyService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Survey not found"));
 
 		if (!UserAuthContextUtil.getRole().equals("admin")) {
-			domainService.validateOwnership(survey, UserAuthContextUtil.getCurrentUserId());
+			if (survey.getStatus().equals(SurveyStatus.DRAFT)) {
+				domainService.validateOwnership(survey, UserAuthContextUtil.getCurrentUserId());
+			} else {
+				throw new BadRequestException("You can only edit drafted surveys");
+			}
 		}
 
 		if (!survey.getRevision().equals(surveyUpdateDto.revision())) {
@@ -78,51 +92,28 @@ public class StubSurveyDetailsFacadeService implements SurveyDetailsFacadeServic
 		}
 
 		dtoToSurvey.mapUpdate(surveyUpdateDto, survey);
-		Optional.of(surveyUpdateDto.status()).ifPresent(status -> {
-			domainService.updateStatusInstant(survey, status);
-		});
 		domainService.normalizeQuestionIds(survey.getQuestions());
 		domainService.setSurveyType(survey);
 
-		Survey updatedSurvey = surveyService.update(survey)
+		survey = surveyService.update(survey)
 				.orElseThrow(() -> new InternalConflictException("Could not update survey"));
 
-		return surveyToDto.toAdminResponseDto(updatedSurvey,
-				responseService.findAllBySurveyId(updatedSurvey.getId()).size());
-	}
-
-	private boolean containsSearchTerm(Survey s, String term) {
-		String lowerTerm = term.toLowerCase();
-		return s.getTitle().toLowerCase().contains(lowerTerm) || s.getDescription().toLowerCase().contains(lowerTerm);
-	}
-
-	private boolean isWithinTimeRange(Instant createdAt, TimeRange range) {
-		if (range == null)
-			return true;
-		Instant limit = switch (range) {
-		case today -> Instant.now().minus(1, ChronoUnit.DAYS);
-		case week -> Instant.now().minus(7, ChronoUnit.DAYS);
-		case month -> Instant.now().minus(30, ChronoUnit.DAYS);
-		default -> Instant.MIN;
-		};
-		return createdAt.isAfter(limit);
+		return surveyToDto.toAdminResponseDto(survey,
+				responseService.findAllBySurveyId(survey.getId()).size());
 	}
 
 	@Override
-	public PagedResponseDto<SurveyDetailsSummaryDto> getFilteredSurveys(String status, String creator, String search,
-			String category, SortOption sortBy, TimeRange timeRange, Boolean showDeleted, int page, int size) {
+	public PagedResponseDto<SurveyDetailsSummaryDto> getFilteredSurveys(SurveyType surveyType, SurveyStatus status,
+			String creator, String search, String category, SurveySortOption sortBy, TimeRange timeRange,
+			Boolean showDeleted, int page, int size) {
 
-		List<Survey> allSurveys = surveyService.getAll();
+		List<Survey> filtered = surveyService.filter(ALLOWED_STATUSES, surveyType, status, creator, search, category,
+				showDeleted, timeRange);
+		
+		List<String> filteredIds = filtered.stream().map(Survey::getId).toList();
 
-		List<Survey> filtered = allSurveys.stream().filter(s -> showDeleted == null || s.isDeleted() == showDeleted)
-				.filter(s -> creator == null || s.getCreatorId().equals(creator))
-				.filter(s -> status == null || status.equalsIgnoreCase(String.valueOf(s.getStatus())))
-				.filter(s -> category == null || s.getCategory().stream().anyMatch(category::equalsIgnoreCase))
-				.filter(s -> search == null || containsSearchTerm(s, search))
-				.filter(s -> isWithinTimeRange(s.getCreatedAt(), timeRange)).toList();
-
-		Map<String, Integer> responseCounts = filtered.stream()
-				.collect(Collectors.toMap(Survey::getId, s -> responseService.findAllBySurveyId(s.getId()).size()));
+		Map<String, Integer> responseCounts = filteredIds.stream()
+				.collect(Collectors.toMap(id -> id, id -> responseService.findAllBySurveyId(id).size()));
 
 		Comparator<Survey> comparator = switch (sortBy) {
 		case oldest -> Comparator.comparing(Survey::getCreatedAt);
@@ -130,16 +121,8 @@ public class StubSurveyDetailsFacadeService implements SurveyDetailsFacadeServic
 		default -> Comparator.comparing(Survey::getCreatedAt).reversed();
 		};
 
-		int totalElements = filtered.size();
-		int fromIndex = Math.min(page * size, totalElements);
-		int toIndex = Math.min(fromIndex + size, totalElements);
-
-		List<SurveyDetailsSummaryDto> content = filtered.stream().sorted(comparator).collect(Collectors.toList())
-				.subList(fromIndex, toIndex).stream()
-				.map(s -> surveyToDto.toAdminSummaryDto(s, responseCounts.get(s.getId()))).toList();
-
-		int totalPages = (int) Math.ceil((double) totalElements / size);
-		return new PagedResponseDto<>(content, page, totalPages, totalElements, page < totalPages - 1);
+		return toPaged.toPagedResponse(filtered, comparator, page, size,
+				s -> surveyToDto.toAdminSummaryDto(s, responseCounts.get(s.getId())));
 	}
 
 	@Override
@@ -162,21 +145,111 @@ public class StubSurveyDetailsFacadeService implements SurveyDetailsFacadeServic
 		Survey survey = surveyService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Survey not found"));
 
 		if (!UserAuthContextUtil.getRole().equals("admin")) {
-			domainService.validateOwnership(survey, UserAuthContextUtil.getCurrentUserId());
+			if (survey.getStatus().equals(SurveyStatus.DRAFT)) {
+				domainService.validateOwnership(survey, UserAuthContextUtil.getCurrentUserId());
+			} else {
+				throw new BadRequestException("You can only delete drafted surveys");
+			}
 		}
 
 		survey.setDeleted(true);
 		surveyService.update(survey).orElseThrow(
-				() -> new InternalConflictException("User could not be deleted at this time, please try again"));
+				() -> new InternalConflictException("Survey could not be deleted at this time, please try again"));
 
 		return new MessageDto("Survey successfully deleted");
 	}
 
 	@Override
-	public PagedResponseDto<SurveyDetailsSummaryDto> getFilteredSurveys(String status, String search, String category,
-			SortOption sortBy, TimeRange timeRange, Boolean showDeleted, int page, int size) {
-		return getFilteredSurveys(status, UserAuthContextUtil.getCurrentUserId(), search, category, sortBy, timeRange,
-				showDeleted, page, size);
+	public PagedResponseDto<SurveyDetailsSummaryDto> getFilteredSurveys(SurveyType surveyType, SurveyStatus status,
+			String search, String category, SurveySortOption sortBy, TimeRange timeRange, Boolean showDeleted, int page,
+			int size) {
+		return getFilteredSurveys(surveyType, status, UserAuthContextUtil.getCurrentUserId(), search, category, sortBy,
+				timeRange, showDeleted, page, size);
+	}
+
+	@Override
+	public RevisionMessageDto publishSurvey(String urlId, RevisionRecordDto revision) {
+		String id = base64Url.decode(urlId, DocType.SURVEY);
+
+		if (!UserAuthContextUtil.getRole().equals("admin")) {
+			throw new UnauthorizedException("User unauthorized to perform this action");
+		}
+
+		Survey survey = surveyService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Survey not found"));
+
+		if (!survey.getRevision().equals(revision.revision())) {
+			throw new InternalConflictException("Survey was modified by someone else. Please refresh");
+		}
+
+		survey.setStatus(SurveyStatus.PUBLISHED);
+		survey.setPublishedAt(Instant.now());
+
+		survey = surveyService.update(survey).orElseThrow(
+				() -> new InternalConflictException("Survey could not be published at this time, please try again"));
+
+		return new RevisionMessageDto("Survey sucessfully published", survey.getRevision(), id, urlId);
+	}
+
+	@Override
+	public RevisionMessageDto closeSurvey(String urlId, RevisionRecordDto revision) {
+		String id = base64Url.decode(urlId, DocType.SURVEY);
+
+		Survey survey = surveyService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Survey not found"));
+
+		if (!survey.getRevision().equals(revision.revision())) {
+			throw new InternalConflictException("Survey was modified by someone else. Please refresh");
+		}
+		survey.setStatus(SurveyStatus.CLOSED);
+		survey.setClosedAt(Instant.now());
+
+		survey = surveyService.update(survey).orElseThrow(
+				() -> new InternalConflictException("Survey could not be closed at this time, please try again"));
+
+		return new RevisionMessageDto("Survey sucessfully closed", survey.getRevision(), id, urlId);
+	}
+
+	@Override
+	public RevisionMessageDto draftSurvey(String urlId, RevisionRecordDto revision) {
+		String id = base64Url.decode(urlId, DocType.SURVEY);
+
+		if (!UserAuthContextUtil.getRole().equals("admin")) {
+			throw new UnauthorizedException("User unauthorized to perform this action");
+		}
+
+		Survey survey = surveyService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Survey not found"));
+
+		if (!survey.getRevision().equals(revision.revision())) {
+			throw new InternalConflictException("Survey was modified by someone else. Please refresh");
+		}
+		survey.setStatus(SurveyStatus.DRAFT);
+
+		survey = surveyService.update(survey).orElseThrow(
+				() -> new InternalConflictException("Survey could not be drafted at this time, please try again"));
+
+		return new RevisionMessageDto("Survey sucessfully drafted", survey.getRevision(), id, urlId);
+	}
+
+	@Override
+	public RevisionMessageDto setHome(String urlId, SurveyHomePatchDto revision) {
+		String id = base64Url.decode(urlId, DocType.SURVEY);
+
+		if (!UserAuthContextUtil.getRole().equals("admin")) {
+			throw new UnauthorizedException("User unauthorized to perform this action");
+		}
+
+		Survey survey = surveyService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Survey not found"));
+
+		if (!survey.getRevision().equals(revision.revision())) {
+			throw new InternalConflictException("Survey was modified by someone else. Please refresh");
+		}
+		survey.setHome(revision.isHome());
+
+		survey = surveyService.update(survey).orElseThrow(
+				() -> new InternalConflictException("Survey could not be drafted at this time, please try again"));
+
+		return new RevisionMessageDto(
+				"Survey will now " + (revision.isHome() ? "" : "no longer") + " be on the homepage",
+				survey.getRevision(), id, urlId);
 	}
 
 }

@@ -1,0 +1,2604 @@
+{
+  "info": {
+    "_postman_id": "fe9b7080-d689-4627-8f75-35c38e483570",
+    "name": "Survey-Universe-API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "24023588"
+  },
+  "item": [
+    {
+      "name": "Auth-Test",
+      "item": [
+        {
+          "name": "Login Correct",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"hajamag257@lohinja.com\",\r\n    \"password\": \"iE)+Z-a8@_GP\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Fail (Password)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"hajamag257@lohinja.com\",\r\n    \"password\": \"iE)+Z-a8@_GP_NOT\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Fail (Uknown User)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"newuser@lohinja.com\",\r\n    \"password\": \"iE)+Z-a8@_GP_NOT\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Fail (Email Format)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"mail.com\",\r\n    \"password\": \"123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Success",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Lydia\",\r\n    \"lastName\": \"Henry\",\r\n    \"email\": \"ficx5@wshu.net\",\r\n    \"password\": \"x+U3Z%T@dlQ]\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/register",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Fail (User Exists)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Lydia\",\r\n    \"lastName\": \"Henry\",\r\n    \"email\": \"ficx5@wshu.net\",\r\n    \"password\": \"x+U3Z%T@dlQ]\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/register",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Success (Newly Registered)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"ficx5@wshu.net\",\r\n    \"password\": \"x+U3Z%T@dlQ]\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Fail (Password Format)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Bernard\",\r\n    \"lastName\": \"Linsday\",\r\n    \"email\": \"cxfs6@wshu.net\",\r\n    \"password\": \"xyz}YaQr!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/register",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Fail (Absent Field)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Sion\",\r\n    \"email\": \"ouv63@wshu.net\",\r\n    \"password\": \"MP.T3h+U@L[%\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/register",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Success (Automate Refresh))",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "if (response.jwtToken) {\r",
+                  "    pm.environment.set(\"jwtToken\", response.jwtToken);\r",
+                  "}\r",
+                  "\r",
+                  "if (response.refreshToken) {\r",
+                  "    pm.environment.set(\"refreshToken\", response.refreshToken);\r",
+                  "}\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"bv7oo@deltajohnsons.com\",\r\n    \"password\": \"49Z=g6Yl,gX~\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "JWT Refresh Success",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"refreshToken\": \"{{refreshToken}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/refresh",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "refresh"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "JWT Refresh Fail (Old Token)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"refreshToken\": \"{{refreshToken}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/refresh",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "refresh"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User-Test",
+      "item": [
+        {
+          "name": "Login (Automate User Tests)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "if (response.jwtToken) {\r",
+                  "    pm.environment.set(\"jwtToken\", response.jwtToken);\r",
+                  "}\r",
+                  "\r",
+                  "if (response.refreshToken) {\r",
+                  "    pm.environment.set(\"refreshToken\", response.refreshToken);\r",
+                  "}\r",
+                  "\r",
+                  "if (response.userSummary) {\r",
+                  "    pm.environment.set(\"usrUrl1\", response.userSummary.urlId);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"bv7oo@deltajohnsons.com\",\r\n    \"password\": \"49Z=g6Yl,gX~\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Self - Public Profile",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/users/{{usrUrl1}}/public",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "{{usrUrl1}}",
+                "public"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Self - View Responses",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:8080/api/v1/users/{{usrUrl1}}/responses",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "{{usrUrl1}}",
+                "responses"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login (Created User)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "if (response.jwtToken) {\r",
+                  "    pm.environment.set(\"jwtToken2\", response.jwtToken);\r",
+                  "}\r",
+                  "\r",
+                  "if (response.refreshToken) {\r",
+                  "    pm.environment.set(\"refreshToken2\", response.refreshToken);\r",
+                  "}\r",
+                  "\r",
+                  "if (response.userSummary) {\r",
+                  "    pm.environment.set(\"usrUrl2\", response.userSummary.urlId);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"ficx5@wshu.net\",\r\n    \"password\": \"x+U3Z%T@dlQ]\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Self - Private Profile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "if (response.revision) {\r",
+                  "    pm.environment.set(\"rev2\", response.revision);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/users/{{usrUrl2}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "{{usrUrl2}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Other - Public Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken2}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:8080/api/v1/users/{{usrUrl1}}/public",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "{{usrUrl1}}",
+                "public"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Other - Private Profile (Fail)",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/users/{{usrUrl1}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "{{usrUrl1}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Self - Update User (Fail Blank Rev)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"lastName\": \"Henryy\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/users/{{usrUrl2}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "{{usrUrl2}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Self - Update User",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"lastName\": \"Henryy\",\r\n    \"revision\": \"{{rev2}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/users/{{usrUrl2}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "{{usrUrl2}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Other - Update User (Fail)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"lastName\": \"Henryy\",\r\n    \"revision\": \"{{rev2}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/users/{{usrUrl1}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "{{usrUrl1}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Other - Delete (Fail)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"lastName\": \"Henryy\",\r\n    \"revision\": \"{{rev2}}\"\r\n}"
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/users/{{usrUrl1}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "{{usrUrl1}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Self - Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/users/{{usrUrl2}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "{{usrUrl2}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Self Delete (Fail - Already Deleted)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/users/{{usrUrl2}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "{{usrUrl2}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Fail (Deleted User)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Lydia\",\r\n    \"lastName\": \"Henry\",\r\n    \"email\": \"ficx5@wshu.net\",\r\n    \"password\": \"x+U3Z%T@dlQ]\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/register",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Fail (Deleted User)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"ficx5@wshu.net\",\r\n    \"password\": \"x+U3Z%T@dlQ]\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User-Test-Admin",
+      "item": [
+        {
+          "name": "Register New User (Admin Automation)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Yunus\",\r\n    \"lastName\": \"Mills\", \r\n    \"email\": \"asawkar@gmail-c.cc\",\r\n    \"password\": \"GggvkUEkUk8J\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/register",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login New User (Admin Automation)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "if (response.jwtToken) {\r",
+                  "    pm.environment.set(\"jwtToken_nu\", response.jwtToken);\r",
+                  "}\r",
+                  "\r",
+                  "if (response.refreshToken) {\r",
+                  "    pm.environment.set(\"refreshToken_nu\", response.refreshToken);\r",
+                  "}\r",
+                  "\r",
+                  "if (response.userSummary) {\r",
+                  "    pm.environment.set(\"usrUrl_nu\", response.userSummary.urlId);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"asawkar@gmail-c.cc\",\r\n    \"password\": \"GggvkUEkUk8J\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin Login (User Test Automation)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "if (response.jwtToken) {\r",
+                  "    pm.environment.set(\"jwtToken_a\", response.jwtToken);\r",
+                  "}\r",
+                  "\r",
+                  "if (response.refreshToken) {\r",
+                  "    pm.environment.set(\"refreshToken_a\", response.refreshToken);\r",
+                  "}\r",
+                  "\r",
+                  "if (response.userSummary) {\r",
+                  "    pm.environment.set(\"usrUrl_a\", response.userSummary.urlId);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"hajamag257@lohinja.com\",\r\n    \"password\": \"iE)+Z-a8@_GP\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Other - Get Private (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "if (response.revision) {\r",
+                  "    pm.environment.set(\"rev_nu\", response.revision);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/users/{{usrUrl_nu}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "{{usrUrl_nu}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All - Admin",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:8080/api/v1/users",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Other - Update Admin",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"lastName\": \"Farmer\",\r\n    \"revision\": \"{{rev_nu}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/users/{{usrUrl_nu}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "{{usrUrl_nu}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Other - Delete Admin",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:8080/api/v1/users/{{usrUrl_nu}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "{{usrUrl_nu}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All - Admin Post Delete Search",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:8080/api/v1/users?showDeleted=true&search=ia",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "showDeleted",
+                  "value": "true"
+                },
+                {
+                  "key": "search",
+                  "value": "ia"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All (show deleted) - With Pagination",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/users?showDeleted=true&size=3&page=0",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "showDeleted",
+                  "value": "true"
+                },
+                {
+                  "key": "size",
+                  "value": "3"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin-Surveys API",
+      "item": [
+        {
+          "name": "Admin Log In",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "if (response.jwtToken) {\r",
+                  "    pm.environment.set(\"jwtToken_a2\", response.jwtToken);\r",
+                  "}\r",
+                  "\r",
+                  "if (response.refreshToken) {\r",
+                  "    pm.environment.set(\"refreshToken_a2\", response.refreshToken);\r",
+                  "}\r",
+                  "\r",
+                  "if (response.userSummary) {\r",
+                  "    pm.environment.set(\"usrUrl_a2\", response.userSummary.urlId);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"hajamag257@lohinja.com\",\r\n    \"password\": \"iE)+Z-a8@_GP\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Surveys Admin",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a2}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/admin",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "admin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Surveys Admin",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a2}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/admin?surveyType=questionnaire&surveyStatus=published&sortby=oldest",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "admin"
+              ],
+              "query": [
+                {
+                  "key": "surveyType",
+                  "value": "questionnaire"
+                },
+                {
+                  "key": "surveyStatus",
+                  "value": "published"
+                },
+                {
+                  "key": "sortby",
+                  "value": "oldest"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Survey Create",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "if (response.summary) {\r",
+                  "    pm.environment.set(\"surveyUrl\", response.summary.urlId);\r",
+                  "}\r",
+                  "if (response.revision) {\r",
+                  "    pm.environment.set(\"rev_cs\", response.revision);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"_id\":\"survey:019de95c-3401-7001-b2c3-d4e5f6a70002\",\r\n   \"root_type\":\"survey\",\r\n   \"title\":\"IT Infrastructure and Security Feedback 2026\",\r\n   \"description\":\"Evaluating internal tools, hardware satisfaction, and security awareness.\",\r\n   \"category\":[\r\n      \"it\",\r\n      \"security\",\r\n      \"infrastructure\"\r\n   ],\r\n   \"is_home\":false,\r\n   \"icon\": null,\r\n   \"estimated_time\":\"8\",\r\n   \"created_at\":\"2026-05-11T14:15:00Z\",\r\n   \"modified_at\":\"2026-05-11T15:00:00Z\",\r\n   \"closed_at\":null,\r\n   \"is_deleted\":false,\r\n   \"creator_id\":\"survey:019de95c-3401-7001-a1b2-c3d4e5f60001\",\r\n   \"questions\":[\r\n      {\r\n         \"id\":\"q1\",\r\n         \"label\":\"How would you rate the speed of your corporate VPN?\",\r\n         \"sort_order\":1,\r\n         \"type\":\"range\",\r\n         \"min\":1,\r\n         \"max\":5,\r\n         \"step\":1,\r\n         \"is_required\":true,\r\n         \"options\":[\r\n            \r\n         ]\r\n      },\r\n      {\r\n         \"id\":\"q2\",\r\n         \"label\":\"Which multi-factor authentication (MFA) method do you prefer?\",\r\n         \"sort_order\":2,\r\n         \"type\":\"checkbox\",\r\n         \"is_required\":true,\r\n         \"options\":[\r\n            {\r\n               \"id\":\"opt1\",\r\n               \"label\":\"Authenticator App Code\",\r\n               \"sort_order\":1\r\n            },\r\n            {\r\n               \"id\":\"opt2\",\r\n               \"label\":\"Hardware Security Key (YubiKey)\",\r\n               \"sort_order\":2\r\n            },\r\n            {\r\n               \"id\":\"opt3\",\r\n               \"label\":\"Biometric (TouchID / FaceID)\",\r\n               \"sort_order\":3\r\n            }\r\n         ]\r\n      },\r\n      {\r\n         \"id\":\"q3\",\r\n         \"label\":\"Describe any issues you face with your current hardware setup:\",\r\n         \"sort_order\":3,\r\n         \"type\":\"text_area\",\r\n         \"placeholder\":\"Monitors, laptop performance, peripherals...\",\r\n         \"is_required\":false,\r\n         \"options\":[\r\n            \r\n         ]\r\n      }\r\n   ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/admin",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "admin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "View Survey Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a2}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/admin/{{surveyUrl}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "admin",
+                "{{surveyUrl}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Draft",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "if (response.revision) {\r",
+                  "    pm.environment.set(\"rev_cs\", response.revision);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"_id\":\"survey:019de95c-3401-7001-b2c3-d4e5f6a70002\",\r\n   \"root_type\":\"survey\",\r\n   \"title\":\"IT Infrastructure and Security Feedback 2026\",\r\n   \"description\":\"Evaluating internal tools, hardware satisfaction, and security awareness.\",\r\n   \"revision\": \"{{rev_cs}}\",\r\n   \"category\":[\r\n      \"it\",\r\n      \"security\",\r\n      \"infrastructure\",\r\n      \"questionnaire\"\r\n   ],\r\n   \"is_home\":false,\r\n   \"icon\": null,\r\n   \"estimated_time\":\"8\",\r\n   \"created_at\":\"2026-05-11T14:15:00Z\",\r\n   \"modified_at\":\"2026-05-11T15:00:00Z\",\r\n   \"closed_at\":null,\r\n   \"is_deleted\":false,\r\n   \"creator_id\":\"survey:019de95c-3401-7001-a1b2-c3d4e5f60001\",\r\n   \"questions\":[\r\n      {\r\n         \"id\":\"q1\",\r\n         \"label\":\"How would you rate the speed of your corporate VPN?\",\r\n         \"sort_order\":1,\r\n         \"type\":\"range\",\r\n         \"min\":1,\r\n         \"max\":5,\r\n         \"step\":1,\r\n         \"is_required\":true,\r\n         \"options\":[\r\n            \r\n         ]\r\n      },\r\n      {\r\n         \"id\":\"q2\",\r\n         \"label\":\"Which multi-factor authentication (MFA) method do you prefer?\",\r\n         \"sort_order\":2,\r\n         \"type\":\"checkbox\",\r\n         \"is_required\":true,\r\n         \"options\":[\r\n            {\r\n               \"id\":\"opt1\",\r\n               \"label\":\"Authenticator App Code\",\r\n               \"sort_order\":1\r\n            },\r\n            {\r\n               \"id\":\"opt2\",\r\n               \"label\":\"Hardware Security Key (YubiKey)\",\r\n               \"sort_order\":2\r\n            },\r\n            {\r\n               \"id\":\"opt3\",\r\n               \"label\":\"Biometric (TouchID / FaceID)\",\r\n               \"sort_order\":3\r\n            }\r\n         ]\r\n      },\r\n      {\r\n         \"id\":\"q3\",\r\n         \"label\":\"Describe any issues you face with your current hardware setup:\",\r\n         \"sort_order\":3,\r\n         \"type\":\"text_area\",\r\n         \"placeholder\":\"Monitors, laptop performance, peripherals...\",\r\n         \"is_required\":false,\r\n         \"options\":[\r\n            \r\n         ]\r\n      },\r\n      {\r\n         \"label\":\"Does your company use 2FA:\",\r\n         \"sort_order\": 4,\r\n         \"type\":\"radio_button\",\r\n         \"is_required\":false,\r\n         \"options\":[\r\n             {\r\n               \"id\":\"opt1\",\r\n               \"label\":\"yes\",\r\n               \"sort_order\":1\r\n            },\r\n            {\r\n               \"id\":\"opt2\",\r\n               \"label\":\"no\",\r\n               \"sort_order\":2\r\n            }\r\n         ]\r\n      }\r\n   ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/admin/{{surveyUrl}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "admin",
+                "{{surveyUrl}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Publish Survey",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "if (response.revision) {\r",
+                  "    pm.environment.set(\"rev_cs\", response.revision);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"revision\": \"{{rev_cs}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/admin/{{surveyUrl}}/publish",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "admin",
+                "{{surveyUrl}}",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Publish",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "if (response.revision) {\r",
+                  "    pm.environment.set(\"rev_cs\", response.revision);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"_id\":\"survey:019de95c-3401-7001-b2c3-d4e5f6a70002\",\r\n   \"root_type\":\"survey\",\r\n   \"title\":\"IT Infrastructure and Security Feedback 2026\",\r\n   \"description\":\"Evaluating internal tools, hardware satisfaction, and security awareness of employees.\",\r\n   \"revision\": \"{{rev_cs}}\",\r\n   \"category\":[\r\n      \"it\",\r\n      \"security\",\r\n      \"infrastructure\",\r\n      \"questionnaire\"\r\n   ],\r\n   \"is_home\":false,\r\n   \"icon\": null,\r\n   \"estimated_time\":\"8\",\r\n   \"created_at\":\"2026-05-11T14:15:00Z\",\r\n   \"modified_at\":\"2026-05-11T15:00:00Z\",\r\n   \"closed_at\":null,\r\n   \"is_deleted\":false,\r\n   \"creator_id\":\"survey:019de95c-3401-7001-a1b2-c3d4e5f60001\",\r\n   \"questions\":[\r\n      {\r\n         \"id\":\"q1\",\r\n         \"label\":\"How would you rate the speed of your corporate VPN?\",\r\n         \"sort_order\":1,\r\n         \"type\":\"range\",\r\n         \"min\":1,\r\n         \"max\":5,\r\n         \"step\":1,\r\n         \"is_required\":true,\r\n         \"options\":[\r\n            \r\n         ]\r\n      },\r\n      {\r\n         \"id\":\"q2\",\r\n         \"label\":\"Which multi-factor authentication (MFA) method do you prefer?\",\r\n         \"sort_order\":2,\r\n         \"type\":\"checkbox\",\r\n         \"is_required\":true,\r\n         \"options\":[\r\n            {\r\n               \"id\":\"opt1\",\r\n               \"label\":\"Authenticator App Code\",\r\n               \"sort_order\":1\r\n            },\r\n            {\r\n               \"id\":\"opt2\",\r\n               \"label\":\"Hardware Security Key (YubiKey)\",\r\n               \"sort_order\":2\r\n            },\r\n            {\r\n               \"id\":\"opt3\",\r\n               \"label\":\"Biometric (TouchID / FaceID)\",\r\n               \"sort_order\":3\r\n            }\r\n         ]\r\n      },\r\n      {\r\n         \"id\":\"q3\",\r\n         \"label\":\"Describe any issues you face with your current hardware setup:\",\r\n         \"sort_order\":3,\r\n         \"type\":\"text_area\",\r\n         \"placeholder\":\"Monitors, laptop performance, peripherals...\",\r\n         \"is_required\":false,\r\n         \"options\":[\r\n            \r\n         ]\r\n      },\r\n      {\r\n         \"label\":\"Does your company use 2FA:\",\r\n         \"sort_order\": 4,\r\n         \"type\":\"radio_button\",\r\n         \"is_required\":false,\r\n         \"options\":[\r\n             {\r\n               \"id\":\"opt1\",\r\n               \"label\":\"yes\",\r\n               \"sort_order\":1\r\n            },\r\n            {\r\n               \"id\":\"opt2\",\r\n               \"label\":\"no\",\r\n               \"sort_order\":2\r\n            }\r\n         ]\r\n      }\r\n   ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/admin/{{surveyUrl}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "admin",
+                "{{surveyUrl}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Close Survey",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "if (response.revision) {\r",
+                  "    pm.environment.set(\"rev_cs\", response.revision);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"revision\": \"{{rev_cs}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/admin/{{surveyUrl}}/close",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "admin",
+                "{{surveyUrl}}",
+                "close"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Closed",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "if (response.revision) {\r",
+                  "    pm.environment.set(\"rev_cs\", response.revision);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"_id\":\"survey:019de95c-3401-7001-b2c3-d4e5f6a70002\",\r\n   \"root_type\":\"survey\",\r\n   \"title\":\"IT Infrastructure and Security Feedback 2026\",\r\n   \"description\":\"Evaluating internal tools, hardware and security software satisfaction, and security awareness of employees.\",\r\n   \"revision\": \"{{rev_cs}}\",\r\n   \"category\":[\r\n      \"it\",\r\n      \"security\",\r\n      \"infrastructure\",\r\n      \"questionnaire\"\r\n   ],\r\n   \"is_home\":false,\r\n   \"icon\": null,\r\n   \"estimated_time\":\"8\",\r\n   \"created_at\":\"2026-05-11T14:15:00Z\",\r\n   \"modified_at\":\"2026-05-11T15:00:00Z\",\r\n   \"closed_at\":null,\r\n   \"is_deleted\":false,\r\n   \"creator_id\":\"survey:019de95c-3401-7001-a1b2-c3d4e5f60001\",\r\n   \"questions\":[\r\n      {\r\n         \"id\":\"q1\",\r\n         \"label\":\"How would you rate the speed of your corporate VPN?\",\r\n         \"sort_order\":1,\r\n         \"type\":\"range\",\r\n         \"min\":1,\r\n         \"max\":5,\r\n         \"step\":1,\r\n         \"is_required\":true,\r\n         \"options\":[\r\n            \r\n         ]\r\n      },\r\n      {\r\n         \"id\":\"q2\",\r\n         \"label\":\"Which multi-factor authentication (MFA) method do you prefer?\",\r\n         \"sort_order\":2,\r\n         \"type\":\"checkbox\",\r\n         \"is_required\":true,\r\n         \"options\":[\r\n            {\r\n               \"id\":\"opt1\",\r\n               \"label\":\"Authenticator App Code\",\r\n               \"sort_order\":1\r\n            },\r\n            {\r\n               \"id\":\"opt2\",\r\n               \"label\":\"Hardware Security Key (YubiKey)\",\r\n               \"sort_order\":2\r\n            },\r\n            {\r\n               \"id\":\"opt3\",\r\n               \"label\":\"Biometric (TouchID / FaceID)\",\r\n               \"sort_order\":3\r\n            }\r\n         ]\r\n      },\r\n      {\r\n         \"id\":\"q3\",\r\n         \"label\":\"Describe any issues you face with your current hardware setup:\",\r\n         \"sort_order\":3,\r\n         \"type\":\"text_area\",\r\n         \"placeholder\":\"Monitors, laptop performance, peripherals...\",\r\n         \"is_required\":false,\r\n         \"options\":[\r\n            \r\n         ]\r\n      },\r\n      {\r\n         \"label\":\"Does your company use 2FA:\",\r\n         \"sort_order\": 4,\r\n         \"type\":\"radio_button\",\r\n         \"is_required\":false,\r\n         \"options\":[\r\n             {\r\n               \"id\":\"opt1\",\r\n               \"label\":\"yes\",\r\n               \"sort_order\":1\r\n            },\r\n            {\r\n               \"id\":\"opt2\",\r\n               \"label\":\"no\",\r\n               \"sort_order\":2\r\n            }\r\n         ]\r\n      }\r\n   ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/admin/{{surveyUrl}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "admin",
+                "{{surveyUrl}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Force Draft",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "if (response.revision) {\r",
+                  "    pm.environment.set(\"rev_cs\", response.revision);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"revision\": \"{{rev_cs}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/admin/{{surveyUrl}}/draft",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "admin",
+                "{{surveyUrl}}",
+                "draft"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Paginated",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a2}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/admin?page=1&size=5",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "admin"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "size",
+                  "value": "5",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Home Unauthorized",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiQUNDRVNTIiwic3ViIjoiaGFqYW1hZzI1N0Bsb2hpbmphLmNvbSIsImlhdCI6MTc3ODMxMDcyNiwiZXhwIjoxNzc4MzE0MzI2fQ.oD_X3C_ERBAIRvSH4DSTs3hSsbCNh-Hx0O0RKLdKxVE",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/home",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "home"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Set Home",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "if (response.revision) {\r",
+                  "    pm.environment.set(\"rev_cs\", response.revision);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"revision\": \"{{rev_cs}}\",\r\n    \"isHome\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/admin/{{surveyUrl}}/home",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "admin",
+                "{{surveyUrl}}",
+                "home"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Home",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "if (response.revision) {\r",
+                  "    pm.environment.set(\"rev_cs\", response.revision);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"revision\": \"{{rev_cs}}\",\r\n   \"isHome\": false\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/admin/{{surveyUrl}}/home",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "admin",
+                "{{surveyUrl}}",
+                "home"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Account Public Self",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a2}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/admin/{{surveyUrl}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "admin",
+                "{{surveyUrl}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User-Surveys-API",
+      "item": [
+        {
+          "name": "User Login 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "if (response.jwtToken) {\r",
+                  "    pm.environment.set(\"jwtToken_u1\", response.jwtToken);\r",
+                  "}\r",
+                  "\r",
+                  "if (response.refreshToken) {\r",
+                  "    pm.environment.set(\"refreshToken_u1\", response.refreshToken);\r",
+                  "}\r",
+                  "\r",
+                  "if (response.userSummary) {\r",
+                  "    pm.environment.set(\"usrUrl_u1\", response.userSummary.urlId);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"2ft12@deltajohnsons.com\",\r\n    \"password\": \"7;8Sf1uVrQQD\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User Login 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "if (response.jwtToken) {\r",
+                  "    pm.environment.set(\"jwtToken_u2\", response.jwtToken);\r",
+                  "}\r",
+                  "\r",
+                  "if (response.refreshToken) {\r",
+                  "    pm.environment.set(\"refreshToken_u2\", response.refreshToken);\r",
+                  "}\r",
+                  "\r",
+                  "if (response.userSummary) {\r",
+                  "    pm.environment.set(\"usrUrl_u2\", response.userSummary.urlId);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"kimbernodle@vnvmail.com\",\r\n    \"password\": \"dlc3S=xAd#Er\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/auth/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "(Fail) Get All Admin Endpoint",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_u1}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/admin",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "admin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Read",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "if (response.content) {\r",
+                  "    pm.environment.set(\"surveyUrlPublic\", response.content[0].urlId);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a2}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Survey By Public Url",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a2}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/{{surveyUrlPublic}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "{{surveyUrlPublic}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Survey By User",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Create Survey User1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "if (response.summary) {\r",
+                  "    pm.environment.set(\"surveyUrl_u1\", response.summary.urlId);\r",
+                  "}\r",
+                  "if (response.revision) {\r",
+                  "    pm.environment.set(\"rev_cs_u1\", response.revision);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_u1}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"_id\":\"survey:019de95c-3401-7001-b2c3-d4e5f6a70003\",\r\n   \"root_type\":\"survey\",\r\n   \"title\":\"Postman Stub Testing Feedback 2026\",\r\n   \"description\":\"Evaluating mock server reliability, stub management, and API testing efficiency.\",\r\n   \"category\":[\r\n      \"testing\",\r\n      \"postman\",\r\n      \"development\"\r\n   ],\r\n   \"is_home\":false,\r\n   \"icon\":null,\r\n   \"estimated_time\":\"5\",\r\n   \"created_at\":\"2026-05-11T17:10:00Z\",\r\n   \"modified_at\":\"2026-05-11T18:00:00Z\",\r\n   \"closed_at\":null,\r\n   \"is_deleted\":false,\r\n   \"creator_id\":\"survey:019de95c-3401-7001-a1b2-c3d4e5f60001\",\r\n   \"questions\":[\r\n      {\r\n         \"id\":\"q1\",\r\n         \"label\":\"How would you rate the response speed of Postman mock servers?\",\r\n         \"sort_order\":1,\r\n         \"type\":\"range\",\r\n         \"min\":1,\r\n         \"max\":5,\r\n         \"step\":1,\r\n         \"is_required\":true,\r\n         \"options\":[\r\n            \r\n         ]\r\n      },\r\n      {\r\n         \"id\":\"q2\",\r\n         \"label\":\"Which matching strategy do you use most for stub responses?\",\r\n         \"sort_order\":2,\r\n         \"type\":\"checkbox\",\r\n         \"is_required\":true,\r\n         \"options\":[\r\n            {\r\n               \"id\":\"opt1\",\r\n               \"label\":\"Exact URL and Request Body matching\",\r\n               \"sort_order\":1\r\n            },\r\n            {\r\n               \"id\":\"opt2\",\r\n               \"label\":\"Custom Request Headers verification\",\r\n               \"sort_order\":2\r\n            },\r\n            {\r\n               \"id\":\"opt3\",\r\n               \"label\":\"Wildcard / Regex path parameters\",\r\n               \"sort_order\":3\r\n            }\r\n         ]\r\n      },\r\n      {\r\n         \"id\":\"q3\",\r\n         \"label\":\"Describe any difficulties you face with environment variables or dynamic data in stubs:\",\r\n         \"sort_order\":3,\r\n         \"type\":\"text_area\",\r\n         \"placeholder\":\"Dynamic IDs, fake data generation, session tokens...\",\r\n         \"is_required\":false,\r\n         \"options\":[\r\n            \r\n         ]\r\n      }\r\n   ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/my",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "my"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Survey User2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "if (response.summary) {\r",
+                  "    pm.environment.set(\"surveyUrl_u2\", response.summary.urlId);\r",
+                  "}\r",
+                  "if (response.revision) {\r",
+                  "    pm.environment.set(\"rev_cs_u2\", response.revision);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_u2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"_id\":\"survey:019de95c-3401-7001-b2c3-d4e5f6a70004\",\r\n   \"root_type\":\"survey\",\r\n   \"title\":\"Survey Access Control and Permissions Testing\",\r\n   \"description\":\"Verifying authorization boundaries and checking if users can edit surveys owned by others.\",\r\n   \"category\":[\r\n      \"security\",\r\n      \"testing\",\r\n      \"permissions\"\r\n   ],\r\n   \"is_home\":false,\r\n   \"icon\":null,\r\n   \"estimated_time\":\"6\",\r\n   \"created_at\":\"2026-05-11T20:15:00Z\",\r\n   \"modified_at\":\"2026-05-11T20:15:00Z\",\r\n   \"closed_at\":null,\r\n   \"is_deleted\":false,\r\n   \"creator_id\":\"survey:019de95c-3401-7001-a1b2-c3d4e5f60001\",\r\n   \"questions\":[\r\n      {\r\n         \"id\":\"q1\",\r\n         \"label\":\"How often do you encounter unauthorized 403 errors when trying to edit your own surveys?\",\r\n         \"sort_order\":1,\r\n         \"type\":\"range\",\r\n         \"min\":1,\r\n         \"max\":5,\r\n         \"step\":1,\r\n         \"is_required\":true,\r\n         \"options\":[\r\n            \r\n         ]\r\n      },\r\n      {\r\n         \"id\":\"q2\",\r\n         \"label\":\"Which security vulnerability or bypass method did you successfully replicate during the edit test?\",\r\n         \"sort_order\":2,\r\n         \"type\":\"checkbox\",\r\n         \"is_required\":true,\r\n         \"options\":[\r\n            {\r\n               \"id\":\"opt1\",\r\n               \"label\":\"IDOR (Modifying the survey ID parameter in the URL)\",\r\n               \"sort_order\":1\r\n            },\r\n            {\r\n               \"id\":\"opt2\",\r\n               \"label\":\"Token Reuse (Using User A session token for User B assets)\",\r\n               \"sort_order\":2\r\n            },\r\n            {\r\n               \"id\":\"opt3\",\r\n               \"label\":\"Privilege Escalation (Standard user modifying admin surveys)\",\r\n               \"sort_order\":3\r\n            }\r\n         ]\r\n      },\r\n      {\r\n         \"id\":\"q3\",\r\n         \"label\":\"Describe any unexpected behavior observed when two different users attempt to edit the same survey simultaneously:\",\r\n         \"sort_order\":3,\r\n         \"type\":\"text_area\",\r\n         \"placeholder\":\"Data overwrites, missing audit logs, WebSocket disconnects...\",\r\n         \"is_required\":false,\r\n         \"options\":[\r\n            \r\n         ]\r\n      }\r\n   ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/my",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "my"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User 1 Access Self",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_u1}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"_id\":\"survey:019de95c-3401-7001-b2c3-d4e5f6a70004\",\r\n   \"root_type\":\"survey\",\r\n   \"title\":\"Survey Access Control and Permissions Testing\",\r\n   \"description\":\"Verifying authorization boundaries and checking if users can edit surveys owned by others.\",\r\n   \"category\":[\r\n      \"security\",\r\n      \"testing\",\r\n      \"permissions\"\r\n   ],\r\n   \"is_home\":false,\r\n   \"icon\":null,\r\n   \"estimated_time\":\"6\",\r\n   \"created_at\":\"2026-05-11T20:15:00Z\",\r\n   \"modified_at\":\"2026-05-11T20:15:00Z\",\r\n   \"closed_at\":null,\r\n   \"is_deleted\":false,\r\n   \"creator_id\":\"survey:019de95c-3401-7001-a1b2-c3d4e5f60001\",\r\n   \"questions\":[\r\n      {\r\n         \"id\":\"q1\",\r\n         \"label\":\"How often do you encounter unauthorized 403 errors when trying to edit your own surveys?\",\r\n         \"sort_order\":1,\r\n         \"type\":\"range\",\r\n         \"min\":1,\r\n         \"max\":5,\r\n         \"step\":1,\r\n         \"is_required\":true,\r\n         \"options\":[\r\n            \r\n         ]\r\n      },\r\n      {\r\n         \"id\":\"q2\",\r\n         \"label\":\"Which security vulnerability or bypass method did you successfully replicate during the edit test?\",\r\n         \"sort_order\":2,\r\n         \"type\":\"checkbox\",\r\n         \"is_required\":true,\r\n         \"options\":[\r\n            {\r\n               \"id\":\"opt1\",\r\n               \"label\":\"IDOR (Modifying the survey ID parameter in the URL)\",\r\n               \"sort_order\":1\r\n            },\r\n            {\r\n               \"id\":\"opt2\",\r\n               \"label\":\"Token Reuse (Using User A session token for User B assets)\",\r\n               \"sort_order\":2\r\n            },\r\n            {\r\n               \"id\":\"opt3\",\r\n               \"label\":\"Privilege Escalation (Standard user modifying admin surveys)\",\r\n               \"sort_order\":3\r\n            }\r\n         ]\r\n      },\r\n      {\r\n         \"id\":\"q3\",\r\n         \"label\":\"Describe any unexpected behavior observed when two different users attempt to edit the same survey simultaneously:\",\r\n         \"sort_order\":3,\r\n         \"type\":\"text_area\",\r\n         \"placeholder\":\"Data overwrites, missing audit logs, WebSocket disconnects...\",\r\n         \"is_required\":false,\r\n         \"options\":[\r\n            \r\n         ]\r\n      }\r\n   ]\r\n}"
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/my/{{surveyUrl_u1}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "my",
+                "{{surveyUrl_u1}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User 1 Access Other",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Bearer",
+                "value": "Authorization {{jwtToken_u2}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/my/{{surveyUrl_u2}}",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "my",
+                "{{surveyUrl_u2}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User 1 Try Publish (Fail)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_u1}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"revision\": \"{{rev_cs_u1}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/admin/{{surveyUrl_u2}}/publish",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "admin",
+                "{{surveyUrl_u2}}",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin Publish User 2 Survey",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "if (response.summary) {\r",
+                  "    pm.environment.set(\"surveyUrl_u2\", response.summary.urlId);\r",
+                  "}\r",
+                  "if (response.revision) {\r",
+                  "    pm.environment.set(\"rev_cs_u2\", response.revision);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken_a2}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"revision\": \"{{rev_cs_u2}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1/surveys/admin/{{surveyUrl_u2}}/publish",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "surveys",
+                "admin",
+                "{{surveyUrl_u2}}",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

@@ -58,8 +58,6 @@ public class User {
     
     @JsonProperty("is_deleted")
     private boolean isDeleted = false;
-    
-    @JsonProperty("surveys_completed")
-    private List<String> surveysCompleted = new ArrayList<>();   
+      
     
 }

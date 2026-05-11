@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.survey.universe.domain.constant.DocType;
 import com.survey.universe.domain.constant.SurveyStatus;
+import com.survey.universe.domain.constant.SurveyType;
 import com.survey.universe.domain.model.SurveyResponse;
 import com.survey.universe.domain.model.survey.Survey;
 import com.survey.universe.exception.type.BadRequestException;
@@ -21,10 +22,11 @@ import com.survey.universe.service.UserService;
 import com.survey.universe.spring.configuration.bean.UUIDGenerator;
 import com.survey.universe.spring.util.Base64UrlUtil;
 import com.survey.universe.spring.util.UserAuthContextUtil;
-import com.survey.universe.web.dto.MessageDto;
 import com.survey.universe.web.dto.SurveyStatsDto;
 import com.survey.universe.web.dto.UserSurveyResponseDto;
-import com.survey.universe.web.dto.request.SurveySubmitDto;
+import com.survey.universe.web.dto.generic.MessageDto;
+import com.survey.universe.web.dto.inheritable.ConditionalResponseDto;
+import com.survey.universe.web.dto.request.SurveyResponseSubmitDto;
 import com.survey.universe.web.dto.response.PersonalSurveyResponseDto;
 
 import lombok.AllArgsConstructor;
@@ -43,7 +45,7 @@ public class StubSurveyResponseFacadeService implements SurveyResponseFacadeServ
 	private DtoToSurveyResponseMapper dtoToResponse;
 
 	@Override
-	public PersonalSurveyResponseDto submitResponse(String urlId, SurveySubmitDto submitDto) {
+	public ConditionalResponseDto submitResponse(String urlId, SurveyResponseSubmitDto submitDto) {
 		String surveyId = base64Url.decode(urlId, DocType.SURVEY);
 
 		Survey survey = surveyService.findById(surveyId)
@@ -58,7 +60,8 @@ public class StubSurveyResponseFacadeService implements SurveyResponseFacadeServ
 
 		responseService.add(response);
 
-		return responseToDto.toPersonalSurveyResponseDto(urlId, survey, response);
+		return survey.getSurveyType().equals(SurveyType.TEST) ? responseToDto.toPersonalSurveyResponseDto(urlId, survey, response)
+				: new MessageDto("Answer has been recorded");
 	}
 
 	@Override

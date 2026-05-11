@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.survey.universe.domain.model.RefreshToken;
-import com.survey.universe.domain.storage.stub.StubRefreshTokenStorage;
+import com.survey.universe.domain.stub.storage.StubRefreshTokenStorage;
 import com.survey.universe.service.RefreshTokenService;
 import com.survey.universe.spring.configuration.bean.UUIDGenerator;
 

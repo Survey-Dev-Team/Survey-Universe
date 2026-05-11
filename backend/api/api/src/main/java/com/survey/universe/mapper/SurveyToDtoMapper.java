@@ -7,8 +7,8 @@ import com.survey.universe.domain.model.survey.Survey;
 import com.survey.universe.spring.util.Base64UrlUtil;
 import com.survey.universe.web.dto.SurveyDetailsSummaryDto;
 import com.survey.universe.web.dto.SurveyReadSummaryDto;
-import com.survey.universe.web.dto.response.SurveyDetailsResponseDto;
-import com.survey.universe.web.dto.response.SurveyReadResponseDto;
+import com.survey.universe.web.dto.request.survey.SurveyDetailsResponseDto;
+import com.survey.universe.web.dto.request.survey.SurveyReadResponseDto;
 
 import lombok.AllArgsConstructor;
 
@@ -17,7 +17,8 @@ import lombok.AllArgsConstructor;
 public class SurveyToDtoMapper {
 
 	private Base64UrlUtil base64Url;
-	private QuestionToDtoMapper questionToDto;
+	private QuestionToPublicDtoMapper questionToDtoPublic;
+	private QuestionToDetailsDtoMapper questionToDtoDetails;
 
 	public SurveyDetailsSummaryDto toAdminSummaryDto(Survey survey, Integer responseCount) {
 		String urlId = base64Url.encode(survey.getId(), DocType.SURVEY);
@@ -31,7 +32,7 @@ public class SurveyToDtoMapper {
 
 	public SurveyDetailsResponseDto toAdminResponseDto(Survey survey, Integer responseCount) {
 		return new SurveyDetailsResponseDto(toAdminSummaryDto(survey, responseCount), survey.getRevision(),
-				survey.getQuestions());
+				survey.getQuestions().stream().map(question -> question.accept(questionToDtoDetails)).toList());
 
 	}
 
@@ -44,6 +45,6 @@ public class SurveyToDtoMapper {
 
 	public SurveyReadResponseDto toReadResponseDto(Survey survey) {
 		return new SurveyReadResponseDto(toReadSummaryDto(survey),
-				survey.getQuestions().stream().map(question -> question.accept(questionToDto)).toList());
+				survey.getQuestions().stream().map(question -> question.accept(questionToDtoPublic)).toList());
 	}
 }

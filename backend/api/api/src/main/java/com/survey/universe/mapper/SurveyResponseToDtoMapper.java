@@ -20,7 +20,7 @@ import com.survey.universe.domain.model.survey.Survey;
 import com.survey.universe.domain.model.survey.TextAreaQuestion;
 import com.survey.universe.web.dto.QuestionStatsDto;
 import com.survey.universe.web.dto.SurveyStatsDto;
-import com.survey.universe.web.dto.question.PersonalRespondentAnswerDto;
+import com.survey.universe.web.dto.response.PersonalRespondentAnswerDto;
 import com.survey.universe.web.dto.response.PersonalSurveyResponseDto;
 
 @Component

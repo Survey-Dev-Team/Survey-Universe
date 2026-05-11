@@ -8,9 +8,11 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.survey.universe.domain.model.SurveyResponse;
-import com.survey.universe.domain.storage.stub.StubSurveyResponseStorage;
+import com.survey.universe.domain.stub.provider.StubSurveyResponsesProvider;
+import com.survey.universe.domain.stub.storage.StubSurveyResponseStorage;
 import com.survey.universe.service.SurveyResponseService;
 
+import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -18,7 +20,16 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class StubSurveyResponseService implements SurveyResponseService {
 
-	private StubSurveyResponseStorage responseStorage;
+	private final StubSurveyResponseStorage responseStorage;
+	
+	private final StubSurveyResponsesProvider provider;
+	
+	@PostConstruct
+	private void init() {
+		for (SurveyResponse response : provider.getAll()) {
+			add(response);
+		}
+	}
 	
 	@Override
 	public Optional<SurveyResponse> add(SurveyResponse response) {

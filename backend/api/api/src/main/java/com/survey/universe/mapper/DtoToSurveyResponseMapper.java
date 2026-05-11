@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 
 import com.survey.universe.domain.model.ResponseAnswer;
 import com.survey.universe.domain.model.SurveyResponse;
-import com.survey.universe.web.dto.request.SurveySubmitDto;
+import com.survey.universe.web.dto.request.SurveyResponseSubmitDto;
 
 @Component
 public class DtoToSurveyResponseMapper {
 
-	public SurveyResponse toSurveyResponse(String id, String surveyId, String respondentId, String surveyRev, SurveySubmitDto submitDto) {
+	public SurveyResponse toSurveyResponse(String id, String surveyId, String respondentId, String surveyRev, SurveyResponseSubmitDto submitDto) {
 		SurveyResponse response = new SurveyResponse();
 		response.setId(id);
 		response.setSurveyId(surveyId);

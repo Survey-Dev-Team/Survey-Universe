@@ -1,6 +1,7 @@
 package com.survey.universe.service.stub;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,11 +9,14 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.survey.universe.domain.constant.SurveyStatus;
+import com.survey.universe.domain.constant.SurveyType;
 import com.survey.universe.domain.model.survey.Survey;
-import com.survey.universe.domain.storage.stub.StubSurveyStorage;
+import com.survey.universe.domain.stub.provider.StubSurveysProvider;
+import com.survey.universe.domain.stub.storage.StubSurveyStorage;
 import com.survey.universe.service.SurveyService;
-import com.survey.universe.spring.configuration.bean.UUIDGenerator;
+import com.survey.universe.service.constant.TimeRange;
 
+import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -21,7 +25,16 @@ import lombok.AllArgsConstructor;
 public class StubSurveyService implements SurveyService {
 
 	private final StubSurveyStorage surveys;
-	
+
+	private final StubSurveysProvider provider;
+
+	@PostConstruct
+	private void initialize() {
+		for (Survey survey : provider.getAll()) {
+			add(survey);
+		}
+	}
+
 	@Override
 	public Optional<Survey> findById(String id) {
 		return surveys.findById(id);
@@ -80,5 +93,42 @@ public class StubSurveyService implements SurveyService {
 		return surveys.getAll();
 	}
 
-	
+	private boolean containsSearchTerm(Survey s, String term) {
+		if (term == null || term.isBlank()) {
+			return true;
+		}
+		String lowerTerm = term.toLowerCase();
+		String title = s.getTitle() != null ? s.getTitle().toLowerCase() : "";
+		String desc = s.getDescription() != null ? s.getDescription().toLowerCase() : "";
+		return title.contains(lowerTerm) || desc.contains(lowerTerm);
+	}
+
+	private boolean isWithinTimeRange(Instant createdAt, TimeRange range) {
+		if (range == null || createdAt == null) {
+			return true;
+		}
+		Instant limit = switch (range) {
+		case today -> Instant.now().minus(1, ChronoUnit.DAYS);
+		case week -> Instant.now().minus(7, ChronoUnit.DAYS);
+		case month -> Instant.now().minus(30, ChronoUnit.DAYS);
+		default -> Instant.MIN;
+		};
+		return createdAt.isAfter(limit);
+	}
+
+	@Override
+	public List<Survey> filter(List<SurveyStatus> allowedStatuses, SurveyType surveyType, SurveyStatus status,
+			String creator, String search, String category, Boolean showDeleted, TimeRange timeRange) {
+		
+		
+		return getAll().stream().filter(s -> allowedStatuses.contains(s.getStatus()))
+				.filter(s -> s.isDeleted() == false || s.isDeleted() == showDeleted)
+				.filter(s -> surveyType == null ||  surveyType.equals(s.getSurveyType()))
+				.filter(s -> status == null || status.equals(s.getStatus()))
+				.filter(s -> creator == null || creator.equals(s.getCreatorId()))
+				.filter(s -> category == null || (s.getCategory() != null && s.getCategory().contains(category)))
+				.filter(s -> isWithinTimeRange(s.getCreatedAt(), timeRange)).filter(s -> containsSearchTerm(s, search))
+				.toList();
+	}
+
 }

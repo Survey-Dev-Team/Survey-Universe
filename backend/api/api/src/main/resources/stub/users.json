@@ -1,0 +1,63 @@
+[
+    {
+        "_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
+        
+        "root_type": "user",
+        "first_name": "Jaxson",
+        "last_name": "Stokes",
+        "email": "hajamag257@lohinja.com",
+        "password": "$2a$12$uKj8.dokVynHGbTEtel1uutkVwvNqqcPpNX.AGRSrdFffCdCl/2AK",
+        "role": "admin",
+        "profile_image": null,
+        "last_session": "2026-05-03T15:30:26+00:00"
+    },
+    {
+        "_id": "user:019de94a-d11f-761e-ba08-8f389fa1c4ff",
+        
+        "root_type": "user",
+        "first_name": "Emily",
+        "last_name": "Bean",
+        "email": "bv7oo@deltajohnsons.com",
+        "password": "$2a$12$0fgUCi6BxbXI5TLOWkqodOZC1UxuK/jDXl5BJvW0rOHf6Lwog4Ti6",
+        "role": "user",
+        "profile_image": null,
+        "last_session": "2026-05-03T20:30:26+00:00"
+    },
+    {
+        "_id": "user:019de94b-06be-7bf6-a972-ce3da920d965",
+        
+        "root_type": "user",
+        "first_name": "Edie",
+        "last_name": "Levine",
+        "email": "2ft12@deltajohnsons.com",
+        "password": "$2a$12$iOKlQ50uDDfu7qGAUKO2fuxI7y4MbhkqidOX5YeZVpqNmJeumkA72",
+        "role": "user",
+        "profile_image": null,
+        "last_session": "2026-05-03T21:26:26+00:00"
+    },
+    {
+        "_id": "user:019de94b-4fc0-7659-a7de-a19f279a943b",
+        
+        "root_type": "user",
+        "first_name": "Peter",
+        "last_name": "Delacruz",
+        "email": "kimbernodle@vnvmail.com",
+        "password": "$2a$12$SAjYKuY1gcFu38PV5nYWPuWmc7Fi4VW0vPeArWBvNeFIpTUpPJVFe",
+        "role": "user",
+        "profile_image": null,
+        "last_session": "2026-04-29T17:29:29+00:00"
+    },
+    {
+        "_id": "user:019de94b-92d1-7f88-bbdc-f590f2186541",
+        
+        "root_type": "user",
+        "first_name": "Kamil",
+        "last_name": "Orr",
+        "email": "hooriyah1979@konterkulo.com",
+        "password": "$2a$12$dMn6DqKm2jP2Fvb67vXUNeBu9LXxLZkofnz8nvLU7t4wC3Wnva2/O",
+        "role": "user",
+        "profile_image": null,
+        "last_session": "2026-04-30T21:47:36+00:00"
+    }
+
+]

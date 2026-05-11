@@ -14,7 +14,7 @@ import com.survey.universe.domain.model.survey.RangeQuestion;
 import com.survey.universe.domain.model.survey.SelectionQuestion;
 import com.survey.universe.domain.model.survey.SimpleRespondedQuestion;
 import com.survey.universe.domain.model.survey.TextAreaQuestion;
-import com.survey.universe.web.dto.question.PersonalRespondentAnswerDto;
+import com.survey.universe.web.dto.response.PersonalRespondentAnswerDto;
 
 import lombok.AllArgsConstructor;
 

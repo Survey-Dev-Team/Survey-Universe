@@ -7,9 +7,8 @@ import org.springframework.stereotype.Component;
 
 import com.survey.universe.domain.constant.SurveyStatus;
 import com.survey.universe.domain.model.survey.Survey;
-import com.survey.universe.spring.util.UserAuthContextUtil;
-import com.survey.universe.web.dto.request.SurveyCreateRequestDto;
-import com.survey.universe.web.dto.request.SurveyUpdateRequestDto;
+import com.survey.universe.web.dto.request.survey.SurveyCreateRequestDto;
+import com.survey.universe.web.dto.request.survey.SurveyUpdateRequestDto;
 
 @Component
 public class DtoToSurveyMapper {
@@ -33,7 +32,7 @@ public class DtoToSurveyMapper {
 		survey.setDescription(surveyCreateDto.description());
 		survey.setCategory(surveyCreateDto.category());
 		survey.setEstimatedTime(surveyCreateDto.estimatedTime());
-		survey.setHome(surveyCreateDto.isHome());
+		survey.setHome(false);
 		survey.setStatus(SurveyStatus.DRAFT);
 		survey.setIcon(surveyCreateDto.icon());
 		survey.setCreatorId(userId);

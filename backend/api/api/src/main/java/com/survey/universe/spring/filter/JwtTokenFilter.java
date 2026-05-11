@@ -14,6 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.survey.universe.domain.model.User;
 import com.survey.universe.service.UserService;
+import com.survey.universe.spring.configuration.UserPrincipal;
 import com.survey.universe.spring.util.JwtAuthorizationHeaderUtil;
 import com.survey.universe.spring.util.JwtTokenUtil;
 
@@ -49,7 +50,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 			if (user.isPresent()) {
 				User userRecord = user.get();
 				List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + userRecord.getRole().toUpperCase()));
-				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userRecord,
+				
+				UserPrincipal userPrincipal = new UserPrincipal(userRecord.getId(), userRecord.getEmail(), userRecord.getRole(), authorities);
+				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userPrincipal,
 						null, authorities);
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -6,24 +6,19 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.survey.universe.domain.constant.SurveyStatus;
+import com.survey.universe.domain.constant.SurveyType;
 import com.survey.universe.service.SurveyReadFacadeService;
-import com.survey.universe.service.constant.SortOption;
+import com.survey.universe.service.constant.SurveySortOption;
 import com.survey.universe.service.constant.TimeRange;
-import com.survey.universe.web.dto.MessageDto;
-import com.survey.universe.web.dto.SurveyStatsDto;
 import com.survey.universe.web.dto.SurveyReadSummaryDto;
-import com.survey.universe.web.dto.UserSurveyResponseDto;
-import com.survey.universe.web.dto.request.SurveySubmitDto;
-import com.survey.universe.web.dto.response.PagedResponseDto;
-import com.survey.universe.web.dto.response.SurveyReadResponseDto;
+import com.survey.universe.web.dto.generic.PagedResponseDto;
+import com.survey.universe.web.dto.request.survey.SurveyReadResponseDto;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -40,13 +35,19 @@ public class SurveyReadController {
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PagedResponseDto<SurveyReadSummaryDto>> getAvailableSurveys(
-			@RequestParam(required = false) String category, @RequestParam(required = false) String search,
-			@RequestParam(required = false) String creator,
-			@RequestParam(defaultValue = "newest") SortOption sortBy,
-			@RequestParam(required = false) TimeRange timeRange,
-			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
-		return ResponseEntity.ok(surveyService.getFilteredSurveys(category, search, creator, sortBy, timeRange, page, size));
+			@RequestParam(required = false) SurveyStatus surveyStatus,
+			@RequestParam(required = false) SurveyType surveyType, @RequestParam(required = false) String category,
+			@RequestParam(required = false) String search, @RequestParam(required = false) String creator,
+			@RequestParam(defaultValue = "newest") SurveySortOption sortBy,
+			@RequestParam(required = false) TimeRange timeRange, @RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "0") int size) {
+		return ResponseEntity.ok(surveyService.getFilteredSurveys(surveyStatus, surveyType, category, search, creator,
+				sortBy, timeRange, page, size));
 	}
 
-	
+	@GetMapping(path = "/home", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<SurveyReadSummaryDto>> getHomeSurveys() {
+		return ResponseEntity.ok(surveyService.getHomeSurveys());
+	}
+
 }

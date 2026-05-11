@@ -2,7 +2,6 @@ package com.survey.universe.web.controller;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,9 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.survey.universe.service.SurveyResponseFacadeService;
 import com.survey.universe.web.dto.SurveyStatsDto;
 import com.survey.universe.web.dto.UserSurveyResponseDto;
-import com.survey.universe.web.dto.request.SurveySubmitDto;
+import com.survey.universe.web.dto.generic.MessageDto;
+import com.survey.universe.web.dto.inheritable.ConditionalResponseDto;
+import com.survey.universe.web.dto.request.SurveyResponseSubmitDto;
 import com.survey.universe.web.dto.response.PersonalSurveyResponseDto;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
@@ -36,8 +41,17 @@ public class SurveyResponseController {
 	}
 	
 	@PostMapping(path = "/{urlId}/responses", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PersonalSurveyResponseDto> submitResponse(@PathVariable String urlId,
-			@Valid @RequestBody SurveySubmitDto submitDto) {
+	@Operation(summary = "DTO response depends on whether the survey is a test")
+	@ApiResponse(
+	    responseCode = "200",
+	    description = "On success code, return PersonalSurveyResponseDto for Surveys that are tests, and MessageDto else)",
+	    content = @Content(
+	        mediaType = "application/json",
+	        schema = @Schema(oneOf = {MessageDto.class, PersonalSurveyResponseDto.class})
+	    )
+	)
+	public ResponseEntity<ConditionalResponseDto> submitResponse(@PathVariable String urlId,
+			@Valid @RequestBody SurveyResponseSubmitDto submitDto) {
 		return ResponseEntity.ok(responseService.submitResponse(urlId, submitDto));
 	}
 

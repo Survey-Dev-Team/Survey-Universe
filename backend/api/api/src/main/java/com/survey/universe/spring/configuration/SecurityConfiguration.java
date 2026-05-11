@@ -27,9 +27,9 @@ public class SecurityConfiguration {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http.cors(AbstractHttpConfigurer::disable).csrf(AbstractHttpConfigurer::disable)
+		return http.cors(AbstractHttpConfigurer::disable).csrf(AbstractHttpConfigurer::disable).csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(request -> {
-					request.requestMatchers("/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
+					request.requestMatchers("/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/surveys/home")
 							.permitAll().anyRequest().authenticated();
 				}).sessionManagement(sessionManagementCustomizer -> {
 					sessionManagementCustomizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -17,4 +17,5 @@ public interface UserService {
 	
 	public List<User> getAll();
 
+	public List<User> filter(String search, Boolean isDeleted);
 }
