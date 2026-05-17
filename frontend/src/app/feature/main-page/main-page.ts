@@ -2,7 +2,9 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  inject,
   OnDestroy,
+  OnInit,
   ViewChild,
 } from '@angular/core';
 import {
@@ -20,6 +22,7 @@ import { Header } from '../../shared/components/header/header';
 import { Footer } from '../../shared/components/footer/footer';
 import { SurveyComponent } from '../user-profile/components/survey/survey';
 import { ROUTES } from '../../shared/models/routes.constants';
+import { SurveysService } from '../../shared/services/surveys/surveys.service';
 
 @Component({
   selector: 'gt-main-page',
@@ -47,7 +50,16 @@ import { ROUTES } from '../../shared/models/routes.constants';
     ]),
   ],
 })
-export class MainPage implements AfterViewInit, OnDestroy {
+export class MainPage implements AfterViewInit, OnDestroy, OnInit {
+  private surveysService = inject(SurveysService);
+
+  ngOnInit(): void {
+    this.surveysService.getHomeSurveys().subscribe({
+      next: (surveys) => console.log('[MainPage] home surveys:', surveys),
+      error: (err) => console.error('[MainPage] home surveys error:', err),
+    });
+  }
+
   @ViewChild('parallaxScene')
   private parallaxScene?: ElementRef<HTMLElement>;
 

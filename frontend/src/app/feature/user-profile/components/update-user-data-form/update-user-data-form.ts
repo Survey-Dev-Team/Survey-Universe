@@ -20,11 +20,10 @@ import { Input } from '../../../../shared/components/input/input';
 import { InputType } from '../../../../shared/components/input/models/input.model';
 import { ButtonText } from '../../../../shared/models/buttons.constants';
 import { UserStoreService } from '../../../../shared/services/user-store-service/user-store-service';
-import { 
-  UpdateUserData
-} from '../../models/interfaces';
+import { UpdateUserData } from '../../models/interfaces';
 import { TagModule } from 'primeng/tag';
 import { ToastService } from '../../../../shared/services/toast-service/toast-service';
+import { UsersService } from '../../../../shared/services/users/users.service';
 
 @Component({
   selector: 'gt-update-user-data-form',
@@ -41,7 +40,9 @@ export class UpdateUserDataForm implements Validators, OnInit {
   @ViewChild(FileUpload) fileUpload!: FileUpload;
   fb = inject(FormBuilder);
   userStoreService = inject(UserStoreService);
+  usersService = inject(UsersService);
   toastService = inject(ToastService);
+  private revision = signal<string>('1');
   inputType = InputType;
   buttonText = ButtonText;
   previewUrl: string | null = null;
@@ -90,7 +91,13 @@ export class UpdateUserDataForm implements Validators, OnInit {
   getUserData() {
     const stored = this.userStoreService.getUser();
     if (stored) {
-      this.currentUserData.set(stored);
+      this.currentUserData.set({
+        imageUrl: stored.profileImage,
+        firstName: stored.firstName,
+        lastName: stored.lastName,
+        role: stored.role as UpdateUserData['role'],
+        email: stored.email,
+      });
     }
   }
 
@@ -122,12 +129,16 @@ export class UpdateUserDataForm implements Validators, OnInit {
       return;
     }
 
-    this.toastService.showToast({
-        severity: 'info',
-        message: 'Info',
-        detail: 'Profile update is not yet implemented.',
-        life: 3000,
-      });
-    return;
+    const urlId = this.userStoreService.getUser()?.urlId;
+    if (!urlId) return;
+
+    const { firstName, lastName, base64encodedImage } = this.updateUserDataForm.value;
+
+    this.usersService.updateUser(urlId, {
+      firstName: firstName ?? undefined,
+      lastName: lastName ?? undefined,
+      profileImage: base64encodedImage ?? undefined,
+      revision: this.revision(),
+    });
   }
 }

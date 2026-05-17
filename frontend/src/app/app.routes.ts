@@ -1,5 +1,8 @@
 import { Routes } from '@angular/router';
 import { ROUTES } from './shared/models/routes.constants';
+import { nonAuthorizedGuard } from './shared/guards/non-authorized/non-authorized.guard';
+import { authorizedGuard } from './shared/guards/authorized/authorized.guard';
+import { adminGuard } from './shared/guards/admin/admin.guard';
 
 export const routes: Routes = [
 	{
@@ -9,11 +12,13 @@ export const routes: Routes = [
 	},
 	{
 		path: ROUTES.LOGIN,
+		canActivate: [nonAuthorizedGuard],
 		loadComponent: () =>
 			import('./feature/login-page/login-page').then((m) => m.LoginPage),
 	},
 	{
 		path: ROUTES.REGISTER,
+		canActivate: [nonAuthorizedGuard],
 		loadComponent: () =>
 			import('./feature/registration-page/registration-page').then(
 				(m) => m.RegistrationPage
@@ -26,6 +31,7 @@ export const routes: Routes = [
 	},
 	{
 		path: ROUTES.USER_PROFILE,
+		canActivate: [authorizedGuard],
 		loadComponent: () =>
 			import('./feature/user-profile/user-profile').then((m) => m.UserProfile),
 	},
@@ -46,21 +52,25 @@ export const routes: Routes = [
 	},
 	{
 		path: ROUTES.STATISTICS,
+		canActivate: [adminGuard],
 		loadComponent: () =>
 			import('./feature/admin-stats/admin-stats').then((m) => m.AdminStats),
 	},
 	{
 		path: ROUTES.ADMIN_USERS,
+		canActivate: [adminGuard],
 		loadComponent: () =>
 			import('./feature/admin-users/admin-users').then((m) => m.AdminUsers),
 	},
 	{
 		path: ROUTES.ADMIN_SURVEYS,
+		canActivate: [adminGuard],
 		loadComponent: () =>
 			import('./feature/admin-surveys/admin-surveys').then((m) => m.AdminSurveys),
 	},
 	{
 		path: ROUTES.USER_SURVEYS,
+		canActivate: [authorizedGuard],
 		loadComponent: () =>
 			import('./feature/my-surveys/my-surveys').then((m) => m.MySurveys),
 	},

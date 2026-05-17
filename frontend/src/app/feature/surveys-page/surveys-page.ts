@@ -1,10 +1,11 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { Header } from '../../shared/components/header/header';
 import { Footer } from '../../shared/components/footer/footer';
 import { PageHeaderRole } from '../../shared/components/page-header-role/page-header-role';
 import { SurveyComponent } from '../user-profile/components/survey/survey';
 import { InputText } from 'primeng/inputtext';
 import { RouterLink } from '@angular/router';
+import { SurveysService } from '../../shared/services/surveys/surveys.service';
 
 interface Survey {
   id: string;
@@ -23,7 +24,16 @@ interface Survey {
   templateUrl: './surveys-page.html',
   styleUrl: './surveys-page.scss',
 })
-export class SurveysPage {
+export class SurveysPage implements OnInit {
+  private surveysService = inject(SurveysService);
+
+  ngOnInit(): void {
+    this.surveysService.getAllSurveys().subscribe({
+      next: (response) => console.log('[SurveysPage] API response:', response),
+      error: (err) => console.error('[SurveysPage] API error:', err),
+    });
+  }
+
   readonly searchQuery = signal('');
 
   readonly openGroups = signal<Set<string>>(

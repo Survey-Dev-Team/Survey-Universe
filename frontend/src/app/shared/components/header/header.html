@@ -27,10 +27,7 @@
       }
 
       @if (isLoggedIn()) {
-        <button class="button button__fit-content button__inverted" (click)="navigateToProfile()">
-          User Cabinet
-        </button>
-        <button class="button button__fit-content" (click)="logout()">Sign out</button>
+        <gt-user-menu></gt-user-menu>
       }
     </div>
   </div>
@@ -71,9 +68,12 @@
       }
 
       @if (isLoggedIn()) {
-        <button class="button button__inverted gt-header__mobile-link" (click)="navigateToProfile()">
-          User Cabinet
-        </button>
+        <a [routerLink]="'/' + routes.USER_PROFILE" class="button button__inverted gt-header__mobile-link" (click)="closeMobileMenu()">
+          My Profile
+        </a>
+        <a [routerLink]="'/' + routes.USER_SURVEYS" class="button button__inverted gt-header__mobile-link" (click)="closeMobileMenu()">
+          My Surveys
+        </a>
         <button class="button gt-header__mobile-link" (click)="logout()">Sign out</button>
       }
     </nav>

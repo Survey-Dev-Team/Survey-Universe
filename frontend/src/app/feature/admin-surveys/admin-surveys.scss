@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use "../../../styles/variables" as *;
 @use "../../../styles/functions-and-mixins" as functions;
 @use "../../../styles/fonts" as fonts;
@@ -52,7 +53,7 @@
     transition: background 0.2s, transform 0.15s;
 
     &:hover {
-      background: darken(#7c3aed, 8%);
+      background: color.adjust(#7c3aed, $lightness: -8%);
       transform: translateY(-1px);
     }
 

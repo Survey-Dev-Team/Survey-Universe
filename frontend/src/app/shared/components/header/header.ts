@@ -11,10 +11,11 @@ import { AuthService } from '../../services/auth-service/auth-service';
 import { ROUTES } from '../../models/routes.constants';
 import { ThemeToggle } from '../theme-toggle/theme-toggle';
 import { UserStoreService } from '../../services/user-store-service/user-store-service';
+import { UserMenu } from '../user-menu/user-menu';
 
 @Component({
   selector: 'gt-header',
-  imports: [CommonModule, RouterLink, RouterLinkActive, ThemeToggle],
+  imports: [CommonModule, RouterLink, RouterLinkActive, ThemeToggle, UserMenu],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
@@ -30,18 +31,29 @@ export class Header {
   readonly routes = ROUTES;
   readonly ROUTES = ROUTES;
 
-  readonly menuItems = computed(() => [
-    { label: 'Main page', route: `/${ROUTES.MAIN_PAGE}` },
-    { label: 'All Surveys', route: `/${ROUTES.SURVEYS}` },
-    { label: 'About us', route: `/${ROUTES.ABOUT}` },
-    { label: 'Statistics', route: `/${ROUTES.STATISTICS}` },
-    { label: 'Contact', route: `/${ROUTES.CONTACT}` },
-    ...(this.isLoggedIn() ? [{ label: 'My Surveys', route: `/${ROUTES.USER_SURVEYS}` }] : []),
-    ...(this.isAdmin() ? [
-      { label: 'Surveys Admin', route: `/${ROUTES.ADMIN_SURVEYS}` },
-      { label: 'Users', route: `/${ROUTES.ADMIN_USERS}` },
-    ] : []),
-  ]);
+  readonly menuItems = computed(() => {
+    if (this.isAdmin()) {
+      return [
+        { label: 'Statistics', route: `/${ROUTES.STATISTICS}` },
+        { label: 'Users', route: `/${ROUTES.ADMIN_USERS}` },
+        { label: 'Surveys', route: `/${ROUTES.ADMIN_SURVEYS}` },
+      ];
+    }
+    if (this.isLoggedIn()) {
+      return [
+        { label: 'Home', route: `/${ROUTES.MAIN_PAGE}` },
+        { label: 'All Surveys', route: `/${ROUTES.SURVEYS}` },
+        { label: 'About us', route: `/${ROUTES.ABOUT}` },
+        { label: 'Contact', route: `/${ROUTES.CONTACT}` },
+      ];
+    }
+    return [
+      { label: 'Home', route: `/${ROUTES.MAIN_PAGE}` },
+      { label: 'All Surveys', route: `/${ROUTES.SURVEYS}` },
+      { label: 'About us', route: `/${ROUTES.ABOUT}` },
+      { label: 'Contact', route: `/${ROUTES.CONTACT}` },
+    ];
+  });
 
   @HostListener('window:scroll')
   onWindowScroll(): void {
@@ -59,11 +71,6 @@ export class Header {
 
   closeMobileMenu(): void {
     this.isMobileMenuOpen.set(false);
-  }
-
-  navigateToProfile(): void {
-    this.router.navigate([`/${ROUTES.USER_PROFILE}`]);
-    this.closeMobileMenu();
   }
 
   logout(): void {

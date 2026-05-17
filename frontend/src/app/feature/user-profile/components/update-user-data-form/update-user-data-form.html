@@ -5,7 +5,7 @@
         <div class="gt-update-user-data-form__avatar-section">
           <div class="gt-update-user-data-form__avatar">
             <img
-              src="{{ currentUserData().imageUrl }}"
+              [src]="currentUserData().imageUrl || '/assets/icons/default-avatar.svg'"
               alt="User Avatar"
               class="gt-update-user-data-form__avatar-icon image"
             />

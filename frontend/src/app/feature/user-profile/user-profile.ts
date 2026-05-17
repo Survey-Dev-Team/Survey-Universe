@@ -6,6 +6,7 @@ import { ButtonText } from '../../shared/models/buttons.constants';
 import { AuthService } from '../../shared/services/auth-service/auth-service';
 import { ROUTES } from '../../shared/models/routes.constants';
 import { UpdateUserDataForm } from "./components/update-user-data-form/update-user-data-form";
+import { UsersService } from '../../shared/services/users/users.service';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { UpdateUserDataForm } from "./components/update-user-data-form/update-us
 })
 export class UserProfile {
   userStoreService = inject(UserStoreService);
+  usersService = inject(UsersService);
   protected readonly ButtonText = ButtonText;
   isLoggedIn = inject(AuthService).isAuthorized;
   currentUser = computed(() => this.userStoreService.getUser());
@@ -31,4 +33,10 @@ export class UserProfile {
 
   routes = ROUTES;
   LoginLinkRoute = `/${this.routes.LOGIN}`;
+
+  deleteAccount(): void {
+    const urlId = this.userStoreService.getUser()?.urlId;
+    if (!urlId) return;
+    this.usersService.deleteUser(urlId);
+  }
 }

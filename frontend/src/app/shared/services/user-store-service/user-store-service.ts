@@ -4,16 +4,19 @@ import {
   signal 
 } from '@angular/core';
 import { LocalStorageService } from '../local-storage/local-storage';
-import {
-  UpdateUserData,
-} from '../../../feature/user-profile/models/interfaces';
+import { UserPrivateSummary } from '../../models/interfaces';
+
+const USER_STORE_KEY = 'currentUser';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserStoreService {
-  currentUser = signal<UpdateUserData | null>(null);
   private localStorage = inject(LocalStorageService);
+
+  currentUser = signal<UserPrivateSummary | null>(
+    this.localStorage.getItem<UserPrivateSummary>(USER_STORE_KEY)
+  );
 
   isAdmin = signal<boolean>(false);
   isWaiter = signal<boolean>(false);
@@ -21,19 +24,29 @@ export class UserStoreService {
   isLoggin = signal<boolean>(this.localStorage.hasToken());
   currentCode = signal<string>('');
 
-  setUser(user: UpdateUserData) {
-    this.currentUser.set(user);
-    this.isAdmin.set(user.role === 'ADMIN');
-    this.isWaiter.set(user.role === 'WAITER');
-    this.isCustomer.set(user.role === 'CUSTOMER');
+  constructor() {
+    const stored = this.localStorage.getItem<UserPrivateSummary>(USER_STORE_KEY);
+    if (stored) {
+      this.isAdmin.set(stored.role?.toLowerCase() === 'admin');
+      this.isCustomer.set(stored.role?.toLowerCase() === 'user');
+    }
   }
 
-  getUser(): UpdateUserData | null {
+  setUser(user: UserPrivateSummary) {
+    this.currentUser.set(user);
+    this.localStorage.setItem(USER_STORE_KEY, user);
+    this.isAdmin.set(user.role?.toLowerCase() === 'admin');
+    this.isWaiter.set(false);
+    this.isCustomer.set(user.role?.toLowerCase() === 'user');
+  }
+
+  getUser(): UserPrivateSummary | null {
     return this.currentUser();
   }
 
   clearUser(): void {
     this.currentUser.set(null);
+    this.localStorage.removeItem(USER_STORE_KEY);
     this.isAdmin.set(false);
     this.isWaiter.set(false);
     this.isCustomer.set(false);

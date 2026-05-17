@@ -22,7 +22,6 @@ import {
 } from '../../models/api';
 import { LocalStorageService } from '../local-storage/local-storage';
 import { UserStoreService } from '../user-store-service/user-store-service';
-import { CartService } from '../../../feature/cart-component/services/cart-service/cart-service';
 
 interface TokenPayload {
   exp: number;
@@ -44,7 +43,6 @@ export class AuthService {
   localStorageService = inject(LocalStorageService);
   private http = inject(HttpClient);
   userStoreService = inject(UserStoreService);
-  private cartService = inject(CartService);
   
   private readonly RESET_EMAIL_KEY = 'reset_pwd_email';
 
@@ -216,8 +214,7 @@ export class AuthService {
           this.localStorageService.setToken(result.jwtToken);
           this.localStorageService.setItem('refreshToken', result.refreshToken);
           this.startRefreshTokenTimer();
-          this.userStoreService.clearUser();
-          this.cartService.loadCartCount();
+          this.userStoreService.setUser(result.userSummary);
         })
       );
   }
@@ -234,7 +231,6 @@ export class AuthService {
     this.token = '';
     this.refreshToken = '';
     this.userStoreService.clearUser();
-    this.cartService.clearCart();
   }
 
   /* loginWithSocialGoogle(): Observable<any> {

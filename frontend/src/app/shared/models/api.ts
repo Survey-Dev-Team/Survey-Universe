@@ -1,16 +1,28 @@
 import { HttpHeaders } from '@angular/common/http';
 
-export const BASE_URL = 'https://exx3be8tel.execute-api.eu-west-2.amazonaws.com/dev/';
-export const NEW_BASE_URL = 'https://run16-team2-api-handler-run16-team2-run16-team2-dev.development.krci-dev.cloudmentor.academy/';
 export const SURVEY_BASE_URL = 'http://localhost:8080/api/v1/';
 
-/* export const BASE_URL = 'http://127.0.0.1:8000/';
-export const NEW_BASE_URL = 'http://127.0.0.1:8000/'; */
-
 export enum API_ENDPOINTS {
+    // Auth
     AUTH_REGISTER = 'auth/register',
     AUTH_LOGIN = 'auth/login',
     AUTH_REFRESH = 'auth/refresh',
+
+    // Surveys — public read
+    SURVEYS = 'surveys',
+    SURVEYS_HOME = 'surveys/home',
+
+    // Surveys — my (authenticated user)
+    MY_SURVEYS = 'surveys/my',
+
+    // Survey responses & stats (base, urlId appended by helper)
+    SURVEY_RESPONSES = 'surveys',
+
+    // Surveys — admin
+    ADMIN_SURVEYS = 'surveys/admin',
+
+    // Users
+    USERS = 'users',
 }
 
 export const httpOptions = {

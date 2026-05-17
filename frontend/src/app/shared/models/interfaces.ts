@@ -147,3 +147,60 @@ export interface VerifyTokenResponse {
   newEmail: string;
   userId: string;
 }
+
+// Surveys
+export type SurveyStatus = 'draft' | 'published' | 'closed';
+export type SurveyType = 'test' | 'questionnaire' | 'presentation';
+export type SurveySortOption = 'newest' | 'oldest' | 'popular';
+export type SurveyTimeRange = 'today' | 'week' | 'month';
+
+export interface SurveyReadSummary {
+  urlId: string;
+  creatorUrlId: string;
+  title: string;
+  description: string;
+  icon: string;
+  category: string[];
+  estimatedTime: number;
+  publishedAt: string;
+  surveyType: SurveyType;
+}
+
+export interface PagedResponse<T> {
+  content: T[];
+  currentPage: number;
+  totalPages: number;
+  totalElements: number;
+  hasNext: boolean;
+}
+
+export interface SurveysQueryParams {
+  surveyStatus?: SurveyStatus;
+  surveyType?: SurveyType;
+  category?: string;
+  search?: string;
+  creator?: string;
+  sortBy?: SurveySortOption;
+  timeRange?: SurveyTimeRange;
+  page?: number;
+  size?: number;
+}
+
+// Users
+export interface UserUpdateRequest {
+  firstName?: string;
+  lastName?: string;
+  profileImage?: string;
+  revision: string;
+}
+
+export interface UserPrivateDetails {
+  userSummary: UserPrivateSummary;
+  surveysCompleted: number;
+  revision: string;
+  lastSession: string;
+}
+
+export interface MessageResponse {
+  message: string;
+}
