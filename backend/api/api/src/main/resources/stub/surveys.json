@@ -1,0 +1,607 @@
+[
+    {
+        "_id": "survey:019de95c-3401-7001-a1b2-c3d4e5f60001",
+        "root_type": "survey",
+        "title": "Employee Remote Work Questionnaire 2026",
+        "description": "A comprehensive look at our current remote work culture.",
+        "status": "published",
+        "category": [ "corporate", "questionnaire", "work" ],
+        "is_home": true,
+        "icon": null,
+        "estimated_time": "5",
+        "created_at": "2026-05-01T09:00:00Z",
+        "modified_at": "2026-05-01T10:30:00Z",
+        "closed_at": null,
+		"survey_type": "questionnaire",
+        "published_at": "2026-05-01T09:30:00Z",
+        "is_deleted": false,
+        "creator_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
+        "questions": [
+          {
+            "id": "q1",
+            "label": "How satisfied are you with your work-life balance?",
+            "sort_order": 1,
+            "type": "range",
+            "min": 0,
+            "max": 10,
+            "step": 1,
+            "is_required": true,
+            "options": []
+          },
+          {
+            "id": "q2",
+            "label": "Which perks do you value most?",
+            "sort_order": 2,
+            "type": "checkbox",
+            "is_required": false,
+            "options": [
+              {"id": "opt1", "label": "Health Insurance", "sort_order": 1},
+              {"id": "opt2", "label": "Remote Budget", "sort_order": 2},
+              {"id": "opt3", "label": "Extra PTO", "sort_order": 3}
+            ]
+          },
+          {
+            "id": "q3",
+            "label": "Leave your suggestions here:",
+            "sort_order": 3,
+            "type": "text_area",
+            "placeholder": "Enter your suggestions",
+            "is_required": false,
+            "options": []
+          }
+        ]
+      },
+
+      {
+        "_id": "survey:019de96a-0001-7000-8000-c3d4e5f60001",
+        "root_type": "survey",
+        "title": "New Hardware Request",
+        "description": "A survey for the company`s empoyees to determine their laptop preferences and the need to replace current hardware.",
+        "category": [ "corporate", "questionnaire", "hardware" ],
+        "estimated_time": "10",
+		"survey_type": "questionnaire",
+        "is_home": true,
+        "icon": null,
+        "created_at": "2026-04-30T09:00:00Z",
+        "modified_at": "2026-04-30T10:30:00Z",
+        "closed_at": null,
+        "published_at": "2026-04-30T09:30:00Z",
+        "is_deleted": false,
+        "creator_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
+        "status": "published",
+        "questions": [
+          {
+            "id": "q1",
+            "label": "Select your Department",
+            "type": "search_select",
+            "sort_order": 1,
+            "is_required": true,
+            "options": [
+              {"id": "opt1", "label": "Engineering", "sort_order": 1},
+              {"id": "opt2", "label": "Design", "sort_order": 2},
+              {"id": "opt3", "label": "Finances", "sort_order": 3},
+              {"id": "opt4", "label": "Marketing", "sort_order": 4}
+            ]
+          },
+          {
+            "id": "q2",
+            "label": "Which laptop would you prefer to work on?",
+            "type": "radio_button",
+            "sort_order": 2,
+            "is_required": true,
+            "options": [
+              {"id": "opt1", "label": "MacBook Pro", "sort_order": 1},
+              {"id": "opt2", "label": "Dell XPS", "sort_order": 2}
+            ]
+          },
+          {
+            "id": "q3",
+            "label": "How do you evaluate Priority to replace your current work laptop?",
+            "type": "range",
+            "min": 0,
+            "max": 10,
+            "step": 1,
+            "sort_order": 3,
+            "is_required": true,
+            "options": [] 
+          },
+          {
+            "id": "q4",
+            "label": "Required Delivery Date",
+            "type": "date_pick",
+            "sort_order": 4,
+            "is_required": false,
+            "options": []
+          },
+          {
+            "id": "q5",
+            "label": "Additional Notes",
+            "type": "text_area",
+            "placeholder": "Enter your notes and suggestions",
+            "sort_order": 5,
+            "is_required": false,
+            "options": []
+          }
+        ]
+      },
+
+      {
+        "_id": "survey:019ded05-5fbc-7e45-919f-ea20c34a34ac",
+        "root_type": "survey",
+        "title": "Coffee Drinking Habits",
+        "description": "A short survey to determine your coffee drinking habits for market research.",
+        "category": [ "business", "questionnnaire", "marketing" ],
+        "estimated_time": "7",
+        "status": "published",
+		"survey_type": "questionnaire",
+        "is_home": false,
+        "icon": null,
+        "creator_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
+        "created_at": "2026-04-20T10:00:00Z",
+        "modified_at": "2026-04-20T10:00:00Z",
+        "closed_at": null,
+        "published_at": "2026-04-20T10:00:00Z",
+        "is_deleted":false,
+        "questions": [
+          {
+            "id": "q1",
+            "type": "image",
+            "placeholder": "Share your coffee preferences with us!",
+            "link": null,
+            "sort_order": 1
+          },
+          {
+            "id": "q2",
+            "type": "radio_button",
+            "label": "How often do you drink coffee?",
+            "is_required": true,
+            "sort_order": 1,
+            "options": [
+              { "id": "opt1", "label": "Daily", "sort_order": 1 },
+              { "id": "opt2", "label": "Several times a week", "sort_order": 2 },
+              { "id": "opt3", "label": "Seldomly", "sort_order": 3 }
+            ]
+          },
+          {
+            "id": "q3",
+            "type": "checkbox",
+            "label": "What do you usually add to your coffee?",
+            "is_required": false,
+            "sort_order": 2,
+            "options": [
+              { "id": "opt1", "label": "Milk", "sort_order": 1 },
+              { "id": "opt2", "label": "Sugar", "sort_order": 2 },
+              { "id": "opt3", "label": "Syrup", "sort_order": 3 }
+            ]
+          },
+          {
+            "id": "q4",
+            "type": "input",
+            "label": "What is your faviorute coffee shop?",
+            "placeholder": "Share it with us!",
+            "input_type": "text",
+            "is_required": true,
+            "sort_order": 3,
+            "options": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "survey:019de95c-3401-7001-a1b2-c3d4e5f60003",
+        "root_type": "survey",
+        "title": "Confidential Hardware Review",
+        "category": [ "corporate", "hardware" ],
+        "estimated_time": null,
+        "is_home": false,
+        "icon": null,
+        "description": "Internal draft for upcoming tech audit.",
+        "status": "draft",
+		"survey_type": "questionnaire",
+        "created_at": "2026-04-25T14:20:00Z",
+        "modified_at": "2026-04-25T14:20:00Z",
+        "creator_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
+        "closed_at": null,
+        "published_at": "2026-04-25T14:20:00Z",
+        "is_deleted": false,
+        "questions": [
+          {
+            "id": "q1",
+            "label": "Serial Number",
+            "sort_order": 1,
+            "type": "input",
+            "placeholder": "Enter the serial number of the hardware",
+            "input_type": "text",
+            "is_required": true,
+            "options": []
+          }
+        ]
+      },
+      
+      {
+        "_id": "survey:019ded10-b3a3-7bc1-a0bc-7a31ff091616",
+        "root_type": "survey",
+        "title": "JavaScript Fundamentals",
+        "category": [ "programming", "quiz", "IT", "learning" ],
+        "estimated_time": "10",
+        "description": "A short quiz to check your JavaScript knowledge.",
+        "status": "published",
+		"survey_type": "test",
+		"is_home": true,
+        "icon": null,
+        "creator_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
+        "created_at": "2026-04-25T11:00:00Z",
+        "modified_at": "2026-04-25T11:00:00Z",
+        "closed_at": null,
+        "published_at": "2026-04-25T11:00:00Z",
+        "is_deleted": false,
+        "questions": [
+          {
+            "id": "q1",
+            "label": "Which keyword is used to declare a block-scoped variable?",
+            "type": "radio_button",
+            "sort_order": 1,
+            "is_required": true,
+            "options": [
+              {"id": "opt1", "label": "var", "sort_order": 1, "correct": false},
+              {"id": "opt2", "label": "let", "sort_order": 2, "correct": true},
+              {"id": "opt3", "label": "declare", "sort_order": 3, "correct": false}
+            ]
+          },
+          {
+            "id": "q2",
+            "label": "What values are equated to 'false'?",
+            "type": "checkbox",
+            "sort_order": 2,
+            "is_required": true,
+            "options": [
+              {"id": "opt1", "label": "[]", "sort_order": 1, "correct": false},
+              {"id": "opt2", "label": "undefined", "sort_order": 2, "correct": true},
+              {"id": "opt3", "label": "0", "sort_order": 3, "correct": true},
+              {"id": "opt4", "label": "NaN", "sort_order": 4, "correct": true}
+            ]
+          },
+          {
+            "id": "q3",
+            "label": "What is the result of console.log(2 + 2 + \"1\")?",
+            "sort_order": 3,
+            "is_required": true,
+            "type": "input",
+            "placeholder": "Enter your answer here",
+            "input_type": "text",
+            "correct_answer": "41",
+            "options": []
+          }
+        ]
+      },
+
+      {
+        "_id": "survey:019ded10-74bd-7a6e-8cc1-50de7ba23977",
+        "root_type": "survey",
+        "title": "Internet Protocols",
+		"survey_type": "test",
+        "category": [ "networking", "quiz", "IT", "learning" ],
+        "estimated_time": 10,
+        "is_home": false,
+        "icon": null,
+        "description": "A short quiz of Internet Protocols",
+        "status": "draft",
+        "creator_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
+        "created_at": "2026-04-25T11:47:00Z",
+        "modified_at": "2026-05-03T13:00:00Z",
+        "closed_at": null,
+        "published_at": "2026-05-03T13:00:00Z",
+        "is_deleted": false,
+        "questions": [
+          {
+            "id": "q1",
+            "label": "Which of these are valid HTTP methods?",
+            "type": "checkbox",
+            "sort_order": 1,
+            "is_required": true,
+            "options": [
+              {"id": "opt1", "label": "GET", "sort_order": 1, "correct": true},
+              {"id": "opt2", "label": "FETCH", "sort_order": 2, "correct": false},
+              {"id": "opt3", "label": "POST", "sort_order": 3, "correct": true},
+              {"id": "opt4", "label": "SEND", "sort_order": 4, "correct": false}
+            ]
+          },
+          {
+            "id": "q2",
+            "label": "Which protocol is used for dynamic assignment of IP addresses?",
+            "type": "search_select",
+            "sort_order": 2,
+            "is_required": true,
+            "options": [
+                {"id": "opt1", "label": "DHCP", "sort_order": 1, "correct": true},
+                {"id": "opt2", "label": "NAT", "sort_order": 2, "correct": false},
+                {"id": "opt3", "label": "OSPF", "sort_order": 3, "correct": false}
+            ]
+          }
+        ]
+      },
+      
+      {
+        "_id": "survey:019ded26-cabe-71af-bc58-ac1b804617c0",
+        "root_type": "survey",
+        "title": "Internet Sequrity",
+		"survey_type": "test",
+        "category": [ "networking", "security", "IT", "quiz", "learning" ],
+        "estimated_time": "15",
+        "is_home": false,
+        "icon": null,
+        "description": "A short quiz of your knowledge of Internet Security",
+        "status": "published",
+        "creator_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
+        "created_at": "2026-04-29T11:47:00Z",
+        "modified_at": "2026-05-03T11:47:01Z",
+        "closed_at": null,
+        "published_at": "2026-05-03T11:47:01Z",
+        "is_deleted":false,
+        "questions": [
+           {
+              "id": "q1",
+              "label": "When should you use 2FA?",
+              "type": "radio_button",
+              "sort_order": 1,
+              "is_required": true,
+              "options": [
+                {"id": "opt1", "label": "Only for bank accounts", "sort_order": 1, "correct": false},
+                {"id": "opt2", "label": "Whenever possible", "sort_order": 2, "correct": true},
+                {"id": "opt3", "label": "Never", "sort_order": 3, "correct": false}
+              ]
+          },
+          {
+            "id": "q2",
+            "label": "What defines a strong password?",
+            "type": "checkbox",
+            "sort_order": 2,
+            "is_required": true,
+            "options": [
+              {"id": "opt1", "label": "Min 12 characters", "sort_order": 1, "correct": true},
+              {"id": "opt2", "label": "Includes special symbols", "sort_order": 2, "correct": true},
+              {"id": "opt3", "label": "Your birth year", "sort_order": 3, "correct": false},
+              {"id": "opt4", "label": "Mixed case letters", "sort_order": 4, "correct": true}
+            ]
+          },
+          {
+            "id": "q3",
+            "label": "Which security protocol does HTTPS natively use?",
+            "sort_order": 3,
+            "is_required": true,
+            "type": "search_select",
+            "options": [
+                {"id": "opt1", "label": "TLS", "sort_order": 1, "correct": true},
+                {"id": "opt2", "label": "SSH", "sort_order": 2, "correct": false},
+                {"id": "opt3", "label": "IPSec", "sort_order": 3, "correct": false}
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "survey:019ded3a-dead-beef-8888-c3d4e5f60001",
+        "root_type": "survey",
+        "title": "Onboarding Training Q1",
+		"survey_type": "questionnaire",
+        "category": [ "corporate", "learning" ],
+        "estimated_time": "7",
+        "description": "Survey of quality of training for Q1 2026 new employees.",
+        "status": "closed",
+        "is_home": false,
+        "icon": null,
+        "created_at": "2026-01-10T09:00:00Z",
+        "modified_at": "2026-01-20T17:00:00Z",
+        "closed_at": "2026-01-20T17:00:00Z",
+        "published_at": "2026-01-10T17:00:00Z",
+        "is_deleted": false,
+        "creator_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
+        "questions": [
+          {
+            "id": "q1",
+            "label": "How would you rate the quality of the training videos?",
+            "type": "range",
+            "min": 0,
+            "max": 10,
+            "step": 1,
+            "sort_order": 1,
+            "is_required": true,
+            "options": []
+          },
+          {
+            "id": "q2",
+            "label": "Which of these tools did you master during training?",
+            "type": "checkbox",
+            "sort_order": 2,
+            "is_required": true,
+            "options": [
+              {"id": "opt1", "label": "Docker Basics", "sort_order": 1},
+              {"id": "opt2", "label": "Internal API Guidelines", "sort_order": 2},
+              {"id": "opt3", "label": "Security Protocols", "sort_order": 3}
+            ]
+          },
+          {
+            "id": "q3",
+            "label": "Give your suggestions to improve a training program",
+            "type": "text_area",
+            "placeholder": "Give us your suggestions",
+            "sort_order": 3,
+            "is_required": false,
+            "options": []
+          }
+        ]
+      },
+      {
+        "_id": "survey:019deda9-096f-7d0c-825e-226ce4c946ff",
+        "root_type": "survey",
+        "title": "Places of Interest",
+        "description": "A survey to compile places of interest of your home town.",
+        "status": "published",
+        "category": [ "travel", "questionnaire" ],
+        "estimated_time": "5",
+        "is_home": false,
+		"survey_type": "questionnaire",
+        "icon": null,
+        "created_at": "2026-05-02T09:00:00Z",
+        "modified_at": "2026-05-02T17:00:00Z",
+        "closed_at": null,
+        "published_at": "2026-05-02T17:00:00Z",
+        "is_deleted": false,
+        "creator_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
+        "questions": [
+          {
+            "id": "q1",
+            "label": "Enter your home town.",
+            "type": "input",
+            "input_type": "text",
+            "placeholder": "Enter your town",
+            "sort_order": 1,
+            "is_required": true,
+            "options": []
+          },
+          {
+            "id": "q2",
+            "label": "Enter the most interesting place in your home town.",
+            "type": "input",
+            "input_type": "text",
+            "placeholder": "Enter your favourite place of interest",
+            "sort_order": 2,
+            "is_required": true,
+            "options": []
+          },
+          {
+            "id": "q3",
+            "label": "Upload its picture here.",
+            "type": "file_upload",
+            "link": null,
+            "placeholder": "Upload your picture here",
+            "sort_order": 3,
+            "is_required": true,
+            "options": []
+          }
+        ]
+      },
+      {
+        "_id": "survey:019df434-1423-76e1-9e23-2808d5d51fbf",
+        "root_type": "survey",
+        "title": "Corporate Account Change Form",
+        "description": "A form for changing corporate account.",
+        "status": "published",
+        "category": [ "corporate", "form", "account" ],
+        "estimated_time": "15",
+        "is_home": false,
+        "icon": null,
+		"survey_type": "questionnaire",
+        "created_at": "2026-05-01T09:00:00Z",
+        "modified_at": "2026-05-02T17:00:00Z",
+        "closed_at": null,
+        "published_at": "2026-05-02T17:00:00Z",
+        "is_deleted": false,
+        "creator_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
+        "questions": [
+          {
+            "id": "q1",
+            "type": "title",
+            "label": "Specify Current Credentials",
+            "sort_order": 1
+          },
+          {
+            "id": "q2",
+            "label": "Enter your current corporate email.",
+            "type": "input",
+            "input_type": "email",
+            "placeholder": "email@corp.com",
+            "sort_order": 2,
+            "is_required": true,
+            "options": []
+          },
+          {
+            "id": "q3",
+            "label": "Enter your first name.",
+            "type": "input",
+            "input_type": "text",
+            "placeholder": "Enter it here",
+            "sort_order": 3,
+            "is_required": true,
+            "options": []
+          },
+          {
+            "id": "q4",
+            "label": "Enter your last name.",
+            "type": "input",
+            "input_type": "text",
+            "placeholder": "Enter it here",
+            "sort_order": 4,
+            "is_required": true,
+            "options": []
+          },
+          {
+            "id": "q5",
+            "label": "Select your Department",
+            "type": "search_select",
+            "sort_order": 5,
+            "is_required": true,
+            "options": [
+              {"id": "opt1", "label": "Engineering", "sort_order": 1},
+              {"id": "opt2", "label": "Design", "sort_order": 2},
+              {"id": "opt3", "label": "Finances", "sort_order": 3},
+              {"id": "opt4", "label": "Marketing", "sort_order": 4}
+            ]
+          },
+          {
+            "id": "q6",
+            "type": "page_break",
+            "sort_order": 6
+          },
+          {
+            "id": "q7",
+            "type": "title",
+            "label": "Desired Credentials",
+            "sort_order": 7
+          },
+          {
+            "id": "q8",
+            "type": "text",
+            "label": "Enter the credentials you would like to get",
+            "sort_order": 8
+          },
+          {
+            "id": "q9",
+            "label": "Enter a new corporate email.",
+            "type": "input",
+            "input_type": "email",
+            "sort_order": 9,
+            "is_required": false,
+            "options": []
+          },
+          {
+            "id": "q10",
+            "label": "Select your desired Department",
+            "type": "search_select",
+            "sort_order": 10,
+            "is_required": true,
+            "options": [
+              {"id": "opt1", "label": "Engineering", "sort_order": 1},
+              {"id": "opt2", "label": "Design", "sort_order": 2},
+              {"id": "opt3", "label": "Finances", "sort_order": 3},
+              {"id": "opt4", "label": "Marketing", "sort_order": 4}
+            ]
+          },
+          {
+            "id": "q11",
+            "type": "space",
+            "sort_order": 11
+          },
+          {
+            "id": "q12",
+            "label": "Upload a new profile picture.",
+            "type": "file_upload",
+            "placeholder": "Upoad it here",
+            "link": null,
+            "sort_order": 12,
+            "options": []
+          }
+          
+        ]
+      }
+]
