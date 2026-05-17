@@ -26,5 +26,16 @@ services:
     volumes:
       - couchdb_data:/opt/couchdb/data
 
+  db-sync:
+    build:
+      context: ./database/config
+      dockerfile: Dockerfile.sync
+    container_name: couchdb_sync_worker
+    restart: always
+    volumes:
+      - ./shared/data:/shared/data
+    depends_on:
+      - database
+
 volumes:
   couchdb_data:
