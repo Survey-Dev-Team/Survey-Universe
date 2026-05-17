@@ -16,7 +16,7 @@ import { ButtonText } from '../../../../shared/models/buttons.constants';
 import { Input } from '../../../../shared/components/input/input';
 import { 
   UserLogin, 
-  UserLoginResponse, 
+  UserAuthResponse, 
   UserErrorResponse 
 } from '../../../../shared/models/interfaces';
 import { AuthService } from '../../../../shared/services/auth-service/auth-service';
@@ -74,8 +74,8 @@ export class LoginForm {
       .login(payload)
       .pipe(take(1))
       .subscribe({
-        next: (response: UserLoginResponse) => {
-          this.localStorageService.setToken(response.idToken);
+        next: (response: UserAuthResponse) => {
+          this.localStorageService.setToken(response.jwtToken);
           this.successText = 'Login successful! You will be redirected shortly.';
           this.router.navigate([ROUTES.MAIN_PAGE]);
           this.isSuccess = true;

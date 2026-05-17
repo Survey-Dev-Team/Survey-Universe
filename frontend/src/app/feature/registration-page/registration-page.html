@@ -8,7 +8,6 @@
     </div>
     <div class="form__content">
       <div class="form__left">
-        @if (!showVerificationForm()) {
           <div class="form__heading">
             <span class="form__subtitle p-14">LET'S GET YOU STARTED</span>
             <h1 class="form__title">Create an Account</h1>
@@ -21,9 +20,6 @@
               Already have an account? <a routerLink="/login" class="form__link">Login</a> instead
             </p>
           </div>
-        } @else {
-          <gt-enter-verification-code-form [currentEmail]="registeredEmail()"></gt-enter-verification-code-form>
-        }
       </div>
     </div>
   </div>

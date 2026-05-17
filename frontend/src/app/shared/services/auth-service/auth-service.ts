@@ -13,13 +13,12 @@ import {
 import {
   UserRegistration,
   UserLogin,
-  UserLoginResponse,
-  UserSuccessResponse,
+  UserAuthResponse,
+  UserRegisterResponse,
 } from '../../models/interfaces';
 import {
   httpOptions,
-  API_ENDPOINTS,
-  NEW_BASE_URL
+  SURVEY_BASE_URL
 } from '../../models/api';
 import { LocalStorageService } from '../local-storage/local-storage';
 import { UserStoreService } from '../user-store-service/user-store-service';
@@ -32,9 +31,10 @@ interface TokenPayload {
 }
 
 interface RefreshTokenResponse {
-  accessToken: string;
-  idToken: string;
+  jwtToken: string;
   refreshToken: string;
+  tokenType: string;
+  expiresIn: number;
 }
 
 @Injectable({
@@ -47,10 +47,6 @@ export class AuthService {
   private cartService = inject(CartService);
   
   private readonly RESET_EMAIL_KEY = 'reset_pwd_email';
-
-  currentEmailForResetPassword = signal<string>(
-    typeof window !== 'undefined' ? sessionStorage.getItem(this.RESET_EMAIL_KEY) || '' : ''
-  );
 
   isAuthorized = signal<boolean>(false);
   token = '';
@@ -160,28 +156,18 @@ export class AuthService {
   }
 
   refreshAccessToken(): Observable<RefreshTokenResponse> {
-    const idToken = this.localStorageService.getItem<string>('idToken') || this.token;
-    const options = {
-      headers: httpOptions.headers.set('Authorization', `Bearer ${idToken}`)
-    };
-
     return this.http
       .post<RefreshTokenResponse>(
-        `${NEW_BASE_URL}${API_ENDPOINTS.REFRESH_TOKEN}`,
+        `${SURVEY_BASE_URL}auth/refresh`,
         { refreshToken: this.refreshToken },
-        options
+        httpOptions
       )
       .pipe(
         tap((response) => {
-          this.token = response.idToken;
+          this.token = response.jwtToken;
           this.refreshToken = response.refreshToken;
-          this.localStorageService.setToken(response.idToken);
-          this.localStorageService.setItem('idToken', response.idToken);
-          this.localStorageService.setItem('accessToken', response.accessToken);
-          this.localStorageService.setItem(
-            'refreshToken',
-            response.refreshToken
-          );
+          this.localStorageService.setToken(response.jwtToken);
+          this.localStorageService.setItem('refreshToken', response.refreshToken);
           this.startRefreshTokenTimer();
         }),
         catchError((error) => {
@@ -207,163 +193,48 @@ export class AuthService {
     };
   }
 
-  register(user: UserRegistration): Observable<UserSuccessResponse> {
-    return this.http.post<UserSuccessResponse>(
-      `${NEW_BASE_URL}${API_ENDPOINTS.AUTH_SIGN_UP}`,
+  register(user: UserRegistration): Observable<UserRegisterResponse> {
+    return this.http.post<UserRegisterResponse>(
+      `${SURVEY_BASE_URL}auth/register`,
       user,
       httpOptions
     );
   }
 
-  login(user: UserLogin): Observable<UserLoginResponse> {
+  login(user: UserLogin): Observable<UserAuthResponse> {
     return this.http
-      .post<UserLoginResponse>(
-        `${NEW_BASE_URL}${API_ENDPOINTS.AUTH_SIGN_IN}`,
+      .post<UserAuthResponse>(
+        `${SURVEY_BASE_URL}auth/login`,
         user,
         httpOptions
       )
       .pipe(
         tap((result) => {
-          console.log('Login response:', result);
           this.isAuthorized.set(true);
-          this.token = result.idToken;
+          this.token = result.jwtToken;
           this.refreshToken = result.refreshToken;
-          this.localStorageService.setToken(result.idToken);
-          this.localStorageService.setItem('idToken', result.idToken);
-          this.localStorageService.setItem('accessToken', result.accessToken);
+          this.localStorageService.setToken(result.jwtToken);
           this.localStorageService.setItem('refreshToken', result.refreshToken);
           this.startRefreshTokenTimer();
           this.userStoreService.clearUser();
-          this.userStoreService.getUserProfile(true);
           this.cartService.loadCartCount();
         })
       );
   }
 
   logout(): void {
-    const accessToken =
-      this.localStorageService.getItem<string>('accessToken') || '';
-
-    this.http
-      .post(
-        `${NEW_BASE_URL}${API_ENDPOINTS.AUTH_SIGN_OUT}`,
-        { accessToken },
-        httpOptions
-      )
-      .subscribe({
-        next: () => {
-          this.clearLocalAuth();
-        },
-        error: () => {
-          this.clearLocalAuth();
-        },
-      });
+    this.clearLocalAuth();
   }
 
   private clearLocalAuth(): void {
     this.stopRefreshTokenTimer();
     this.localStorageService.deleteToken();
-    this.localStorageService.removeItem('idToken');
-    this.localStorageService.removeItem('accessToken');
     this.localStorageService.removeItem('refreshToken');
     this.isAuthorized.set(false);
     this.token = '';
     this.refreshToken = '';
-
     this.userStoreService.clearUser();
     this.cartService.clearCart();
-  }
-
-  requestPasswordReset(email: string): Observable<any> {
-    return this.http.post<any>(
-      `${NEW_BASE_URL}${API_ENDPOINTS.PASSWORD_RESET_REQUEST}`,
-      { email },
-      httpOptions
-    );
-  }
-
-  requestVerifyToken(token: string): Observable<any> {
-    return this.http.get<any>(
-      `${NEW_BASE_URL}${API_ENDPOINTS.VERIFY_TOKEN}?token=${token}`,
-      httpOptions
-    ).pipe(
-      tap((response) => {
-        if (response?.email) {
-          this.setResetPasswordEmail(response.email);
-        }
-      })
-    );
-  }
-
-  requestVerifyCode({
-    code,
-    email,
-  }: {
-    code: any;
-    email: string;
-  }): Observable<any> {
-    return this.http.post<any>(
-      `${NEW_BASE_URL}${API_ENDPOINTS.VERIFY_CODE}`,
-      { code, email },
-      httpOptions
-    );
-  }
-
-  resetPassword({
-    newPassword,
-    confirmPassword,
-    email,
-  }: {
-    newPassword: any;
-    confirmPassword: any;
-    email: any;
-  }): Observable<any> {
-    return this.http.post<any>(
-      `${NEW_BASE_URL}${API_ENDPOINTS.RESET_PASSWORD}`,
-      { newPassword, confirmPassword, email },
-      httpOptions
-    ).pipe(
-      tap(() => {
-        this.clearResetPasswordEmail();
-      })
-    );
-  }
-
-  setResetPasswordEmail(email: string): void {
-    this.currentEmailForResetPassword.set(email);
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem(this.RESET_EMAIL_KEY, email);
-    }
-  }
-
-  clearResetPasswordEmail(): void {
-    this.currentEmailForResetPassword.set('');
-    if (typeof window !== 'undefined') {
-      sessionStorage.removeItem(this.RESET_EMAIL_KEY);
-    }
-  }
-
-  addCaptchaRequest() {
-    return this.http.get<any>(
-      `${NEW_BASE_URL}${API_ENDPOINTS.GET_CAPTCHA}`,
-      httpOptions
-    );
-  }
-
-    registrationVerificationCode(email: string, code: string): Observable<any> {
-    return this.http.post<any>(
-      `${NEW_BASE_URL}${API_ENDPOINTS.VERIFY_CODE_REGISTRATION}`,
-      { email, code },
-      httpOptions
-    );
-  }
-
-  resendVerificationCode(email: string): Observable<string> {
-    return this.http.post<string>(
-      `${NEW_BASE_URL}${API_ENDPOINTS.RESEND_VERIFICATION_CODE}`,
-      { email },
-      httpOptions
-    );
   }
 
   /* loginWithSocialGoogle(): Observable<any> {

@@ -20,7 +20,7 @@ import { InputPassword } from '../../../../shared/components/input-password/inpu
 import { 
   UserErrorResponse, 
   UserRegistration, 
-  UserSuccessResponse 
+  UserRegisterResponse 
 } from '../../../../shared/models/interfaces';
 import { AuthService } from '../../../../shared/services/auth-service/auth-service';
 import { comparePasswordsValidator } from '../../../../shared/validators/compare-passwords.validator';
@@ -96,18 +96,16 @@ export class RegistrationForm {
       password: this.registrationForm.value.password!,
       firstName: this.registrationForm.value.firstName!,
       lastName: this.registrationForm.value.lastName!,
-      captchaAnswer: '',
-      captchaId: '',
     };
 
     this.authService
       .register(payload)
       .pipe(take(1))
       .subscribe({
-        next: (response: UserSuccessResponse) => {
-          this.successText = response.message || 'Registration successful! You can now log in with your credentials.';
+        next: (response: UserRegisterResponse) => {
+          this.successText = `Registration successful! You can now log in as ${response.firstName} ${response.lastName}.`;
           this.isSuccess = true;
-          this.registrationSuccess.emit(this.registrationForm.value.email!);
+          this.registrationSuccess.emit(response.email);
         },
       error: (error: UserErrorResponse) => {
         if(error.status === 400) {

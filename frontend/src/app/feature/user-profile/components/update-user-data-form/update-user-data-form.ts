@@ -21,9 +21,7 @@ import { InputType } from '../../../../shared/components/input/models/input.mode
 import { ButtonText } from '../../../../shared/models/buttons.constants';
 import { UserStoreService } from '../../../../shared/services/user-store-service/user-store-service';
 import { 
-  UpdateUserData, 
-  UpdateUserDataFormResponse, 
-  UpdateUserDataPayload 
+  UpdateUserData
 } from '../../models/interfaces';
 import { TagModule } from 'primeng/tag';
 import { ToastService } from '../../../../shared/services/toast-service/toast-service';
@@ -90,11 +88,10 @@ export class UpdateUserDataForm implements Validators, OnInit {
   }
 
   getUserData() {
-    this.userStoreService.getUserData().subscribe({
-      next: response => {
-        this.currentUserData.set(response);
-      },
-    });
+    const stored = this.userStoreService.getUser();
+    if (stored) {
+      this.currentUserData.set(stored);
+    }
   }
 
   constructor() {
@@ -120,49 +117,17 @@ export class UpdateUserDataForm implements Validators, OnInit {
   }
 
   onSubmit() {
-    console.log(this.updateUserDataForm.value)
-    const payload = {
-      base64encodedImage: this.updateUserDataForm.get('base64encodedImage')?.value ?? null,
-      firstName: this.updateUserDataForm.get('firstName')?.value,
-      lastName: this.updateUserDataForm.get('lastName')?.value,
-    } as UpdateUserDataPayload;
-
     if (this.updateUserDataForm.invalid) {
       this.updateUserDataForm.markAllAsTouched();
       return;
     }
 
-    this.userStoreService.updateUserData(payload).subscribe({
-      next: (response: UpdateUserDataFormResponse) => {
-        this.updateUserDataForm.get('base64encodedImage')?.setValue(null);
-        if (this.fileUpload) {
-          this.fileUpload.clear();
-        }
-        this.toastService.showToast({
-          severity: 'success',
-          message: 'Success',
-          detail: response.message || 'Your Account has been updated successfully.',
-          life: 5000,
-        });
-
-        this.getUserData();
-        this.userStoreService.getUserProfile(true);
-      },
-      error: error => {
-        const anyErr = error as
-          | { error?: { errors?: Array<{ message?: string }>; message?: string } }
-          | undefined;
-        const detail =
-          anyErr?.error?.errors?.[0]?.message ||
-          anyErr?.error?.message ||
-          'An error occurred while updating your account. Please try again.';
-        this.toastService.showToast({
-          severity: 'error',
-          message: 'Error',
-          detail: String(detail),
-          life: 5000,
-        });
-      },
-    });
+    this.toastService.showToast({
+        severity: 'info',
+        message: 'Info',
+        detail: 'Profile update is not yet implemented.',
+        life: 3000,
+      });
+    return;
   }
 }

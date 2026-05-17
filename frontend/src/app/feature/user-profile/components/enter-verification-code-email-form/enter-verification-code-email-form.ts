@@ -99,42 +99,12 @@ export class EnterVerificationCodeEmailForm implements OnInit {
       );
 
       if (email && code) {
-        this.userStoreService
-          .verifyEmailChangeCode({
-            newEmail: email,
-            verificationCode: code,
-          })
-          .subscribe({
-            next: (response) => {
-              this.localStorageService.removeItem('pendingEmailChange');
-              this.userStoreService.currentCode.set('');
-              this.toastService.showToast({
-                severity: 'success',
-                message: 'Success',
-                detail: 'Your email has been changed successfully.',
-                life: 3000,
-              });
-              setTimeout(() => {
-                this.authService.logout();
-                this.router.navigate([`/${this.routes.LOGIN}`]);
-              }, 2000);
-            },
-            error: (error) => {
-              let errorDescripiton = '';
-              if (error.status === 400) {
-                errorDescripiton = 'Invalid verification code or the code has expired. Please check the code and try again or request a new one.';
-              } else {
-                errorDescripiton = 'Failed to verify email change.';
-              }
-              console.error('Error verifying email change:', error);
-              this.toastService.showToast({
-                severity: 'error',
-                message: 'Error',
-                detail: errorDescripiton,
-                life: 3000,
-              });
-            },
-          });
+        this.toastService.showToast({
+          severity: 'info',
+          message: 'Info',
+          detail: 'Email verification is not yet implemented.',
+          life: 3000,
+        });
       }
     }
   }
@@ -147,28 +117,13 @@ export class EnterVerificationCodeEmailForm implements OnInit {
     console.log('Resending verification code to email:', newEmail);
     
     if (newEmail) {
-      this.userStoreService.changeUserEmail(newEmail).subscribe({
-        next: (response) => {
-          console.log('Verification code resent:', response);
-          this.toastService.showToast({
-            severity: 'success',
-            message: 'Code Resent',
-            detail: 'A new verification code has been sent to your email.',
-            life: 3000,
-          });
-          this.startCounter();
-        },
-        error: (error) => {
-          console.error('Failed to resend verification code:', error);
-          this.toastService.showToast({
-            severity: 'error',
-            message: 'Error',
-            detail: error.error?.message || 'Failed to resend verification code.',
-            life: 3000,
-          });
-          this.isCounterActive.set(false);
-        }
+      this.toastService.showToast({
+        severity: 'info',
+        message: 'Info',
+        detail: 'Resend code is not yet implemented.',
+        life: 3000,
       });
+      this.startCounter();
     }
   }
 

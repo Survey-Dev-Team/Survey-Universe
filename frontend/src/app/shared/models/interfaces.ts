@@ -5,8 +5,6 @@ export interface UserRegistration {
   lastName: string;
   email: string;
   password: string;
-  captchaAnswer: string;
-  captchaId: string;
 }
 
 export interface UserLogin {
@@ -35,6 +33,30 @@ export interface UserErrorResponse {
   error: {
     message: string;
   };
+}
+
+export interface UserPrivateSummary {
+  id: string;
+  urlId: string;
+  profileImage: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  email: string;
+}
+
+export interface UserAuthResponse {
+  jwtToken: string;
+  refreshToken: string;
+  tokenType: string;
+  expiresIn: number;
+  userSummary: UserPrivateSummary;
+}
+
+export interface UserRegisterResponse {
+  email: string;
+  firstName: string;
+  lastName: string;
 }
 export interface MenuItem {
   label: string;

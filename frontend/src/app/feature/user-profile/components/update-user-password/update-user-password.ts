@@ -70,43 +70,11 @@ export class UpdateUserPassword {
     const confirmNewPassword = this.updateUserPasswordForm.get('confirmPassword')?.value ?? '';
 
     if (currentPassword && newPassword) {
-      const payload = {
-        old_password: currentPassword,
-        new_password: newPassword,
-        confirm_password: confirmNewPassword,
-      };
-      this.userStoreService.changeUserPassword(payload).subscribe({
-        next: () => {
-          console.log('Password updated successfully');
-          this.errorText.set('');
-          this.toastService.showToast({
-            severity: 'success',
-            message: 'Success',
-            detail: 'Password updated successfully.',
-            life: 3000,
-          });
-        },
-        error: (error) => {
-          console.error('Error updating password:', error);
-          
-          if (error.status === 404) {
-            this.errorText.set('Password not found. Please check your current password.');
-            this.toastService.showToast({
-              severity: 'error',
-              message: 'Error',
-              detail: 'Password not found. Please check your current password.',
-              life: 5000,
-            });
-          } else {
-            this.errorText.set('Failed to update password. Please try again.');
-            this.toastService.showToast({
-              severity: 'error',
-              message: 'Error',
-              detail: error?.error?.errors?.[0]?.message || error?.error?.message || 'Failed to update password. Please try again.',
-              life: 5000,
-            });
-          }
-        },
+      this.toastService.showToast({
+        severity: 'info',
+        message: 'Info',
+        detail: 'Password change is not yet implemented.',
+        life: 3000,
       });
     }
   }

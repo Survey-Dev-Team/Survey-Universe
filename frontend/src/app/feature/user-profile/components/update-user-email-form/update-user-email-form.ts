@@ -51,24 +51,11 @@ export class UpdateUserEmailForm {
       console.log('Form Submitted', this.updateUserEmailForm.value);
       const newEmail = this.updateUserEmailForm.value.newEmail;
       if (newEmail) {
-        this.userStoreService.changeUserEmail(newEmail).subscribe({
-          next: (response) => {
-            console.log('Email change initiated:', response);
-            this.sentEmail.set(this.currentUser()?.email || '');
-            this.localStorageService.setItem('pendingEmailChange', newEmail);
-            this.isSuccess.set(true);
-          },
-          error: (error) => {
-            console.error('Failed to initiate email change:', error);
-            const errorMessage = error.error?.message || 'Failed to initiate email change. Please try again.';
-            this.toastService.showToast({
-              severity: 'error',
-              message: 'Error',
-              detail: errorMessage,
-              life: 4000
-            });
-            this.updateUserEmailForm.get('newEmail')?.setErrors({ emailInUse: true });
-          }
+        this.toastService.showToast({
+          severity: 'info',
+          message: 'Info',
+          detail: 'Email change is not yet implemented.',
+          life: 3000,
         });
       }
     }
