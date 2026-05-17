@@ -1,0 +1,86 @@
+.gt-update-user-data-form {
+  &__content {
+    display: flex;
+    gap: 24px;
+    justify-content: space-between;
+  }
+
+  &__button {
+    padding: 8px 16px;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 69%;
+    justify-content: space-between;
+
+    &--middle {
+      margin-bottom: 16px;
+      display: flex;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    &--bottom {
+      align-self: flex-end;
+    }
+  }
+
+  &__input-half {
+    width: 50%;
+  }
+
+  &__avatar {
+    width: 200px;
+    height: 200px;
+
+    img {
+      object-fit: cover;
+      border-radius: 150%;
+    }
+
+    &-section {
+      gap: 24px;
+      display: flex;
+      flex-direction: column;
+      width: 28%;
+    }
+  }
+}
+
+@media (max-width: 1091px) {
+  .gt-update-user-data-form {
+    &__info {
+      width: 65%;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .gt-update-user-data-form {
+    &__content {
+      flex-direction: column;
+    }
+
+    &__info {
+      width: 100%;
+
+      &--middle {
+        flex-direction: column;
+      }
+    }
+
+    &__avatar {
+      &-section {
+        width: 100%;
+        align-items: center;
+      }
+    }
+
+    &__input-half {
+      width: 100%;
+    }
+  }
+}

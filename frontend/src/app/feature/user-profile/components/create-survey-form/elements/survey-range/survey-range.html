@@ -1,0 +1,21 @@
+@if (element(); as el) {
+  <input
+    class="gt-survey-builder__label-inline"
+    [value]="el.label ?? ''"
+    placeholder="Question label..."
+    (click)="$event.stopPropagation()"
+    (input)="update({ label: $any($event.target).value })"
+  />
+  <div class="gt-survey-builder__range-row">
+    <span class="gt-survey-builder__range-val">{{ el.rangeMin }}</span>
+    <input
+      type="range"
+      [min]="el.rangeMin"
+      [max]="el.rangeMax"
+      [step]="el.rangeStep"
+      disabled
+      class="gt-survey-builder__range"
+    />
+    <span class="gt-survey-builder__range-val">{{ el.rangeMax }}</span>
+  </div>
+}

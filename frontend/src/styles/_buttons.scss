@@ -1,0 +1,121 @@
+@use "variables" as *;
+@use "functions-and-mixins" as functions-and-mixins;
+@use "fonts" as fonts;
+
+.button {
+  font-size: functions-and-mixins.rem($space-14);
+  font-style: normal;
+  font-weight: fonts.$font-weight-bold;
+  line-height: functions-and-mixins.rem($space-24);
+  background-color: var(--accent-color);
+  padding: 10px 28px;
+  color: var(--white);
+  border: none;
+  border-radius: $space-8;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: var(--button-filled-hover);
+  }
+
+  &:disabled {
+    background-color: var(--button-disabled-bg);
+    color: var(--button-disabled-text);
+    border-color: var(--button-disabled-bg);
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: var(--button-disabled-bg);
+      color: var(--button-disabled-text);
+      border: none;
+    }
+  }
+
+  &__full-width {
+    width: 100%;
+    text-align: center;
+  }
+
+  &__fit-content {
+    width: fit-content;
+  }
+
+  &__inverted {
+    background-color: var(--basic-white);
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    padding: 8px 12px;
+
+    &:hover {
+      background-color: var(--button-inverted-hover);
+    }
+  }
+
+  &__disabled:disabled {
+    background-color: var(--basic-white);
+    color: var(--tertiary-color);
+    border: 1px solid var(--tertiary-color);
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: var(--basic-white);
+      color: var(--tertiary-color);
+      border: 1px solid var(--tertiary-color);
+    }
+  }
+
+  &__with-icon {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: transparent;
+      opacity: 0.6;
+    }
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &__underlined {
+    background-color: transparent;
+    color: var(--text-color);
+    border: none;
+    padding-bottom: 4px;
+    position: relative;
+    cursor: pointer;
+    transition: var(--transition);
+
+    &:before {
+      content: "";
+      width: 100%;
+      width: 90%;
+      height: 1px;
+      background-color: var(--text-color);
+      position: absolute;
+      bottom: 6px;
+      left: 5px;
+      transition: var(--transition);
+    }
+
+    &:hover {
+      color: var(--accent-color);
+      background-color: transparent;
+
+      &:before {
+        background-color: var(--accent-color);
+      }
+    }
+  }
+
+  &__middle {
+    padding: 8px 16px;
+  }
+}

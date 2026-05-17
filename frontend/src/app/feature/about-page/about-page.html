@@ -1,0 +1,153 @@
+<gt-header></gt-header>
+<div class="margin-top-header"></div>
+
+<main class="gt-about">
+
+  <!-- ── Hero split ──────────────────────────────────────────────────────── -->
+  <div class="gt-about__hero-layout">
+
+    <!-- Left panel -->
+    <div class="gt-about__left">
+      <h1 class="gt-about__title">About Us</h1>
+      <div class="gt-about__divider"></div>
+      <p class="gt-about__subtitle">
+        We believe every voice matters.<br>
+        Survey Universe is a platform built for honest conversations —
+        where questions spark real insights and every answer counts.
+      </p>
+
+      <ul class="gt-about__facts">
+        <li class="gt-about__fact">
+          <div class="gt-about__fact-icon"><i class="pi pi-eye"></i></div>
+          <div class="gt-about__fact-info">
+            <span class="gt-about__fact-label">TRANSPARENCY</span>
+            <span class="gt-about__fact-value">Open about how data is collected and used</span>
+          </div>
+        </li>
+        <li class="gt-about__fact">
+          <div class="gt-about__fact-icon"><i class="pi pi-lock"></i></div>
+          <div class="gt-about__fact-info">
+            <span class="gt-about__fact-label">PRIVACY</span>
+            <span class="gt-about__fact-value">Respondent anonymity is always guaranteed</span>
+          </div>
+        </li>
+        <li class="gt-about__fact">
+          <div class="gt-about__fact-icon"><i class="pi pi-users"></i></div>
+          <div class="gt-about__fact-info">
+            <span class="gt-about__fact-label">COMMUNITY</span>
+            <span class="gt-about__fact-value">92 countries · 120K+ responses · 4,800 surveys</span>
+          </div>
+        </li>
+        <li class="gt-about__fact">
+          <div class="gt-about__fact-icon"><i class="pi pi-chart-bar"></i></div>
+          <div class="gt-about__fact-info">
+            <span class="gt-about__fact-label">INSIGHT</span>
+            <span class="gt-about__fact-value">Turn responses into real understanding</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Right panel — video then image -->
+    <div class="gt-about__right">
+      <video
+        class="gt-about__video"
+        [class.gt-about__video--hidden]="videoEnded()"
+        src="/assets/videos/about_us_2.mp4"
+        autoplay
+        [muted]="true"
+        playsinline
+        (ended)="onVideoEnded()"
+      ></video>
+      <img
+        class="gt-about__img"
+        [class.gt-about__img--visible]="videoEnded()"
+        src="/assets/images/about_us_2.png"
+        alt="About Survey Universe"
+      />
+    </div>
+
+  </div>
+
+  <!-- ── Mission ─────────────────────────────────────────────────────────── -->
+  <section class="gt-about__section gt-about__mission">
+    <div class="container">
+      <div class="gt-about__mission-layout">
+        <div class="gt-about__mission-label">Our mission</div>
+        <div class="gt-about__mission-body">
+          <h2 class="gt-about__section-title">Making collective knowledge accessible to everyone</h2>
+          <p class="gt-about__section-text">
+            We started Survey Universe because we believed data shouldn't belong only to corporations.
+            Whether you're a researcher, a student, a curious mind, or a community organizer —
+            our platform gives you the tools to ask better questions and understand the answers.
+          </p>
+          <p class="gt-about__section-text">
+            Every survey launched here becomes a small act of discovery. We're proud to be the place
+            where ideas meet reality, one response at a time.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stats ───────────────────────────────────────────────────────────── -->
+  <section class="gt-about__stats">
+    <div class="container">
+      <div class="gt-about__stats-grid">
+        <div class="gt-about__stat">
+          <span class="gt-about__stat-value">120K+</span>
+          <span class="gt-about__stat-label">Responses collected</span>
+        </div>
+        <div class="gt-about__stat">
+          <span class="gt-about__stat-value">4,800</span>
+          <span class="gt-about__stat-label">Surveys created</span>
+        </div>
+        <div class="gt-about__stat">
+          <span class="gt-about__stat-value">92</span>
+          <span class="gt-about__stat-label">Countries represented</span>
+        </div>
+        <div class="gt-about__stat">
+          <span class="gt-about__stat-value">98%</span>
+          <span class="gt-about__stat-label">Anonymity guaranteed</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Team ────────────────────────────────────────────────────────────── -->
+  <section class="gt-about__section gt-about__team-section">
+    <div class="container">
+      <p class="gt-about__eyebrow">The people behind it</p>
+      <h2 class="gt-about__section-title gt-about__section-title--center">Our team</h2>
+      <div class="gt-about__team-grid">
+        @for (member of team; track member.name) {
+          <div class="gt-about__team-card">
+            <div class="gt-about__team-avatar">
+              <i class="pi pi-user"></i>
+            </div>
+            <h3 class="gt-about__team-name">{{ member.name }}</h3>
+            <p class="gt-about__team-role">{{ member.role }}</p>
+            <p class="gt-about__team-bio">{{ member.bio }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ─────────────────────────────────────────────────────────────── -->
+  <section class="gt-about__cta-section">
+    <div class="container">
+      <div class="gt-about__cta-box">
+        <h2 class="gt-about__cta-title">Ready to ask your first question?</h2>
+        <p class="gt-about__cta-text">Join thousands of people who use Survey Universe to discover what the world thinks.</p>
+        <a href="/surveys" class="button gt-about__cta-btn">
+          Browse surveys
+          <i class="pi pi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<gt-footer></gt-footer>

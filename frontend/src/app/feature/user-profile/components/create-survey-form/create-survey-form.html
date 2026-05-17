@@ -1,0 +1,218 @@
+<form [formGroup]="form" class="gt-survey-builder" (ngSubmit)="saveSurvey()">
+
+  <!-- Header -->
+  <div class="gt-survey-builder__header">
+    <div class="gt-survey-builder__cover">
+      @if (form.controls.coverImage.value) {
+        <img [src]="form.controls.coverImage.value" class="gt-survey-builder__cover-img" alt="cover" />
+      } @else {
+        <label class="gt-survey-builder__cover-placeholder">
+          <i class="pi pi-image"></i>
+          <span>Add cover image</span>
+          <input type="file" accept="image/*" hidden (change)="onCoverImageSelect($event)" />
+        </label>
+      }
+      @if (form.controls.coverImage.value) {
+        <button type="button" class="gt-survey-builder__cover-remove" (click)="form.controls.coverImage.setValue('')">
+          <img src="/assets/icons/trash.svg" alt="Remove" class="gt-survey-builder__btn-icon" />
+        </button>
+      }
+    </div>
+    <div class="gt-survey-builder__title-wrap">
+      <input
+        class="gt-survey-builder__title-input"
+        [class.gt-survey-builder__title-input--error]="submitted() && form.controls.title.invalid"
+        formControlName="title"
+        placeholder="Survey title..."
+      />
+      @if (submitted() && form.controls.title.invalid) {
+        <span class="gt-survey-builder__field-error">Title is required</span>
+      }
+      <textarea
+        class="gt-survey-builder__desc-input"
+        formControlName="description"
+        placeholder="Survey description (optional)..."
+        rows="2"
+      ></textarea>
+    </div>
+    <div class="gt-survey-builder__form-actions">
+      <button
+        type="button"
+        class="button button__inverted button__fit-content"
+        (click)="saveAsDraft()"
+      >
+        <i class="pi pi-file-edit"></i> Save as Draft
+      </button>
+      <button
+        type="submit"
+        class="button button__filled button__fit-content"
+      >
+        <i class="pi pi-save"></i> Save Survey
+      </button>
+    </div>
+  </div>
+
+  <!-- Validation summary -->
+  @if (submitted() && !isValid) {
+    <div class="gt-survey-builder__errors">
+      <i class="pi pi-exclamation-triangle"></i>
+      <ul>
+        @if (form.controls.title.invalid) {
+          <li>Survey title is required.</li>
+        }
+        @if (elementsArray.length === 0) {
+          <li>Add at least one element to the survey.</li>
+        }
+      </ul>
+    </div>
+  }
+
+  <div class="gt-survey-builder__workspace">
+
+    <!-- Palette -->
+    <div class="gt-survey-builder__palette">
+      <p class="gt-survey-builder__palette-title p-14__medium">Elements</p>
+      <div
+        cdkDropList
+        #paletteList="cdkDropList"
+        [cdkDropListData]="paletteItems"
+        [cdkDropListConnectedTo]="['canvasList']"
+        [cdkDropListSortingDisabled]="true"
+        class="gt-survey-builder__palette-list"
+      >
+        @for (item of palette; track item.type) {
+          <div
+            class="gt-survey-builder__palette-item"
+            cdkDrag
+            [cdkDragData]="item"
+          >
+            <i [class]="item.icon"></i>
+            <span>{{ item.label }}</span>
+            <ng-template cdkDragPreview>
+              <div class="gt-survey-builder__palette-item--preview">
+                <i [class]="item.icon"></i>
+                <span>{{ item.label }}</span>
+              </div>
+            </ng-template>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Canvas -->
+    <div class="gt-survey-builder__canvas">
+      <div
+        id="canvasList"
+        cdkDropList
+        #canvasList="cdkDropList"
+        [cdkDropListData]="elementsArray.controls"
+        (cdkDropListDropped)="onDrop($event)"
+        class="gt-survey-builder__canvas-list"
+        [class.gt-survey-builder__canvas-list--empty]="elementsArray.length === 0"
+      >
+        @if (elementsArray.length === 0) {
+          <div class="gt-survey-builder__canvas-empty">
+            <i class="pi pi-arrow-left"></i>
+            <p>Drag elements here to build your survey</p>
+          </div>
+        }
+
+        @for (ctrl of elementsArray.controls; track ctrl.value.id) {
+          <div
+            class="gt-survey-builder__element"
+            [class.gt-survey-builder__element--active]="selectedElementId() === ctrl.value.id"
+            [class.gt-survey-builder__element--error]="hasErrorForElement(ctrl.value.id)"
+            cdkDrag
+            [cdkDragData]="ctrl"
+            (click)="selectElement(ctrl.value.id)"
+            (keydown.enter)="selectElement(ctrl.value.id)"
+          >
+            <div class="gt-survey-builder__element-header">
+              <div class="gt-survey-builder__element-drag" cdkDragHandle>
+                <i class="pi pi-bars"></i>
+              </div>
+              <span class="gt-survey-builder__element-type">
+                <i [class]="elementMeta.get(ctrl.value.type)?.icon"></i>
+                {{ elementMeta.get(ctrl.value.type)?.label }}
+              </span>
+              <div class="gt-survey-builder__element-actions">
+                <button
+                  type="button"
+                  class="gt-survey-builder__element-duplicate"
+                  (click)="duplicateElement(ctrl.value.id, $event)"
+                >
+                  <img src="/assets/icons/surveyflow/reports.svg" alt="Duplicate" class="gt-survey-builder__btn-icon" />
+                </button>
+                <button
+                  type="button"
+                  class="gt-survey-builder__element-delete"
+                  (click)="deleteElement(ctrl.value.id, $event)"
+                >
+                  <img src="/assets/icons/trash.svg" alt="Delete" class="gt-survey-builder__btn-icon" />
+                </button>
+              </div>
+            </div>
+
+            <div class="gt-survey-builder__element-body">
+              @switch (ctrl.value.type) {
+                @case ('input') {
+                  <gt-survey-input [formControl]="ctrl" />
+                }
+                @case ('textarea') {
+                  <gt-survey-textarea [formControl]="ctrl" />
+                }
+                @case ('select-radio') {
+                  <gt-survey-select-radio [formControl]="ctrl" />
+                }
+                @case ('select') {
+                  <gt-survey-select [formControl]="ctrl" />
+                }
+                @case ('text') {
+                  <gt-survey-text [formControl]="ctrl" />
+                }
+                @case ('title') {
+                  <gt-survey-title [formControl]="ctrl" />
+                }
+                @case ('image') {
+                  <gt-survey-image [formControl]="ctrl" />
+                }
+                @case ('range') {
+                  <gt-survey-range [formControl]="ctrl" />
+                }
+                @case ('paginator') {
+                  <gt-survey-paginator [formControl]="ctrl" />
+                }
+                @case ('space') {
+                  <gt-survey-space [formControl]="ctrl" />
+                }
+                @case ('file') {
+                  <gt-survey-file [formControl]="ctrl" />
+                }
+                @case ('date-picker') {
+                  <gt-survey-date [formControl]="ctrl" />
+                }
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Properties Panel -->
+    @if (selectedElement(); as el) {
+      <div class="gt-survey-builder__props">
+        <gt-survey-props-panel
+          [element]="el"
+          [propForm]="propForm"
+          (addOption)="addOption()"
+          (removeOption)="removeOption($event)"
+          (imageSelect)="onImageSelect($event)"
+          (fileSelect)="onFileSelect($event)"
+          (dateSelect)="onDateSelect($event)"
+        />
+      </div>
+    }
+
+  </div>
+</form>
+

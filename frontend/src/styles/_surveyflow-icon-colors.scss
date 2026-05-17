@@ -1,0 +1,17 @@
+:root {
+  --sf-icon-primary: #7c3aed;
+  --sf-icon-primary-hover: #8b5cf6;
+  --sf-icon-cyan: #22d3ee;
+  --sf-icon-orange: #f97316;
+  --sf-icon-text: #f8fafc;
+  --sf-icon-muted: #cbd5e1;
+}
+
+[data-theme='light'] {
+  --sf-icon-primary: #6d28d9;
+  --sf-icon-primary-hover: #7c3aed;
+  --sf-icon-cyan: #0891b2;
+  --sf-icon-orange: #ea580c;
+  --sf-icon-text: #0f172a;
+  --sf-icon-muted: #64748b;
+}

@@ -1,0 +1,9 @@
+@if (element(); as el) {
+  <p
+    class="gt-survey-builder__static-text gt-survey-builder__content-inline"
+    contenteditable="true"
+    (click)="$event.stopPropagation()"
+    (keydown)="$event.stopPropagation()"
+    (blur)="update({ content: $any($event.target).innerText })"
+  >{{ el.content }}</p>
+}

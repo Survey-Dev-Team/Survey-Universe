@@ -1,0 +1,78 @@
+@use "../../../../../styles/variables" as *;
+
+.gt-registration-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px 16px;
+
+  &__button {
+    margin-top: 38px;
+  }
+
+  &__captcha {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    &--image {
+      width: 270px;
+      height: 102px;
+    }
+
+    &--button {
+      padding-bottom: 8px;
+      position: relative;
+      border: none;
+      background: none;
+      cursor: pointer;
+
+      &:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 1px;
+        background-color: var(--text-color);
+        transition: background-color 0.3s ease;
+      }
+
+      &:hover {
+        color: var(--accent-color);
+
+        &:after {
+          background-color: var(--accent-color);
+        }
+      }
+    }
+  }
+}
+
+.gt-input {
+  &__half {
+    width: calc(50% - 8px);
+  }
+
+  &__full {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .gt-input {
+    &__half {
+      width: 100%;
+    }
+  }
+
+  .gt-registration-form {
+    &__button {
+      margin-top: 0;
+    }
+
+    &__captcha {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+}

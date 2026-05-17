@@ -1,0 +1,81 @@
+<header class="gt-header" [class.onscroll]="isScrolled()">
+  <a [routerLink]="'/' + routes.MAIN_PAGE" class="gt-header__logo">
+    <img src="/assets/icons/surveyflow/survey_universe_centauri_fixed_not_cropped_transparent.png" alt="Survey Universe" class="gt-header__logo-svg" />
+  </a>
+
+  <div class="gt-header__desktop">
+    <nav class="gt-header__nav" aria-label="Main navigation">
+      @for (item of menuItems(); track item.route) {
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="gt-header__link"
+        >
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+
+    <div class="gt-header__actions">
+      <gt-theme-toggle></gt-theme-toggle>
+
+      @if (!isLoggedIn()) {
+        <a [routerLink]="'/' + routes.LOGIN" class="button button__fit-content button__inverted">
+          Sign In
+        </a>
+      }
+
+      @if (isLoggedIn()) {
+        <button class="button button__fit-content button__inverted" (click)="navigateToProfile()">
+          User Cabinet
+        </button>
+        <button class="button button__fit-content" (click)="logout()">Sign out</button>
+      }
+    </div>
+  </div>
+
+  <div class="gt-header__mobile">
+    <button (click)="toggleMobileMenu()" class="gt-header__menu-btn">
+      <img src="/assets/icons/menu-mobile-icon.svg" alt="Menu Icon" />
+    </button>
+
+    <div class="gt-header__overlay" [class.open]="isMobileMenuOpen()" (click)="closeMobileMenu()" (keydown.escape)="closeMobileMenu()" tabindex="-1" aria-hidden="true"></div>
+
+    <nav class="gt-header__mobile-nav" [class.open]="isMobileMenuOpen()" aria-label="Mobile navigation">
+      <div class="gt-header__nav-header">
+        <div class="gt-header__logo-mobile">
+          <img src="/assets/icons/surveyflow/survey_universe_centauri_fixed_not_cropped_transparent.png" alt="Survey Universe" class="gt-header__logo-svg" />
+        </div>
+        <button class="gt-header__close-btn" (click)="closeMobileMenu()">
+          <img src="/assets/icons/close.svg" alt="Close Menu" />
+        </button>
+      </div>
+
+      <gt-theme-toggle></gt-theme-toggle>
+
+      @for (item of menuItems(); track item.route) {
+        <a [routerLink]="item.route" class="gt-header__link" (click)="closeMobileMenu()">
+          {{ item.label }}
+        </a>
+      }
+
+      @if (!isLoggedIn()) {
+        <a
+          [routerLink]="'/' + routes.LOGIN"
+          class="button button__inverted gt-header__mobile-link"
+          (click)="closeMobileMenu()"
+        >
+          Sign In
+        </a>
+      }
+
+      @if (isLoggedIn()) {
+        <button class="button button__inverted gt-header__mobile-link" (click)="navigateToProfile()">
+          User Cabinet
+        </button>
+        <button class="button gt-header__mobile-link" (click)="logout()">Sign out</button>
+      }
+    </nav>
+  </div>
+</header>

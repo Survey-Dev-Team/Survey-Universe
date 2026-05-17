@@ -1,0 +1,86 @@
+<gt-header></gt-header>
+<div class="margin-top-header"></div>
+
+<main class="gt-contact">
+  <div class="gt-contact__layout">
+
+    <!-- Left panel -->
+    <div class="gt-contact__left">
+      <h1 class="gt-contact__title">Contact Us</h1>
+      <div class="gt-contact__divider"></div>
+      <p class="gt-contact__subtitle">
+        Have questions, suggestions or just want to say hello?<br>
+        We'd love to hear from you.
+      </p>
+
+      <ul class="gt-contact__list">
+        <li class="gt-contact__item">
+          <div class="gt-contact__icon-wrap">
+            <i class="pi pi-envelope"></i>
+          </div>
+          <div class="gt-contact__item-info">
+            <span class="gt-contact__item-label">EMAIL</span>
+            <span class="gt-contact__item-value">hello&#64;surveyuniverse.com</span>
+          </div>
+        </li>
+        <li class="gt-contact__item">
+          <div class="gt-contact__icon-wrap">
+            <i class="pi pi-map-marker"></i>
+          </div>
+          <div class="gt-contact__item-info">
+            <span class="gt-contact__item-label">ADDRESS</span>
+            <span class="gt-contact__item-value">123 Galaxy Way<br>Cosmic City, UNV 0001</span>
+          </div>
+        </li>
+        <li class="gt-contact__item">
+          <div class="gt-contact__icon-wrap">
+            <i class="pi pi-comments"></i>
+          </div>
+          <div class="gt-contact__item-info">
+            <span class="gt-contact__item-label">GENERAL INQUIRIES</span>
+            <span class="gt-contact__item-value">info&#64;surveyuniverse.com</span>
+          </div>
+        </li>
+        <li class="gt-contact__item">
+          <div class="gt-contact__icon-wrap">
+            <i class="pi pi-headphones"></i>
+          </div>
+          <div class="gt-contact__item-info">
+            <span class="gt-contact__item-label">SUPPORT</span>
+            <span class="gt-contact__item-value">support&#64;surveyuniverse.com</span>
+          </div>
+        </li>
+        <li class="gt-contact__item">
+          <div class="gt-contact__icon-wrap">
+            <i class="pi pi-clock"></i>
+          </div>
+          <div class="gt-contact__item-info">
+            <span class="gt-contact__item-label">WORKING HOURS</span>
+            <span class="gt-contact__item-value">Monday – Friday<br>10:00 AM – 6:00 PM (UTC)</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Right panel — video then image -->
+    <div class="gt-contact__right">
+      <video
+        class="gt-contact__video"
+        [class.gt-contact__video--hidden]="videoEnded()"
+        src="/assets/videos/contacts.mp4"
+        autoplay
+        [muted]="true"
+        playsinline
+        (ended)="onVideoEnded()"
+      ></video>
+      <img
+        class="gt-contact__img"
+        [class.gt-contact__img--visible]="videoEnded()"
+        src="/assets/images/contacs.png"
+        alt="Contact"
+      />
+    </div>
+  </div>
+</main>
+
+<gt-footer></gt-footer>

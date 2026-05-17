@@ -1,0 +1,23 @@
+<div [class]="'gt-select ' + styleClass()">
+  @if (icon()) {
+    <div class="gt-select__icon">
+      <img [src]="icon()" alt="" />
+    </div>
+  }
+
+  <p-select
+    [options]="options()"
+    [optionLabel]="isStringArray() ? undefined : optionLabel()"
+    [optionValue]="isStringArray() ? undefined : optionValue()"
+    [placeholder]="placeholder()"
+    [filter]="filter()"
+    [filterBy]="filterBy()"
+    [showClear]="showClear()"
+    [editable]="editable()"
+    [ngModel]="value"
+    (onChange)="handleChange($event.value)"
+    (onBlur)="markTouched()"
+    [disabled]="disabled"
+  >
+  </p-select>
+</div>

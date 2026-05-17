@@ -1,0 +1,29 @@
+<gt-header>
+  @if (!isLoggedIn()) {
+  <a
+    routerLink="/login"
+    class="button button__fit-content button__inverted"
+    slot="desktop"
+    >{{ ButtonText.Login }}</a
+  >
+  } @if (!isLoggedIn()) {
+  <a
+    routerLink="/login"
+    class="button button__full-width button__inverted"
+    slot="mobile"
+    >{{ ButtonText.Login }}</a
+  >
+  }
+</gt-header>
+<div class="margin-top-header"></div>
+<gt-page-header-role title="My Profile" backgroundImage="/assets/images/all_surveys_top.png"></gt-page-header-role>
+
+<div class="gt-user-profile">
+  <div class="container">
+    <div class="gt-user-profile__data">
+      <div class="gt-user-profile__content">
+        <gt-update-user-data-form></gt-update-user-data-form>
+      </div>
+    </div>
+  </div>
+</div>

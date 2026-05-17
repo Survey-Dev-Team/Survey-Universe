@@ -1,0 +1,51 @@
+<div class="gt-login-page">
+  <div class="container">
+    <div class="form__logo">
+      <a routerLink="/main-page">
+        <img [src]="logoSrc()" alt="Site logo" />
+      </a>
+      <gt-theme-toggle></gt-theme-toggle>
+    </div>
+    <div class="form__content">
+      <div class="form__left">
+        <!-- <div class="gt-login-page__social">
+<a
+          class="button button__inverted button__full-width"
+          href="https://127.0.0.1:8000/oauth/login/google"
+            >
+          <img
+            src="assets/icons/google.svg"
+            alt="Google Icon"
+            class="button__icon button__icon--left"
+          />
+          {{ButtonText.ContinueGoogle}}
+        </a>
+                    <a
+          class="button button__inverted button__full-width"
+        href=loginWithSocialProvider()
+            >
+          <img
+            src="assets/icons/facebook.svg"
+            alt="Facebook Icon"
+            class="button__icon button__icon--left"
+          />
+          {{ButtonText.ContinueFacebook}}
+            </a>
+        </div> -->
+        
+
+        <div class="form__heading">
+          <span class="form__subtitle p-14">Welcome back</span>
+          <h1 class="form__title">Sign In to Your Account</h1>
+        </div>
+        <gt-login-form></gt-login-form>
+        <div class="gt-login-page__footer form__footer">
+          <p class="p-12">
+            Don't have an account?
+            <a routerLink="/register" class="form__link">Create an Account</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

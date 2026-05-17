@@ -1,0 +1,30 @@
+<div class="gt-registration-page">
+  <div class="container">
+    <div class="form__logo">
+      <a routerLink="/main-page">
+        <img [src]="logoSrc()" alt="Site logo" />
+      </a>
+      <gt-theme-toggle></gt-theme-toggle>
+    </div>
+    <div class="form__content">
+      <div class="form__left">
+        @if (!showVerificationForm()) {
+          <div class="form__heading">
+            <span class="form__subtitle p-14">LET'S GET YOU STARTED</span>
+            <h1 class="form__title">Create an Account</h1>
+          </div>
+
+          <gt-registration-form (registrationSuccess)="onRegistrationSuccess($event)"></gt-registration-form>
+
+          <div class="gt-registration-page__footer form__footer">
+            <p class="p-12">
+              Already have an account? <a routerLink="/login" class="form__link">Login</a> instead
+            </p>
+          </div>
+        } @else {
+          <gt-enter-verification-code-form [currentEmail]="registeredEmail()"></gt-enter-verification-code-form>
+        }
+      </div>
+    </div>
+  </div>
+</div>

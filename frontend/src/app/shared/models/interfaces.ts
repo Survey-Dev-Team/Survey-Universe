@@ -1,0 +1,127 @@
+import { DishState, DishType } from "./enums";
+
+export interface UserRegistration {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  captchaAnswer: string;
+  captchaId: string;
+}
+
+export interface UserLogin {
+  email: string;
+  password: string;
+}
+
+export interface UserLoginResponse {
+  accessToken: string;
+  idToken: string;
+  refreshToken: string;
+  username: string;
+  firstName?: string;
+  lastName?: string;
+  role: string;
+  email: string;
+  imageUrl: string;
+}
+
+export interface UserSuccessResponse {
+  message: string;
+}
+
+export interface UserErrorResponse {
+  status: number;
+  error: {
+    message: string;
+  };
+}
+export interface MenuItem {
+  label: string;
+  route: string;
+  isActive: boolean;
+}
+
+export interface Dish {
+  id: string;
+  name: string;
+  price: string;
+  weight: string;
+  imageUrl: string;
+  popularity: number;
+  state: string;
+  quantity?: number;
+}
+
+export interface DishAvailable {
+  content: Dish[];
+}
+
+export interface CurrentDishDetails {
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  price: number;
+  popularity: number;
+  dishType: DishType;
+  state: DishState;
+  weight: string;
+  calories: string;
+  proteins: string;
+  fats: string;
+  carbohydrates: string;
+  vitamins: string;
+}
+
+export interface LocationSelectOptions {
+  id: string;
+  name: string;
+}
+
+
+
+export interface TableResponse {
+  id: string;
+  name: string;
+}
+
+export interface AvailableTimeslots {
+  tableId: string;
+  availableSlots: string[];
+}
+
+export interface LabeledOption {
+  value: string;
+  label: string;
+}
+
+export interface ReservationData {
+  location: string;
+  tableNumber?: string;
+  date: string;
+  timeslot: string;
+  reservationId: string;
+}
+
+export interface ChangeUserPasswordPayload {
+  old_password: string;
+  new_password: string;
+  confirmNewPassword?: string;
+}
+
+export interface ChangeUserEmailPayload {
+  newEmail: string;
+}
+
+export interface VerifyEmailCodePayload {
+  newEmail: string;
+  verificationCode: string;
+}
+
+export interface VerifyTokenResponse {
+  valid: boolean;
+  code: string;
+  newEmail: string;
+  userId: string;
+}

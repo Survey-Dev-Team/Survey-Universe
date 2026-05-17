@@ -1,0 +1,464 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/fonts" as fonts;
+
+// ── Hero split (contacts pattern) ─────────────────────────────────
+.gt-about {
+  background-color: #0a0614;
+
+  &__hero-layout {
+    display: grid;
+    grid-template-columns: 480px 1fr;
+    min-height: calc(100vh - 80px);
+
+    @media (max-width: 960px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // Left panel
+  &__left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: $space-64 $space-48;
+    background-color: #0a0614;
+    z-index: 1;
+
+    @media (max-width: 600px) {
+      padding: $space-40 $space-24;
+    }
+  }
+
+  &__title {
+    font-family: fonts.$font-family-heading;
+    font-size: 3rem;
+    font-weight: fonts.$font-weight-bold;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 $space-16;
+    line-height: 1;
+
+    @media (max-width: 600px) {
+      font-size: 2.25rem;
+    }
+  }
+
+  &__divider {
+    width: 48px;
+    height: 3px;
+    background: var(--accent-color);
+    border-radius: 2px;
+    margin-bottom: $space-24;
+  }
+
+  &__subtitle {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.6;
+    margin: 0 0 $space-40;
+  }
+
+  // Facts list
+  &__facts {
+    display: flex;
+    flex-direction: column;
+    gap: $space-12;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__fact {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-16;
+    padding: $space-16 $space-20;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    transition: border-color 0.2s, background 0.2s;
+
+    &:hover {
+      background: rgba(124, 58, 237, 0.08);
+      border-color: rgba(124, 58, 237, 0.35);
+    }
+  }
+
+  &__fact-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid rgba(124, 58, 237, 0.4);
+    background: rgba(124, 58, 237, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color);
+    font-size: 1rem;
+  }
+
+  &__fact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__fact-label {
+    font-size: 0.72rem;
+    font-weight: fonts.$font-weight-semibold;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  &__fact-value {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
+  }
+
+  // Right panel — video / image
+  &__right {
+    position: relative;
+    overflow: hidden;
+    min-height: 400px;
+
+    @media (max-width: 960px) {
+      display: none;
+    }
+  }
+
+  &__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 1.2s ease;
+
+    &--hidden {
+      opacity: 0;
+    }
+  }
+
+  &__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+
+    &--visible {
+      opacity: 1;
+    }
+  }
+}
+
+// ── Shared section styles ─────────────────────────────────────────
+.gt-about {
+  &__section {
+    padding: 80px 0;
+  }
+
+  &__eyebrow {
+    font-size: 0.72rem;
+    font-weight: fonts.$font-weight-semibold;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-color);
+    margin: 0 0 $space-16;
+    display: block;
+    text-align: center;
+  }
+
+  &__section-title {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: fonts.$font-weight-bold;
+    color: var(--text-color);
+    line-height: 1.2;
+    margin: 0 0 $space-24;
+
+    &--center {
+      text-align: center;
+    }
+  }
+
+  &__section-text {
+    font-size: 0.95rem;
+    color: var(--secondary-color);
+    line-height: 1.75;
+    margin: 0 0 $space-16;
+    max-width: 640px;
+  }
+
+  // ── Mission ───────────────────────────────────────────────────
+  &__mission {
+    background: var(--background-color);
+  }
+
+  &__mission-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  &__mission-label {
+    font-size: 0.72rem;
+    font-weight: fonts.$font-weight-semibold;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-color);
+    padding-top: 6px;
+    border-top: 1px solid var(--accent-color);
+  }
+
+  // ── Stats ─────────────────────────────────────────────────────
+  &__stats {
+    padding: 64px 0;
+    background: var(--light-bg);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  &__stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $space-24;
+    text-align: center;
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__stat-value {
+    font-family: fonts.$font-family-heading;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: fonts.$font-weight-bold;
+    color: var(--accent-color);
+    line-height: 1;
+  }
+
+  &__stat-label {
+    font-size: 0.82rem;
+    color: var(--secondary-color);
+    letter-spacing: 0.04em;
+  }
+
+  // ── Values ────────────────────────────────────────────────────
+  &__values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $space-24;
+    margin-top: 40px;
+  }
+
+  &__value-card {
+    background: var(--basic-white);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: border-color 0.2s, transform 0.2s;
+
+    &:hover {
+      border-color: var(--accent-color);
+      transform: translateY(-4px);
+    }
+  }
+
+  &__value-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--light-bg);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      color: var(--accent-color);
+      font-size: 1.1rem;
+    }
+  }
+
+  &__value-title {
+    font-size: 1rem;
+    font-weight: fonts.$font-weight-semibold;
+    color: var(--text-color);
+    margin: 0;
+  }
+
+  &__value-text {
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  // ── Team ──────────────────────────────────────────────────────
+  &__team-section {
+    background: var(--light-bg);
+  }
+
+  &__team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $space-24;
+    margin-top: 40px;
+  }
+
+  &__team-card {
+    background: var(--basic-white);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+
+  &__team-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+
+    i {
+      color: #fff;
+      font-size: 1.4rem;
+    }
+  }
+
+  &__team-name {
+    font-size: 1rem;
+    font-weight: fonts.$font-weight-semibold;
+    color: var(--text-color);
+    margin: 0;
+  }
+
+  &__team-role {
+    font-size: 0.78rem;
+    font-weight: fonts.$font-weight-semibold;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-color);
+    margin: 0;
+  }
+
+  &__team-bio {
+    font-size: 0.82rem;
+    color: var(--secondary-color);
+    line-height: 1.6;
+    margin: 4px 0 0;
+  }
+
+  // ── CTA ───────────────────────────────────────────────────────
+  &__cta-section {
+    padding: 80px 0;
+    background: var(--background-color);
+  }
+
+  &__cta-box {
+    background: linear-gradient(135deg, rgba(110, 60, 200, 0.18) 0%, rgba(60, 20, 120, 0.12) 100%);
+    border: 1px solid rgba(110, 60, 200, 0.25);
+    border-radius: 24px;
+    padding: 56px 48px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-16;
+  }
+
+  &__cta-title {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: fonts.$font-weight-bold;
+    color: var(--text-color);
+    margin: 0;
+  }
+
+  &__cta-text {
+    font-size: 0.95rem;
+    color: var(--secondary-color);
+    max-width: 480px;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  &__cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: fonts.$font-weight-semibold;
+    font-size: 0.95rem;
+    text-decoration: none;
+    margin-top: 8px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: var(--button-filled-hover);
+    }
+  }
+}
+
+// ── Responsive ────────────────────────────────────────────────────
+@media screen and (max-width: 1100px) {
+  .gt-about {
+    &__values-grid,
+    &__team-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    &__stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .gt-about {
+    &__hero-text {
+      padding-bottom: 48px;
+    }
+
+    &__mission-layout {
+      grid-template-columns: 1fr;
+      gap: $space-24;
+    }
+
+    &__values-grid,
+    &__team-grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    &__cta-box {
+      padding: 40px 24px;
+    }
+  }
+}

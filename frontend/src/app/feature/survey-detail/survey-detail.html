@@ -1,0 +1,131 @@
+<gt-header></gt-header>
+<div class="margin-top-header"></div>
+
+@if (isLoading()) {
+  <div class="gt-survey-detail__loading">
+    <div class="gt-survey-detail__spinner"></div>
+  </div>
+}
+
+@if (!isLoading() && survey(); as s) {
+  <!-- Hero -->
+  <div class="gt-survey-detail__hero" [style.background-image]="'url(' + s.coverImage + ')'">
+    <div class="gt-survey-detail__hero-overlay"></div>
+    <div class="gt-survey-detail__hero-content container">
+      <a class="gt-survey-detail__back" [routerLink]="surveysRoute">
+        <span class="gt-survey-detail__back-icon"></span>
+        Back to all surveys
+      </a>
+      <div class="gt-survey-detail__hero-body">
+        <span class="gt-survey-detail__category">{{ s.category }}</span>
+        <h1 class="gt-survey-detail__title">{{ s.title }}</h1>
+        <p class="gt-survey-detail__desc">{{ s.description }}</p>
+        <div class="gt-survey-detail__cta">
+          <button class="button gt-survey-detail__start-btn">
+            Start survey
+            <i class="pi pi-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="gt-survey-detail__body">
+    <div class="container">
+      <div class="gt-survey-detail__layout">
+
+        <!-- Left column -->
+        <div class="gt-survey-detail__left">
+
+          <div class="gt-survey-detail__card">
+            <div class="gt-survey-detail__card-header">
+              <i class="pi pi-info-circle"></i>
+              <h2 class="gt-survey-detail__card-title">About this survey</h2>
+            </div>
+            <p class="gt-survey-detail__card-text">{{ s.about }}</p>
+          </div>
+
+          <div class="gt-survey-detail__card">
+            <div class="gt-survey-detail__card-header">
+              <i class="pi pi-send"></i>
+              <h2 class="gt-survey-detail__card-title">Before you start</h2>
+            </div>
+            <div class="gt-survey-detail__steps">
+              @for (step of beforeYouStart; track step.num) {
+                <div class="gt-survey-detail__step">
+                  <span class="gt-survey-detail__step-num">{{ step.num }}</span>
+                  <div>
+                    <strong class="gt-survey-detail__step-title">{{ step.title }}</strong>
+                    <p class="gt-survey-detail__step-desc">{{ step.desc }}</p>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right column — details panel -->
+        <aside class="gt-survey-detail__sidebar">
+          <div class="gt-survey-detail__details-card">
+            <div class="gt-survey-detail__details-header">
+              <i class="pi pi-list"></i>
+              <h3 class="gt-survey-detail__details-title">Survey details</h3>
+            </div>
+            <ul class="gt-survey-detail__details-list">
+              <li class="gt-survey-detail__details-row">
+                <div class="gt-survey-detail__details-key">
+                  <i class="pi pi-tag"></i> Category
+                </div>
+                <span class="gt-survey-detail__details-val gt-survey-detail__details-val--accent">{{ s.category }}</span>
+              </li>
+              <li class="gt-survey-detail__details-row">
+                <div class="gt-survey-detail__details-key">
+                  <i class="pi pi-question-circle"></i> Questions
+                </div>
+                <span class="gt-survey-detail__details-val">{{ s.questionsCount }}</span>
+              </li>
+              <li class="gt-survey-detail__details-row">
+                <div class="gt-survey-detail__details-key">
+                  <i class="pi pi-clock"></i> Estimated time
+                </div>
+                <span class="gt-survey-detail__details-val">{{ s.estimatedTime }}</span>
+              </li>
+              <li class="gt-survey-detail__details-row">
+                <div class="gt-survey-detail__details-key">
+                  <i class="pi pi-circle"></i> Status
+                </div>
+                <span
+                  class="gt-survey-detail__details-val gt-survey-detail__status"
+                  [class.gt-survey-detail__status--active]="s.status === 'Active'"
+                  [class.gt-survey-detail__status--passed]="s.status === 'Passed'"
+                >{{ s.status }}</span>
+              </li>
+              <li class="gt-survey-detail__details-row">
+                <div class="gt-survey-detail__details-key">
+                  <i class="pi pi-user"></i> Author
+                </div>
+                <span class="gt-survey-detail__details-val">{{ s.author }}</span>
+              </li>
+              <li class="gt-survey-detail__details-row">
+                <div class="gt-survey-detail__details-key">
+                  <i class="pi pi-users"></i> Participants
+                </div>
+                <span class="gt-survey-detail__details-val">{{ s.participants | number }}</span>
+              </li>
+            </ul>
+
+            <button class="button gt-survey-detail__sidebar-btn">
+              Start survey
+              <i class="pi pi-arrow-right"></i>
+            </button>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+}
+
+<gt-footer></gt-footer>

@@ -1,0 +1,81 @@
+<div class="gt-user-profile__content">
+  <div class="gt-update-user-data-form">
+    <form [formGroup]="updateUserDataForm" (ngSubmit)="onSubmit()">
+      <div class="gt-update-user-data-form__content">
+        <div class="gt-update-user-data-form__avatar-section">
+          <div class="gt-update-user-data-form__avatar">
+            <img
+              src="{{ currentUserData().imageUrl }}"
+              alt="User Avatar"
+              class="gt-update-user-data-form__avatar-icon image"
+            />
+          </div>
+          <p-fileupload
+            name="base64encodedImage"
+            chooseLabel="Upload Photo"
+            [showUploadButton]="false"
+            [customUpload]="true"
+            [showCancelButton]="false"
+            mode="advanced"
+            accept=".jpg,.jpeg,.png"
+            [maxFileSize]="768000"
+            (onSelect)="onSelect($event)"
+          >
+          </p-fileupload>
+        </div>
+        <div class="gt-update-user-data-form__info">
+          <div>
+            @if (currentUserData().lastName) {
+              <div class="gt-update-user-data-form__info--top">
+                <h2 class="gt-user-profile__name p-14__medium">
+                  {{ currentUserData().firstName }} {{ currentUserData().lastName }}
+                  <span class="gt-user-profile__role p-14__medium">({{ currentUserRole() }})</span>
+                </h2>
+                <p class="gt-user-profile__email p-14">{{ currentUser()?.email }}</p>
+              </div>
+            }
+
+            <div class="gt-update-user-data-form__info--middle">
+              <div class="gt-update-user-data-form__input-half">
+                <gt-input
+                  [type]="inputType.Text"
+                  label="First Name"
+                  placeholder="Enter your First Name"
+                  description="e.g. Jonson"
+                  name="firstName"
+                  class="gt-input"
+                  formControlName="firstName"
+                  [parentForm]="updateUserDataForm"
+                  [isLoginForm]="false"
+                ></gt-input>
+              </div>
+              <div class="gt-update-user-data-form__input-half">
+                <gt-input
+                  [type]="inputType.Text"
+                  label="Last Name"
+                  placeholder="Enter your Last Name"
+                  description="e.g. Doe"
+                  name="lastName"
+                  class="gt-input"
+                  formControlName="lastName"
+                  [parentForm]="updateUserDataForm"
+                  [isLoginForm]="false"
+                ></gt-input>
+              </div>
+            </div>
+          </div>
+
+          <div class="gt-update-user-data-form__info--bottom">
+            <button
+              type="submit"
+              [disabled]="updateUserDataForm.invalid"
+              class="gt-update-user-data-form__button button button__filled button__fit-content"
+            >
+              {{ buttonText.SaveChanges }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

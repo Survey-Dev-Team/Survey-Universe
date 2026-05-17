@@ -1,0 +1,287 @@
+<gt-header />
+<div class="margin-top-header"></div>
+
+<main class="gt-admin-stats">
+
+  <!-- Hero -->
+  <section class="gt-admin-stats__hero">
+    <div class="container">
+      <h1 class="gt-admin-stats__page-title">Survey Statistics</h1>
+      <p class="gt-admin-stats__page-subtitle">Overview of survey activity and test performance</p>
+    </div>
+  </section>
+
+  <div class="container">
+
+    <!-- ── Tabs ────────────────────────────────────────────────────────── -->
+    <div class="gt-admin-stats__tabs">
+      <button class="gt-admin-stats__tab"
+        [class.gt-admin-stats__tab--active]="activeTab() === 'surveys'"
+        (click)="setTab('surveys')">
+        <i class="pi pi-list"></i> Surveys
+      </button>
+      <button class="gt-admin-stats__tab"
+        [class.gt-admin-stats__tab--active]="activeTab() === 'tests'"
+        (click)="setTab('tests')">
+        <i class="pi pi-pencil"></i> Tests
+      </button>
+    </div>
+    <!-- ── Time filter ──────────────────────────────────────────────────── -->
+    <div class="gt-admin-stats__filter-row">
+      @for (r of timeRanges; track r.value) {
+        <button class="gt-admin-stats__filter-btn"
+          [class.gt-admin-stats__filter-btn--active]="timeRange() === r.value"
+          (click)="setTimeRange(r.value)">
+          {{ r.label }}
+        </button>
+      }
+    </div>
+    <!-- ══════════════════ SURVEYS TAB ══════════════════ -->
+    @if (activeTab() === 'surveys') {
+
+      <!-- KPI -->
+      <div class="gt-admin-stats__kpi-row">
+        <div class="gt-admin-stats__kpi-card">
+          <i class="pi pi-users gt-admin-stats__kpi-icon"></i>
+          <span class="gt-admin-stats__kpi-value">{{ surveyTotalParticipants() | number }}</span>
+          <span class="gt-admin-stats__kpi-label">Total participants</span>
+        </div>
+        <div class="gt-admin-stats__kpi-card">
+          <i class="pi pi-list gt-admin-stats__kpi-icon"></i>
+          <span class="gt-admin-stats__kpi-value">{{ filteredSurveys().length }}</span>
+          <span class="gt-admin-stats__kpi-label">Total surveys</span>
+        </div>
+        <div class="gt-admin-stats__kpi-card gt-admin-stats__kpi-card--accent">
+          <i class="pi pi-check-circle gt-admin-stats__kpi-icon"></i>
+          <span class="gt-admin-stats__kpi-value">{{ surveyActive() }}</span>
+          <span class="gt-admin-stats__kpi-label">Active surveys</span>
+        </div>
+        <div class="gt-admin-stats__kpi-card">
+          <i class="pi pi-percentage gt-admin-stats__kpi-icon"></i>
+          <span class="gt-admin-stats__kpi-value">{{ surveyAvgCompletion() }}%</span>
+          <span class="gt-admin-stats__kpi-label">Avg completion</span>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="gt-admin-stats__section">
+        <h2 class="gt-admin-stats__section-title">Monthly activity</h2>
+        <div class="gt-admin-stats__charts-row">
+          <div class="gt-admin-stats__chart-card gt-admin-stats__chart-card--wide">
+            <h3 class="gt-admin-stats__chart-title">Participants by month</h3>
+            <div class="gt-admin-stats__chart-wrap">
+              <p-chart type="bar" [data]="surveyTrendData()" [options]="chartOptions()" />
+            </div>
+          </div>
+          <div class="gt-admin-stats__chart-card">
+            <h3 class="gt-admin-stats__chart-title">By category</h3>
+            <div class="gt-admin-stats__chart-wrap gt-admin-stats__chart-wrap--doughnut">
+              <p-chart type="doughnut" [data]="surveyCategoryData()" [options]="doughnutOptions()" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="gt-admin-stats__section">
+        <h2 class="gt-admin-stats__section-title">All surveys</h2>
+        <div class="gt-admin-stats__table-card">
+          <div class="gt-admin-stats__table-wrap">
+            <table class="gt-admin-stats__table">
+              <thead>
+                <tr>
+                  <th>Survey</th>
+                  <th>Category</th>
+                  <th>Participants</th>
+                  <th>Completion</th>
+                  <th>Status</th>
+                  <th>Created</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (s of filteredSurveys(); track s.id) {
+                  <tr>
+                    <td>
+                      <a class="gt-admin-stats__survey-link" [routerLink]="'/' + routes.SURVEYS + '/' + s.id">
+                        {{ s.title }}
+                      </a>
+                    </td>
+                    <td>{{ s.category }}</td>
+                    <td>{{ s.participants | number }}</td>
+                    <td>
+                      <div class="gt-admin-stats__progress-wrap">
+                        <div class="gt-admin-stats__progress-bar">
+                          <div class="gt-admin-stats__progress-fill" [style.width.%]="s.completionRate"></div>
+                        </div>
+                        <span class="gt-admin-stats__progress-value">{{ s.completionRate }}%</span>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="gt-admin-stats__badge"
+                        [class.gt-admin-stats__badge--active]="s.status === 'Active'"
+                        [class.gt-admin-stats__badge--passed]="s.status === 'Passed'">
+                        {{ s.status }}
+                      </span>
+                    </td>
+                    <td>{{ s.createdAt }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- ══════════════════ TESTS TAB ══════════════════ -->
+    @if (activeTab() === 'tests') {
+
+      <!-- KPI -->
+      <div class="gt-admin-stats__kpi-row">
+        <div class="gt-admin-stats__kpi-card">
+          <i class="pi pi-users gt-admin-stats__kpi-icon"></i>
+          <span class="gt-admin-stats__kpi-value">{{ testTotalParticipants() | number }}</span>
+          <span class="gt-admin-stats__kpi-label">Total participants</span>
+        </div>
+        <div class="gt-admin-stats__kpi-card">
+          <i class="pi pi-pencil gt-admin-stats__kpi-icon"></i>
+          <span class="gt-admin-stats__kpi-value">{{ filteredTests().length }}</span>
+          <span class="gt-admin-stats__kpi-label">Total tests</span>
+        </div>
+        <div class="gt-admin-stats__kpi-card gt-admin-stats__kpi-card--accent">
+          <i class="pi pi-check-circle gt-admin-stats__kpi-icon"></i>
+          <span class="gt-admin-stats__kpi-value">{{ testActive() }}</span>
+          <span class="gt-admin-stats__kpi-label">Active tests</span>
+        </div>
+        <div class="gt-admin-stats__kpi-card">
+          <i class="pi pi-star gt-admin-stats__kpi-icon"></i>
+          <span class="gt-admin-stats__kpi-value">{{ testAvgScore() }}%</span>
+          <span class="gt-admin-stats__kpi-label">Avg score</span>
+        </div>
+        <div class="gt-admin-stats__kpi-card">
+          <i class="pi pi-trophy gt-admin-stats__kpi-icon"></i>
+          <span class="gt-admin-stats__kpi-value">{{ testAvgPassRate() }}%</span>
+          <span class="gt-admin-stats__kpi-label">Avg pass rate</span>
+        </div>
+        <div class="gt-admin-stats__kpi-card">
+          <i class="pi pi-clock gt-admin-stats__kpi-icon"></i>
+          <span class="gt-admin-stats__kpi-value">{{ testAvgTime() }} min</span>
+          <span class="gt-admin-stats__kpi-label">Avg time</span>
+        </div>
+      </div>
+
+      <!-- Funnel -->
+      <div class="gt-admin-stats__section">
+        <h2 class="gt-admin-stats__section-title">Completion funnel</h2>
+        <div class="gt-admin-stats__funnel">
+          @for (step of testFunnel(); track step.label) {
+            <div class="gt-admin-stats__funnel-step" [style.--pct]="step.pct + '%'">
+              <div class="gt-admin-stats__funnel-meta">
+                <span class="gt-admin-stats__funnel-label">{{ step.label }}</span>
+                <span class="gt-admin-stats__funnel-count">{{ step.count | number }}</span>
+                <span class="gt-admin-stats__funnel-pct">{{ step.pct }}%</span>
+              </div>
+              <div class="gt-admin-stats__funnel-track">
+                <div class="gt-admin-stats__funnel-bar"></div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Performance charts -->
+      <div class="gt-admin-stats__section">
+        <h2 class="gt-admin-stats__section-title">Performance analysis</h2>
+        <div class="gt-admin-stats__charts-row">
+          <div class="gt-admin-stats__chart-card gt-admin-stats__chart-card--wide">
+            <h3 class="gt-admin-stats__chart-title">Avg score & pass rate trend</h3>
+            <p class="gt-admin-stats__chart-desc">Monthly dynamics for all tests</p>
+            <div class="gt-admin-stats__chart-wrap">
+              <p-chart type="line" [data]="testTrendData()" [options]="chartOptions()" />
+            </div>
+          </div>
+          <div class="gt-admin-stats__chart-card">
+            <h3 class="gt-admin-stats__chart-title">Score distribution</h3>
+            <p class="gt-admin-stats__chart-desc">How participants scored</p>
+            <div class="gt-admin-stats__chart-wrap">
+              <p-chart type="bar" [data]="scoreDistData()" [options]="chartOptions()" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pass/Fail per test -->
+      <div class="gt-admin-stats__section">
+        <h2 class="gt-admin-stats__section-title">Pass vs Fail per test</h2>
+        <div class="gt-admin-stats__chart-card">
+          <div class="gt-admin-stats__chart-wrap gt-admin-stats__chart-wrap--tall">
+            <p-chart type="bar" [data]="passFailData()" [options]="horizOptions()" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="gt-admin-stats__section">
+        <h2 class="gt-admin-stats__section-title">All tests</h2>
+        <div class="gt-admin-stats__table-card">
+          <div class="gt-admin-stats__table-wrap">
+            <table class="gt-admin-stats__table">
+              <thead>
+                <tr>
+                  <th>Test</th>
+                  <th>Category</th>
+                  <th>Participants</th>
+                  <th>Avg score</th>
+                  <th>Pass rate</th>
+                  <th>Avg time</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (t of filteredTests(); track t.id) {
+                  <tr>
+                    <td>
+                      <a class="gt-admin-stats__survey-link" [routerLink]="'/' + routes.SURVEYS + '/' + t.id">
+                        {{ t.title }}
+                      </a>
+                    </td>
+                    <td>{{ t.category }}</td>
+                    <td>{{ t.participants | number }}</td>
+                    <td>
+                      <span class="gt-admin-stats__score"
+                        [class.gt-admin-stats__score--good]="t.avgScore >= 70"
+                        [class.gt-admin-stats__score--mid]="t.avgScore >= 50 && t.avgScore < 70"
+                        [class.gt-admin-stats__score--low]="t.avgScore < 50">
+                        {{ t.avgScore }}%
+                      </span>
+                    </td>
+                    <td>
+                      <div class="gt-admin-stats__progress-wrap">
+                        <div class="gt-admin-stats__progress-bar">
+                          <div class="gt-admin-stats__progress-fill gt-admin-stats__progress-fill--pass"
+                            [style.width.%]="t.passRate"></div>
+                        </div>
+                        <span class="gt-admin-stats__progress-value">{{ t.passRate }}%</span>
+                      </div>
+                    </td>
+                    <td>{{ t.avgTimeMin }} min</td>
+                    <td>
+                      <span class="gt-admin-stats__badge"
+                        [class.gt-admin-stats__badge--active]="t.status === 'Active'"
+                        [class.gt-admin-stats__badge--passed]="t.status === 'Passed'">
+                        {{ t.status }}
+                      </span>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    }
+
+  </div>
+</main>
+
+<gt-footer />

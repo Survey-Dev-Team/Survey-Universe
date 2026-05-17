@@ -1,0 +1,431 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/functions-and-mixins" as functions;
+@use "../../../styles/fonts" as fonts;
+
+.gt-admin-stats {
+  min-height: 100vh;
+  background-color: var(--background-color);
+  overflow-x: hidden;
+
+  // ── Hero ──────────────────────────────────────────────────────────────────
+  &__hero {
+    padding: $space-48 0 $space-32;
+    background: linear-gradient(135deg, #1e1040 0%, #2d1b69 50%, #1a0533 100%);
+    overflow: hidden;
+  }
+
+  &__page-title {
+    font-family: fonts.$font-family-heading;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 $space-8;
+  }
+
+  &__page-subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.65);
+    margin: 0;
+  }
+
+  // ── Access denied ──────────────────────────────────────────────────────────
+  &__access-denied {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: $space-120 $space-16;
+    text-align: center;
+    gap: $space-16;
+  }
+
+  &__lock-icon {
+    font-size: 3.5rem;
+    color: var(--accent-color);
+  }
+
+  &__denied-title {
+    font-family: fonts.$font-family-heading;
+    font-size: 1.75rem;
+    color: var(--text-color);
+    margin: 0;
+  }
+
+  &__denied-text {
+    color: var(--secondary-color);
+    margin: 0;
+  }
+
+  // ── KPI row ────────────────────────────────────────────────────────────────
+  &__kpi-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: $space-16;
+    margin: $space-40 0;
+
+    @media (max-width: 1100px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 600px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__kpi-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-8;
+    background: var(--basic-white);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: $space-24;
+    box-shadow: var(--box-shadow);
+
+    &--accent {
+      background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+      border-color: transparent;
+
+      .gt-admin-stats__kpi-icon,
+      .gt-admin-stats__kpi-value,
+      .gt-admin-stats__kpi-label {
+        color: #ffffff;
+      }
+    }
+  }
+
+  &__kpi-icon {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+  }
+
+  &__kpi-value {
+    font-family: fonts.$font-family-heading;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    line-height: 1;
+  }
+
+  &__kpi-label {
+    font-size: 0.875rem;
+    color: var(--secondary-color);
+  }
+
+  // ── Tabs ───────────────────────────────────────────────────────────────────
+  &__tabs {
+    display: flex;
+    gap: $space-8;
+    margin: $space-32 0 $space-8;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  &__tab {
+    display: flex;
+    align-items: center;
+    gap: $space-8;
+    padding: $space-12 $space-24;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--secondary-color);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+
+    i { font-size: 0.95rem; }
+
+    &:hover { color: var(--text-color); }
+
+    &--active {
+      color: var(--accent-color);
+      border-bottom-color: var(--accent-color);
+    }
+  }
+
+  // ── Filter ────────────────────────────────────────────────────────────────
+  &__filter-row {
+    display: flex;
+    gap: $space-8;
+    margin: $space-16 0 $space-24;
+    flex-wrap: wrap;
+  }
+
+  &__filter-btn {
+    padding: $space-8 $space-16;
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 0.875rem;
+    color: var(--secondary-color);
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      border-color: var(--accent-color);
+      color: var(--text-color);
+    }
+
+    &--active {
+      background: var(--accent-color);
+      border-color: var(--accent-color);
+      color: #fff;
+      font-weight: 500;
+    }
+  }
+
+  // ── Sections ───────────────────────────────────────────────────────────────
+  &__section {
+    margin-bottom: $space-48;
+  }
+
+  &__section-title {
+    font-family: fonts.$font-family-heading;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0 0 $space-20;
+  }
+
+  // ── Funnel ─────────────────────────────────────────────────────────────────
+  &__funnel {
+    display: flex;
+    flex-direction: column;
+    gap: $space-12;
+    background: var(--basic-white);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: $space-24;
+    box-shadow: var(--box-shadow);
+  }
+
+  &__funnel-step {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    align-items: center;
+    gap: $space-16;
+  }
+
+  &__funnel-track {
+    height: 32px;
+    background: rgba(124, 58, 237, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  &__funnel-bar {
+    height: 100%;
+    width: var(--pct);
+    background: linear-gradient(90deg, #7c3aed, #a855f7);
+    border-radius: 6px;
+    transition: width 0.5s ease;
+  }
+
+  &__funnel-meta {
+    display: flex;
+    align-items: center;
+    gap: $space-12;
+    white-space: nowrap;
+    min-width: 0;
+  }
+
+  &__funnel-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-color);
+    min-width: 110px;
+  }
+
+  &__funnel-count {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    font-weight: 600;
+  }
+
+  &__funnel-pct {
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+  }
+
+  // ── Charts ─────────────────────────────────────────────────────────────────
+  &__charts-row {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: $space-20;
+    margin-bottom: $space-20;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__chart-card {
+    background: var(--basic-white);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: $space-24;
+    box-shadow: var(--box-shadow);
+
+    &--wide {
+      // already handled by grid
+    }
+
+    &--full {
+      margin-bottom: $space-20;
+    }
+  }
+
+  &__chart-title {
+    font-family: fonts.$font-family-heading;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0 0 $space-20;
+  }
+
+  &__chart-desc {
+    font-size: 0.82rem;
+    color: var(--secondary-color);
+    margin: -$space-12 0 $space-16;
+  }
+
+  &__chart-wrap {
+    height: 280px;
+
+    &--doughnut {
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &--tall {
+      height: 320px;
+    }
+
+    // Force PrimeNG chart canvas to fill container
+    ::ng-deep canvas {
+      max-width: 100% !important;
+      height: 100% !important;
+    }
+  }
+
+  // ── Table ──────────────────────────────────────────────────────────────────
+  &__table-card {
+    background: var(--basic-white);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: $space-24;
+    box-shadow: var(--box-shadow);
+    margin-bottom: $space-64;
+  }
+
+  &__table-wrap {
+    overflow-x: auto;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+
+    th {
+      text-align: left;
+      padding: $space-12 $space-16;
+      color: var(--secondary-color);
+      font-weight: 500;
+      border-bottom: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: $space-14 $space-16;
+      color: var(--text-color);
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: middle;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:hover td {
+      background: var(--light-bg);
+    }
+  }
+
+  &__survey-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  // ── Progress bar ───────────────────────────────────────────────────────────
+  &__progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: $space-8;
+  }
+
+  &__progress-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+    min-width: 80px;
+  }
+
+  &__progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #7c3aed, #9333ea);
+    border-radius: 4px;
+    transition: width 0.4s ease;
+
+    &--pass {
+      background: linear-gradient(90deg, #16a34a, #22c55e);
+    }
+  }
+
+  &__progress-value {
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+    white-space: nowrap;
+  }
+
+  // ── Score badge ────────────────────────────────────────────────────────────
+  &__score {
+    font-weight: 600;
+    font-size: 0.88rem;
+
+    &--good { color: var(--success-color); }
+    &--mid  { color: var(--warning-color); }
+    &--low  { color: var(--error-color); }
+  }
+
+  // ── Status badge ───────────────────────────────────────────────────────────
+  &__badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 500;
+
+    &--active {
+      background: var(--success-bg);
+      color: var(--success-color);
+    }
+
+    &--passed {
+      background: var(--light-bg);
+      color: var(--secondary-color);
+    }
+  }
+}

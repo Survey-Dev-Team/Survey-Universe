@@ -1,0 +1,18 @@
+body.dark {
+  .password-toggle-btn::before,
+  .gt-header button img,
+  .gt-select__icon img,
+  .gt-date-picker .p-datepicker:before,
+  .gt-date-picker .p-datepicker:after,
+  .gt-number__label img,
+  .cart-sidebar__close img,
+  .button__with-icon img,
+  .gt-notifications__close-btn img {
+    filter: brightness(0) invert(1);
+  }
+
+  .gt-header button.gt-header__mobile-link img {
+    filter: none;
+  }
+}
+

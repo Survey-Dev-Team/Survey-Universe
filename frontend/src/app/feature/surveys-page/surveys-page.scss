@@ -1,0 +1,350 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/fonts" as fonts;
+
+.gt-surveys-page {
+  padding: $space-40 0 60px;
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 15%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url('/assets/images/all_surveys_bg.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+  &__hero {
+    width: 100%;
+    margin-top: $space-24;
+    overflow: hidden;
+  }
+
+  &__hero-placeholder {
+    width: 100%;
+    height: 220px;
+    background: linear-gradient(
+      135deg,
+      rgba(60, 20, 120, 0.35) 0%,
+      rgba(10, 5, 30, 0.6) 100%
+    );
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  // ── Search (rendered inside page-header) ────────────────────────
+  &__search-desc {
+    font-family: fonts.$font-family;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.65);
+    max-width: 520px;
+    margin: 0 0 $space-24;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  &__search-input-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+  }
+
+  &__search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent-color);
+    opacity: 0.7;
+    font-size: 1rem;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &__search-clear {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent-color);
+    opacity: 0.6;
+    font-size: 0.9rem;
+    cursor: pointer;
+    z-index: 1;
+    transition: opacity 0.15s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__search-input {
+    width: 100%;
+    padding: 14px 44px 14px 46px !important;
+    border-radius: 40px !important;
+    border: 1px solid var(--border-color) !important;
+    background: var(--basic-white) !important;
+    color: var(--text-color) !important;
+    font-family: fonts.$font-family !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+
+    &::placeholder {
+      color: var(--tertiary-color);
+      line-height: normal;
+    }
+
+    &:focus {
+      border-color: var(--accent-color) !important;
+      box-shadow: 0 0 0 3px rgba(120, 80, 220, 0.15) !important;
+      outline: none !important;
+    }
+  }
+
+  // ── Layout ───────────────────────────────────────────────────────
+  &__content {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  // ── Filters ──────────────────────────────────────────────────────
+  &__filters {
+    background: var(--basic-white);
+    border: 1px solid var(--border-color);
+    border-radius: $space-16;
+    padding: $space-24;
+    display: flex;
+    flex-direction: column;
+    gap: $space-24;
+    position: sticky;
+    top: 90px;
+  }
+
+  &__filters-title {
+    font-family: fonts.$font-family-heading;
+    font-size: 1.1rem;
+    font-weight: fonts.$font-weight-semibold;
+    color: var(--text-color);
+    margin: 0;
+  }
+
+  &__filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: $space-8;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: $space-16;
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+
+  &__filter-group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  &__filter-arrow {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    position: relative;
+    display: block;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 6px;
+      height: 1.5px;
+      background: var(--secondary-color);
+      transition: transform 0.2s;
+    }
+
+    &::before {
+      left: 1px;
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    &::after {
+      right: 1px;
+      transform: translateY(-50%) rotate(-45deg);
+    }
+
+    .gt-surveys-page__filter-group-header--open & {
+      &::before { transform: translateY(-50%) rotate(-45deg); }
+      &::after  { transform: translateY(-50%) rotate(45deg); }
+    }
+  }
+
+  &__filter-label {
+    font-family: fonts.$font-family;
+    font-size: 0.78rem;
+    font-weight: fonts.$font-weight-semibold;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--tertiary-color);
+  }
+
+  &__filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  &__filter-btn {
+    text-align: left;
+    padding: 7px 12px;
+    border-radius: $space-8;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--secondary-color);
+    font-family: fonts.$font-family;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+
+    &:hover {
+      background: var(--light-bg);
+      color: var(--text-color);
+    }
+
+    &--active {
+      background: rgba(120, 80, 220, 0.1);
+      border-color: rgba(120, 80, 220, 0.3);
+      color: var(--accent-color);
+      font-weight: fonts.$font-weight-medium;
+      padding-left: 28px;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+        width: 5px;
+        height: 9px;
+        border-right: 2px solid var(--accent-color);
+        border-bottom: 2px solid var(--accent-color);
+        margin-top: -1px;
+      }
+    }
+  }
+
+  &__filter-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-8;
+    padding: 7px 12px;
+    border-radius: $space-8;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--secondary-color);
+    font-family: fonts.$font-family;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+
+    &--active {
+      background: rgba(120, 80, 220, 0.1);
+      border-color: rgba(120, 80, 220, 0.3);
+      color: var(--accent-color);
+    }
+  }
+
+  &__filter-toggle-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--tertiary-color);
+    transition: background 0.15s;
+
+    .gt-surveys-page__filter-toggle--active & {
+      background: var(--accent-color);
+    }
+  }
+
+  // ── Surveys main ─────────────────────────────────────────────────
+  &__main {
+    display: flex;
+    flex-direction: column;
+    gap: $space-16;
+  }
+
+  &__count {
+    font-family: fonts.$font-family;
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    margin: 0;
+
+    strong {
+      color: var(--text-color);
+      font-weight: fonts.$font-weight-semibold;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-24;
+    justify-content: center;
+  }
+
+  &__card-link {
+    display: block;
+    text-decoration: none;
+    border-radius: 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    }
+  }
+}
+
+// ── Responsive ────────────────────────────────────────────────────
+@media screen and (max-width: 1100px) {
+  .gt-surveys-page {
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .gt-surveys-page {
+    &__content {
+      grid-template-columns: 1fr;
+    }
+
+    &__filters {
+      position: static;
+    }
+
+    &__filter-group-header {
+      padding: $space-8 0;
+    }
+
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__search-title {
+      font-size: 1.5rem;
+    }
+  }
+}

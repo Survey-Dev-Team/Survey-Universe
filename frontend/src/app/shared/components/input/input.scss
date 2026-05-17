@@ -1,0 +1,106 @@
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/functions-and-mixins" as functions;
+@use "../../../../styles/fonts" as fonts;
+
+.gt-input {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &__label {
+    font-size: functions.rem($space-14);
+    font-weight: fonts.$font-weight-medium;
+    line-height: functions.rem($space-24);
+  }
+
+  &__half {
+    width: 45%;
+  }
+
+  input {
+    background-color: var(--basic-white);
+    border: 1px solid var(--border-color);
+
+    &::placeholder {
+      font-size: functions.rem($space-14);
+      font-weight: fonts.$font-weight-light;
+      line-height: functions.rem($space-24);
+      color: var(--tertiary-color);
+    }
+
+    &.gt-input__invalid {
+      border-color: var(--error-color);
+    }
+
+    &.gt-input__valid {
+      border-color: var(--success-color);
+    }
+  }
+
+  &__invalid {
+    border-color: var(--error-color);
+  }
+
+  &__valid {
+    border-color: var(--success-color);
+  }
+
+  &__description,
+  &__error {
+    font-size: functions.rem($space-12);
+    font-weight: fonts.$font-weight-light;
+    line-height: functions.rem($space-16);
+  }
+
+  &__error {
+    color: var(--error-color);
+  }
+
+  &__description {
+    color: var(--tertiary-color);
+  }
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 12px;
+  top: 55px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tertiary-color);
+  z-index: 1;
+
+  &::before {
+    content: "";
+    width: 32px;
+    height: 32px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: opacity 0.2s ease;
+  }
+
+  &.password-hidden::before {
+    background-image: url("/assets/icons/eye.svg");
+  }
+
+  &.password-visible::before {
+    background-image: url("/assets/icons/eye-closed.svg");
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+}

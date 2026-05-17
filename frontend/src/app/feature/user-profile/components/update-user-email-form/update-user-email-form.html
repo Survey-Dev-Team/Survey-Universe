@@ -1,0 +1,44 @@
+<div class="gt-user-profile__content">
+  @if (!isSuccess()) {
+    <form [formGroup]="updateUserEmailForm" (ngSubmit)="onSubmit()" class="gt-update-user-email-form">
+      @if(currentUser()!.email){
+      <div class="gt-update-user-email-form__top">
+        <p class="p-14">
+          <span class="p-14__medium">Current email: </span
+          >{{currentUser()!.email}}
+        </p>
+      </div>
+      }
+
+      <div class="gt-update-user-email-form__item">
+        <gt-input
+          [type]="inputType.Text"
+          label="New Email"
+          placeholder="Enter your New Email"
+          description="e.g. username@domain.com"
+          name="newEmail"
+          class="gt-input"
+          formControlName="newEmail"
+          [parentForm]="updateUserEmailForm"
+          [isLoginForm]="false"
+        [BEValidationsErrors]="errorText()"
+        ></gt-input>
+      </div>
+      <div class="gt-update-user-email-form__bottom">
+        <button
+          type="submit"
+          [disabled]="updateUserEmailForm.invalid"
+          class="gt-update-user-email-form__button button button__filled button__fit-content"
+        >
+          {{ buttonText.SendCode }}
+        </button>
+      </div>
+    </form>
+  } @else {
+    <div class="gt-update-user-email-form__success">
+      <p class="p-14">
+        We sent an email to {{ sentEmail() }} with a confirmation link. Please follow the instructions in the email.
+      </p>
+    </div>
+  }
+</div>

@@ -1,0 +1,59 @@
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/fonts" as fonts;
+@use "../../../../styles/functions-and-mixins" as functions-and-mixins;
+
+.gt-select {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: fit-content;
+
+  &__icon {
+    position: absolute;
+    left: 20px;
+    z-index: 2;
+    top: 12px;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .p-select {
+    padding: 16px 24px 16px 50px;
+    width: 100%;
+    min-width: 400px;
+
+    &.p-select-open {
+      .p-placeholder.p-select-label {
+        color: var(--text-color) !important;
+      }
+    }
+
+    .p-placeholder.p-select-label {
+      color: var(--text-color) !important;
+      font-size: functions-and-mixins.rem($space-14) !important;
+      font-style: normal;
+      font-weight: fonts.$font-weight-medium !important;
+      line-height: functions-and-mixins.rem($space-24);
+    }
+  }
+}
+
+.time-select {
+  .p-select {
+    width: 185px;
+    min-width: auto;
+  }
+}
+
+@media screen and (max-width: 1370px) {
+  .gt-select {
+    width: 100%;
+    .p-select {
+      width: 100%;
+      min-width: auto;
+    }
+  }
+}

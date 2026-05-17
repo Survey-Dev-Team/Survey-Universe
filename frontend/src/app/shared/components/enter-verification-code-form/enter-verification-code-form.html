@@ -1,0 +1,84 @@
+<div class="form__heading">
+  <h1 class="form__title">Enter Verification Code</h1>
+</div>
+
+@if(currentEmail().length > 0){
+<p class="p-14 gt-enter-verification-code-form__description">
+  The verification code has been sent to your email to {{currentEmail()}}.
+  Please enter the code from the email.
+</p>
+}
+
+<form
+  [formGroup]="verificationCodeForm"
+  (ngSubmit)="onSubmit()"
+  class="gt-enter-verification-code-form"
+>
+  @if(errorText().length > 0) {
+  <div class="form__error">
+    <p class="form__error-text p-14">{{ errorText() }}</p>
+  </div>
+  }
+  <div class="gt-input__full">
+    <gt-input
+      [type]="InputType.Email"
+      label="Verification Code"
+      [parentForm]="verificationCodeForm"
+      [isLoginForm]="false"
+      class="gt-input"
+      placeholder="Enter Verification Code"
+      formControlName="verificationCode"
+    >
+    </gt-input>
+    <div class="gt-enter-verification-code-form__code-actions">
+    @if(currentCode().length > 0 && !isResendCodeClicked() && !isSetCodeClicked()) {
+    <button
+      class="gt-enter-verification-code-form__resend-button p-12"
+      (click)="setCode()"
+    >
+      Set Code
+    </button>
+    } @if(currentEmail().length > 0) { @if(isCounterActive()) {
+    <p class="p-12 gt-enter-verification-code-form__resend-timer">
+      Not received yet? Resend code in {{ counter() }}s
+    </p>
+    } @else {
+    <button
+      class="gt-enter-verification-code-form__resend-button p-12"
+      (click)="resendCode()"
+      type="button"
+    >
+      Resend Code
+    </button>
+    } }
+    </div>
+  </div>
+  <button
+    class="button button__filled button__full-width gt-enter-verification-code-form__button"
+    type="submit"
+    [disabled]="verificationCodeForm.invalid"
+  >
+    {{ ButtonText.Continue }}
+  </button>
+</form>
+<div class="gt-login-page__footer form__footer">
+  <p class="p-12">
+    Don't have an account?
+    <a routerLink="/register" class="form__link">Create an Account</a>
+    or
+    <a routerLink="/login" class="form__link">Back to Login Page</a>
+  </p>
+</div>
+@if(currentCode().length > 0 && !isResendCodeClicked()){
+<div class="gt-enter-verification-code-form__code-message">
+  <p class="p-14__medium gt-enter-verification-code-form__code-message--title">
+    Verification Code Assistance
+  </p>
+  <p class="p-14">
+    The verification code is available and can be inserted automatically. You
+    can add it once to the input by clicking the
+    <span class="p-14__medium">Set Code</span> button or paste it manually using
+    <span class="p-14__medium">Ctrl + V/Command + V</span>.
+  </p>
+</div>
+}

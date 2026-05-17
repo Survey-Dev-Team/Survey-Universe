@@ -1,0 +1,70 @@
+@use "../../../../../../../styles/variables" as *;
+@use "../../../../../../../styles/fonts" as fonts;
+
+.gt-survey-builder {
+  &__label-inline {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed transparent;
+    font-size: 0.85rem;
+    font-weight: fonts.$font-weight-medium;
+    color: var(--text-color);
+    padding: 0;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:hover,
+    &:focus {
+      border-bottom-color: var(--primary-color);
+    }
+
+    &::placeholder {
+      color: var(--tertiary-color);
+      font-weight: normal;
+      font-style: italic;
+    }
+  }
+
+  &__select-preview {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    border-radius: $space-8;
+    overflow: hidden;
+    background: var(--light-bg);
+    position: relative;
+  }
+
+  &__select-icon {
+    position: absolute;
+    top: $space-8;
+    right: $space-12;
+    font-size: 0.75rem;
+    color: var(--tertiary-color);
+    pointer-events: none;
+  }
+
+  &__select-options {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__select-option {
+    padding: $space-8 $space-12;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &--placeholder {
+      color: var(--tertiary-color);
+      font-style: italic;
+    }
+  }
+}

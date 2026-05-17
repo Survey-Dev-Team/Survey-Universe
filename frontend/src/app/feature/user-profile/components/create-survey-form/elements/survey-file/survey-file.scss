@@ -1,0 +1,35 @@
+@use "../../../../../../../styles/variables" as *;
+
+.gt-survey-builder {
+  &__file-dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $space-8;
+    padding: $space-16;
+    border: 2px dashed var(--border-color);
+    border-radius: $space-8;
+    color: var(--tertiary-color);
+    cursor: pointer;
+    min-height: 80px;
+    transition: border-color 0.2s, background 0.2s;
+
+    &:hover {
+      border-color: var(--accent-color);
+      background: var(--hover-bg, rgba(0, 0, 0, 0.03));
+    }
+  }
+
+  &__file-icon {
+    width: 28px;
+    height: 28px;
+    opacity: 0.6;
+  }
+
+  &__file-hint {
+    font-size: 0.82rem;
+    color: var(--tertiary-color);
+    text-align: center;
+  }
+}

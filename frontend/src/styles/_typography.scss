@@ -1,0 +1,74 @@
+@use 'variables';
+@use 'fonts';
+@use 'functions-and-mixins';
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: fonts.$font-family-heading;
+}
+
+.p-12,
+.p-14,
+.p-14__medium,
+.p-18,
+.p-24 {
+  font-family: fonts.$font-family-description;
+}
+
+.p-12 {
+  font-size: functions-and-mixins.rem(variables.$space-12);
+  font-weight: fonts.$font-weight-light;
+  line-height: functions-and-mixins.rem(variables.$space-16);
+}
+
+.p-14 {
+  font-size: functions-and-mixins.rem(variables.$space-14);
+  font-weight: fonts.$font-weight-light;
+  line-height: functions-and-mixins.rem(variables.$space-24);
+}
+
+.p-14__medium {
+  font-size: functions-and-mixins.rem(variables.$space-14);
+  font-weight: fonts.$font-weight-medium;
+  line-height: functions-and-mixins.rem(variables.$space-24);
+}
+
+.p-18 {
+  font-size: functions-and-mixins.rem(variables.$space-18);
+  font-weight: fonts.$font-weight-medium;
+  line-height: functions-and-mixins.rem(variables.$space-32);
+}
+
+.p-24 {
+  font-size: functions-and-mixins.rem(variables.$space-24);
+  font-weight: fonts.$font-weight-medium;
+  line-height: functions-and-mixins.rem(variables.$space-40);
+} 
+
+.main-title {
+  font-size: functions-and-mixins.rem(variables.$space-48);
+  font-weight: fonts.$font-weight-medium;
+  line-height: functions-and-mixins.rem(variables.$space-48);
+}
+
+.main-subtitle {
+  font-size: functions-and-mixins.rem(variables.$space-24);
+  font-weight: fonts.$font-weight-medium;
+  line-height: functions-and-mixins.rem(variables.$space-32);
+}
+
+.modal-title {
+  font-size: functions-and-mixins.rem(variables.$space-24);
+  font-weight: fonts.$font-weight-medium;
+  line-height: functions-and-mixins.rem(variables.$space-40);
+}
+
+@media screen and (max-width: 475px) {
+  .main-title {
+    font-size: functions-and-mixins.rem(variables.$space-32);
+    line-height: functions-and-mixins.rem(variables.$space-32);
+  }
+}

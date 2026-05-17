@@ -1,0 +1,15 @@
+.gt-update-user-email-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__bottom {
+    margin-top: 32px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__button {
+    padding: 8px 16px;
+  }
+}

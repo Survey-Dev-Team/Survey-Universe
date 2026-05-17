@@ -1,0 +1,147 @@
+<gt-header></gt-header>
+<div class="margin-top-header"></div>
+
+<div class="gt-my-surveys">
+  <!-- Hero -->
+  <div class="gt-my-surveys__hero">
+    <div class="container">
+      <h1 class="gt-my-surveys__page-title">My Surveys</h1>
+      <p class="gt-my-surveys__page-subtitle">Track surveys you've completed and feedback others have shared about you</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- KPI row -->
+    <div class="gt-my-surveys__kpi-row">
+      <div class="gt-my-surveys__kpi-card gt-my-surveys__kpi-card--accent">
+        <i class="pi pi-check-circle gt-my-surveys__kpi-icon"></i>
+        <span class="gt-my-surveys__kpi-value">{{ totalCompleted() }}</span>
+        <span class="gt-my-surveys__kpi-label">Surveys Completed</span>
+      </div>
+      <div class="gt-my-surveys__kpi-card">
+        <i class="pi pi-percentage gt-my-surveys__kpi-icon"></i>
+        <span class="gt-my-surveys__kpi-value">{{ avgCompletion() }}%</span>
+        <span class="gt-my-surveys__kpi-label">Avg Completion Rate</span>
+      </div>
+      <div class="gt-my-surveys__kpi-card">
+        <i class="pi pi-users gt-my-surveys__kpi-icon"></i>
+        <span class="gt-my-surveys__kpi-value">{{ totalRespondents() }}</span>
+        <span class="gt-my-surveys__kpi-label">Peers Responded About Me</span>
+      </div>
+      <div class="gt-my-surveys__kpi-card">
+        <i class="pi pi-star gt-my-surveys__kpi-icon"></i>
+        <span class="gt-my-surveys__kpi-value">{{ avgFeedbackScore() }}%</span>
+        <span class="gt-my-surveys__kpi-label">Avg Feedback Score</span>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="gt-my-surveys__tabs">
+      <button
+        class="gt-my-surveys__tab"
+        [class.gt-my-surveys__tab--active]="activeTab() === 'completed'"
+        (click)="setTab('completed')"
+      >
+        <i class="pi pi-check-square"></i>
+        Surveys I Completed
+        <span class="gt-my-surveys__tab-badge">{{ completedSurveys().length }}</span>
+      </button>
+      <button
+        class="gt-my-surveys__tab"
+        [class.gt-my-surveys__tab--active]="activeTab() === 'about-me'"
+        (click)="setTab('about-me')"
+      >
+        <i class="pi pi-comment"></i>
+        Responses About Me
+        <span class="gt-my-surveys__tab-badge">{{ responsesAboutMe().length }}</span>
+      </button>
+    </div>
+
+    <!-- ── Surveys I Completed ─────────────────────────────────────────────── -->
+    @if (activeTab() === 'completed') {
+      @if (completedSurveys().length === 0) {
+        <div class="gt-my-surveys__empty">
+          <i class="pi pi-inbox gt-my-surveys__empty-icon"></i>
+          <span>You haven't completed any surveys yet.</span>
+          <a [routerLink]="'/' + routes.SURVEYS" class="gt-my-surveys__empty-link">Browse surveys</a>
+        </div>
+      } @else {
+        <div class="gt-my-surveys__grid">
+          @for (s of completedSurveys(); track s.id) {
+            <div class="gt-my-surveys__card">
+              <div
+                class="gt-my-surveys__card-thumb"
+                [style.background-image]="'url(' + s.coverImage + ')'"
+              ></div>
+              <div class="gt-my-surveys__card-body">
+                <div class="gt-my-surveys__card-top">
+                  <span class="gt-my-surveys__category-badge">{{ s.category }}</span>
+                  <span class="gt-my-surveys__date">{{ s.completedAt }}</span>
+                </div>
+                <h3 class="gt-my-surveys__card-title">{{ s.title }}</h3>
+                <div class="gt-my-surveys__card-meta">
+                  <span><i class="pi pi-list"></i> {{ s.answeredQuestions }}/{{ s.totalQuestions }} questions</span>
+                  <span><i class="pi pi-clock"></i> {{ s.timeSpentMin }} min</span>
+                </div>
+                <!-- Completion bar -->
+                <div class="gt-my-surveys__progress-wrap">
+                  <div class="gt-my-surveys__progress-bar">
+                    <div
+                      class="gt-my-surveys__progress-fill"
+                      [style.width.%]="s.completionRate"
+                      [class.gt-my-surveys__progress-fill--full]="s.completionRate === 100"
+                    ></div>
+                  </div>
+                  <span class="gt-my-surveys__progress-label">{{ s.completionRate }}% complete</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+
+    <!-- ── Responses About Me ─────────────────────────────────────────────── -->
+    @if (activeTab() === 'about-me') {
+      @if (responsesAboutMe().length === 0) {
+        <div class="gt-my-surveys__empty">
+          <i class="pi pi-comment gt-my-surveys__empty-icon"></i>
+          <span>No one has responded about you yet.</span>
+        </div>
+      } @else {
+        <div class="gt-my-surveys__grid">
+          @for (r of responsesAboutMe(); track r.id) {
+            <div class="gt-my-surveys__card gt-my-surveys__card--feedback">
+              <div
+                class="gt-my-surveys__card-thumb"
+                [style.background-image]="'url(' + r.coverImage + ')'"
+              ></div>
+              <div class="gt-my-surveys__card-body">
+                <div class="gt-my-surveys__card-top">
+                  <span class="gt-my-surveys__category-badge">{{ r.category }}</span>
+                  <span class="gt-my-surveys__date">{{ r.lastResponseAt }}</span>
+                </div>
+                <h3 class="gt-my-surveys__card-title">{{ r.title }}</h3>
+                <div class="gt-my-surveys__card-meta">
+                  <span><i class="pi pi-users"></i> {{ r.respondents }} respondents</span>
+                </div>
+                <!-- Score bar -->
+                <div class="gt-my-surveys__progress-wrap">
+                  <div class="gt-my-surveys__progress-bar">
+                    <div
+                      class="gt-my-surveys__progress-fill gt-my-surveys__progress-fill--feedback"
+                      [style.width.%]="r.avgScore"
+                    ></div>
+                  </div>
+                  <span class="gt-my-surveys__progress-label">{{ r.avgScore }}% positive</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+  </div>
+</div>
+
+<gt-footer></gt-footer>

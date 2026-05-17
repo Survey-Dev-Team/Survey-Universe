@@ -1,0 +1,19 @@
+.gt-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__button {
+    margin-top: 38px;
+  }
+
+  &__forgot-password {
+    cursor: pointer;
+    margin-top: 4px;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

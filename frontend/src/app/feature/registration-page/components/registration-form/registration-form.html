@@ -1,0 +1,90 @@
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="gt-registration-form">
+  
+  @if(errorText().length > 0) {
+    <div class="form__error">
+      <p class="form__error-text p-14">{{ errorText() }}</p>
+    </div>
+  }
+  <div class="gt-input__half">
+    <gt-input
+      [type]="inputType.Text"
+      label="First Name"
+      placeholder="Enter your First Name"
+      description="e.g. Jonson"
+      name="firstName"
+      class="gt-input"
+      formControlName="firstName"
+      [parentForm]="registrationForm"
+      [isLoginForm]="false"
+    ></gt-input>
+  </div>
+  <div class="gt-input__half">
+    <gt-input
+      [type]="inputType.Text"
+      label="Last Name"
+      placeholder="Enter your Last Name"
+      description="e.g. Doe"
+      name="lastName"
+      class="gt-input"
+      formControlName="lastName"
+      [parentForm]="registrationForm"
+      [isLoginForm]="false"
+    ></gt-input>
+  </div>
+  <div class="gt-input__full">
+    <gt-input
+      [type]="inputType.Email"
+      label="Email"
+      placeholder="Enter your Email"
+      description="e.g. username@domain.com"
+      name="email"
+      class="gt-input"
+      formControlName="email"
+      [parentForm]="registrationForm"
+      [isLoginForm]="false"
+    ></gt-input>
+  </div>
+
+  <div class="gt-input__full">
+    <gt-input-password
+      label="Password"
+      placeholder="Enter your password"
+      name="password"
+      formControlName="password"
+      [parentForm]="registrationForm"
+      [isRegistrationPassword]="true"
+      [isRegistrationConfirmPassword]="false"
+      [isLoginPassword]="false"
+    >
+    </gt-input-password>
+  </div>
+  <div class="gt-input__full">
+    <gt-input-password
+      label="Confirm New Password"
+      placeholder="Confirm New Password"
+      name="confirmPassword"
+      formControlName="confirmPassword"
+      [parentForm]="registrationForm"
+      [isRegistrationPassword]="false"
+      [isRegistrationConfirmPassword]="true"
+      [isLoginPassword]="false"
+    >
+    </gt-input-password>
+  </div>
+
+  <button
+    type="submit"
+    [disabled]="registrationForm.invalid"
+    class="button button__full-width gt-registration-form__button"
+  >
+    {{ buttonText.Register }}
+  </button>
+  @if(isSuccess) {
+    <gt-toast 
+      [message]="successText"
+      [severity]="'success'"
+      [summary]="'Welcome!'"
+      [life]="5000"
+    />
+  }
+</form>

@@ -1,0 +1,173 @@
+<gt-header></gt-header>
+<div class="margin-top-header"></div>
+<gt-page-header-role title="All Surveys" backgroundImage="/assets/images/all_surveys_top.png" [centered]="true">
+  <p class="gt-surveys-page__search-desc">
+    Search across all available surveys — filtering by topic, author, and date will be available soon.
+  </p>
+  <div class="gt-surveys-page__search-input-wrap">
+    <i class="pi pi-search gt-surveys-page__search-icon"></i>
+    <input
+      pInputText
+      class="gt-surveys-page__search-input"
+      type="text"
+      placeholder="Search surveys..."
+      [value]="searchQuery()"
+      (input)="searchQuery.set($any($event.target).value)"
+    />
+    @if (searchQuery()) {
+      <i class="pi pi-times gt-surveys-page__search-clear" (click)="searchQuery.set('')"></i>
+    }
+  </div>
+</gt-page-header-role>
+
+<div class="gt-surveys-page">
+  <div class="container">
+
+    <!-- Content -->
+    <div class="gt-surveys-page__content">
+
+      <!-- Filters sidebar -->
+      <aside class="gt-surveys-page__filters">
+        <h3 class="gt-surveys-page__filters-title">Filters</h3>
+
+        <div class="gt-surveys-page__filter-group">
+          <button
+            class="gt-surveys-page__filter-group-header"
+            [class.gt-surveys-page__filter-group-header--open]="isGroupOpen('Date')"
+            (click)="toggleGroup('Date')"
+          >
+            <span class="gt-surveys-page__filter-label">Date</span>
+            <span class="gt-surveys-page__filter-arrow"></span>
+          </button>
+          @if (isGroupOpen('Date')) {
+            <div class="gt-surveys-page__filter-options">
+              @for (d of ['This week', 'This month', 'All time']; track d) {
+                <button
+                  class="gt-surveys-page__filter-btn"
+                  [class.gt-surveys-page__filter-btn--active]="filters().dates.includes(d)"
+                  (click)="toggleMulti('dates', d)"
+                >{{ d }}</button>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="gt-surveys-page__filter-group">
+          <button
+            class="gt-surveys-page__filter-group-header"
+            [class.gt-surveys-page__filter-group-header--open]="isGroupOpen('Category')"
+            (click)="toggleGroup('Category')"
+          >
+            <span class="gt-surveys-page__filter-label">Category</span>
+            <span class="gt-surveys-page__filter-arrow"></span>
+          </button>
+          @if (isGroupOpen('Category')) {
+            <div class="gt-surveys-page__filter-options">
+              @for (cat of ['Science', 'Philosophy', 'Society', 'Psychology']; track cat) {
+                <button
+                  class="gt-surveys-page__filter-btn"
+                  [class.gt-surveys-page__filter-btn--active]="filters().categories.includes(cat)"
+                  (click)="toggleMulti('categories', cat)"
+                >{{ cat }}</button>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="gt-surveys-page__filter-group">
+          <button
+            class="gt-surveys-page__filter-group-header"
+            [class.gt-surveys-page__filter-group-header--open]="isGroupOpen('Author')"
+            (click)="toggleGroup('Author')"
+          >
+            <span class="gt-surveys-page__filter-label">Author</span>
+            <span class="gt-surveys-page__filter-arrow"></span>
+          </button>
+          @if (isGroupOpen('Author')) {
+            <div class="gt-surveys-page__filter-options">
+              @for (author of ['Alex Monroe', 'Lena Oris', 'Mark Vega', 'Dana Kol', 'Ivan Petrov', 'Sofia Lane']; track author) {
+                <button
+                  class="gt-surveys-page__filter-btn"
+                  [class.gt-surveys-page__filter-btn--active]="filters().authors.includes(author)"
+                  (click)="toggleMulti('authors', author)"
+                >{{ author }}</button>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="gt-surveys-page__filter-group">
+          <button
+            class="gt-surveys-page__filter-group-header"
+            [class.gt-surveys-page__filter-group-header--open]="isGroupOpen('Test')"
+            (click)="toggleGroup('Test')"
+          >
+            <span class="gt-surveys-page__filter-label">Test surveys</span>
+            <span class="gt-surveys-page__filter-arrow"></span>
+          </button>
+          @if (isGroupOpen('Test')) {
+            <div class="gt-surveys-page__filter-options">
+              <button
+                class="gt-surveys-page__filter-toggle"
+                [class.gt-surveys-page__filter-toggle--active]="filters().isTest"
+                (click)="toggleTest()"
+              >
+                <span class="gt-surveys-page__filter-toggle-dot"></span>
+                <span>{{ filters().isTest ? 'Shown' : 'Hidden' }}</span>
+              </button>
+            </div>
+          }
+        </div>
+
+        <div class="gt-surveys-page__filter-group">
+          <button
+            class="gt-surveys-page__filter-group-header"
+            [class.gt-surveys-page__filter-group-header--open]="isGroupOpen('Status')"
+            (click)="toggleGroup('Status')"
+          >
+            <span class="gt-surveys-page__filter-label">Status</span>
+            <span class="gt-surveys-page__filter-arrow"></span>
+          </button>
+          @if (isGroupOpen('Status')) {
+            <div class="gt-surveys-page__filter-options">
+              @for (status of ['Active', 'Passed']; track status) {
+                <button
+                  class="gt-surveys-page__filter-btn"
+                  [class.gt-surveys-page__filter-btn--active]="filters().statuses.includes(status)"
+                  (click)="toggleMulti('statuses', status)"
+                >{{ status }}</button>
+              }
+            </div>
+          }
+        </div>
+      </aside>
+
+      <!-- Surveys grid -->
+      <div class="gt-surveys-page__main">
+        @if (hasActiveFilters()) {
+          <p class="gt-surveys-page__count">
+            Found <strong>{{ filteredSurveys().length }}</strong> surveys
+          </p>
+        }
+
+        <div class="gt-surveys-page__grid">
+          @for (survey of filteredSurveys(); track $index) {
+            <a class="gt-surveys-page__card-link" [routerLink]="'/surveys/' + survey.id">
+              <gt-survey
+                [text]="survey.text"
+                [coverImage]="survey.coverImage"
+                [description]="survey.description"
+                [date]="survey.date"
+                [category]="survey.category"
+                [author]="survey.author"
+              />
+            </a>
+          }
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<gt-footer></gt-footer>

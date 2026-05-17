@@ -1,0 +1,71 @@
+<gt-header></gt-header>
+
+<div class="gt-main-page margin-top-header">
+  <div class="gt-main-page__banner">
+    <div #parallaxScene class="gt-main-page__parallax" aria-hidden="true">
+      <div class="gt-main-page__layer gt-main-page__layer--moon" data-depth="-0.5">
+        <img src="/assets/images/banner/terrain_overlay.png" alt="" />
+      </div>
+      <div class="gt-main-page__layer gt-main-page__layer--terrain" data-depth="0.08">
+        <img src="/assets/images/banner/mountains_person_transparent_cropped.png" alt="" />
+      </div>
+    </div>
+
+    <div class="gt-main-page__banner-content">
+      <h1
+        class="gt-main-page__banner-title main-title"
+        [@titleLetters]="titleState"
+      >
+        @for (word of titleWords; track $index) {
+          <span class="gt-main-page__word">
+            @for (letter of word; track $index) {
+              <span class="gt-main-page__letter">{{ letter }}</span>
+            }
+          </span>
+          @if (!$last) {<span class="gt-main-page__space">&nbsp;</span>}
+        }
+      </h1>
+
+      <p class="gt-main-page__banner-description p-14" [@fadeSlideIn]="descState">
+        Step into a world of questions, share your opinion, and help discover what people think about everyday topics.
+      </p>
+
+      <div class="gt-main-page__banner-buttons" [@fadeSlideIn]="buttonsState">
+        <a [routerLink]="surveysRoute" class="button button__fit-content">Start Exploring</a>
+        <a [routerLink]="surveysRoute" class="button button__fit-content gt-main-page__banner-button--ghost">Choose a Topic</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="gt-main-page__hot-surveys">
+  <div #lunarScene class="gt-main-page__surveys-parallax" aria-hidden="true">
+    <div
+      class="gt-main-page__surveys-lunar"
+      data-depth="0.15"
+    ></div>
+  </div>
+  <div class="container">
+    <div class="gt-main-page__hot-surveys-header">
+      <h2 class="gt-main-page__hot-surveys-title">Surveys <span class="gt-main-page__hot-surveys-accent">for you</span></h2>
+      <a [routerLink]="surveysRoute" class="gt-main-page__hot-surveys-link">All surveys →</a>
+    </div>
+    <div class="gt-main-page__hot-surveys-grid">
+      @for (survey of hotSurveys; track $index) {
+        <a class="gt-main-page__survey-link" [routerLink]="'/surveys/' + survey.id">
+          <gt-survey
+            [text]="survey.text"
+            [coverImage]="survey.coverImage"
+            [description]="survey.description"
+            [date]="survey.date"
+            [category]="survey.category"
+            [author]="survey.author"
+          />
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<gt-footer></gt-footer>
+

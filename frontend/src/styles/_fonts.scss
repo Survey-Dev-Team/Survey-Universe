@@ -1,0 +1,21 @@
+
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+$font-weight-black: 900;
+
+$font-family: 'Raleway', sans-serif;
+$font-family-heading: 'Centauri', sans-serif;
+$font-family-description: 'Raleway', sans-serif;
+
+@font-face {
+  font-family: 'Centauri';
+  src: url('/assets/fonts/Centauri.woff') format('woff'),
+       url('/assets/fonts/Centauri.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}

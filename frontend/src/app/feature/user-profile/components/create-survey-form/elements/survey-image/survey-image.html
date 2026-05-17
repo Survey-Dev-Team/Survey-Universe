@@ -1,0 +1,10 @@
+@if (element(); as el) {
+  @if (el.imageUrl) {
+    <img [src]="el.imageUrl" class="gt-survey-builder__image-preview" alt="Survey preview" />
+  } @else {
+    <div class="gt-survey-builder__image-placeholder">
+      <i class="pi pi-image"></i>
+      <span>Image will appear here</span>
+    </div>
+  }
+}

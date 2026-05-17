@@ -1,0 +1,18 @@
+@if (element(); as el) {
+  <span class="gt-survey-builder__label-row">
+    <input
+      class="gt-survey-builder__label-inline"
+      [value]="el.label ?? ''"
+      placeholder="Question label..."
+      (click)="$event.stopPropagation()"
+      (input)="update({ label: $any($event.target).value })"
+    />
+    @if (el.required) { <span class="gt-survey-builder__required">*</span> }
+  </span>
+  <textarea
+    class="gt-survey-builder__preview-input gt-survey-builder__preview-textarea"
+    [placeholder]="el.placeholder ?? ''"
+    disabled
+    rows="3"
+  ></textarea>
+}

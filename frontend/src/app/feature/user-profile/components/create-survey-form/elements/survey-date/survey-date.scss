@@ -1,0 +1,23 @@
+@use "../../../../../../../styles/variables" as *;
+@use "../../../../../../../styles/fonts" as fonts;
+
+:host ::ng-deep .gt-survey-builder__date-picker.p-datepicker {
+  width: 100%;
+
+  &::before {
+    display: none;
+  }
+
+  .p-inputtext {
+    width: 100% !important;
+    padding: $space-8 $space-12 !important;
+    padding-right: 42px !important;
+    font-family: fonts.$font-family !important;
+    font-size: 0.85rem !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: $space-8 !important;
+    background: var(--light-bg) !important;
+    color: var(--secondary-color) !important;
+    box-shadow: none !important;
+  }
+}

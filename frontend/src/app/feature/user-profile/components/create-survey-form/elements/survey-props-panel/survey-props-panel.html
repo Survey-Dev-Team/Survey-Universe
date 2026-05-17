@@ -1,0 +1,151 @@
+@let f = propForm().controls;
+@let el = element();
+
+<p class="gt-survey-builder__palette-title p-14__medium">Properties</p>
+<p-divider />
+
+<!-- Label / Content -->
+@if (el.type !== 'paginator' && el.type !== 'space' && el.type !== 'image') {
+  <div class="gt-survey-builder__prop-row">
+    <span class="gt-survey-builder__prop-label">
+      {{ el.type === 'text' || el.type === 'title' ? 'Content' : 'Label' }}
+    </span>
+    @if (el.type === 'text') {
+      <textarea class="gt-survey-builder__prop-input" rows="3" [formControl]="f.content"></textarea>
+    } @else if (el.type === 'title') {
+      <input class="gt-survey-builder__prop-input" [formControl]="f.content" />
+    } @else {
+      <input class="gt-survey-builder__prop-input" [formControl]="f.label" />
+    }
+  </div>
+}
+
+<!-- Placeholder (input & textarea) -->
+@if (el.type === 'input' || el.type === 'textarea') {
+  <div class="gt-survey-builder__prop-row">
+    <span class="gt-survey-builder__prop-label">Placeholder</span>
+    @if (el.type === 'textarea') {
+      <textarea class="gt-survey-builder__prop-input" rows="2" [formControl]="f.placeholder"></textarea>
+    } @else {
+      <input class="gt-survey-builder__prop-input" [formControl]="f.placeholder" />
+    }
+  </div>
+}
+
+<!-- Input subtype -->
+@if (el.type === 'input') {
+  <div class="gt-survey-builder__prop-row">
+    <span class="gt-survey-builder__prop-label">Type</span>
+    <select class="gt-survey-builder__prop-input" [formControl]="f.inputSubType">
+      @for (t of inputSubTypes; track t.value) {
+        <option [value]="t.value">{{ t.label }}</option>
+      }
+    </select>
+  </div>
+}
+
+<!-- Required toggle -->
+@if (el.type === 'input' || el.type === 'textarea' || el.type === 'select-radio' || el.type === 'select' || el.type === 'date-picker') {
+  <div class="gt-survey-builder__prop-row gt-survey-builder__prop-row--checkbox">
+    <span class="gt-survey-builder__prop-label">Required</span>
+    <input type="checkbox" [formControl]="f.required" />
+  </div>
+}
+
+<!-- Date picker -->
+@if (el.type === 'date-picker') {
+  <div class="gt-survey-builder__prop-row">
+    <span class="gt-survey-builder__prop-label">Placeholder text</span>
+    <input class="gt-survey-builder__prop-input" [formControl]="f.placeholder" placeholder="e.g. Select a date..." />
+  </div>
+}
+
+<!-- Options (radio / select) -->
+@if (el.type === 'select-radio' || el.type === 'select') {
+  <div class="gt-survey-builder__prop-row">
+    <span class="gt-survey-builder__prop-label">Options</span>
+    @for (optCtrl of optionsArray.controls; track $index; let i = $index) {
+      <div class="gt-survey-builder__option-row">
+        <input class="gt-survey-builder__prop-input" [formControl]="optCtrl" />
+        <button
+          type="button"
+          class="gt-survey-builder__option-remove"
+          [disabled]="optionsArray.length <= 2"
+          (click)="removeOption.emit(i)"
+        >
+          <img src="/assets/icons/trash.svg" alt="Remove" class="gt-survey-builder__btn-icon" />
+        </button>
+      </div>
+    }
+    <button
+      type="button"
+      class="gt-survey-builder__option-add button button__inverted button__fit-content"
+      (click)="addOption.emit()"
+    >
+      <i class="pi pi-plus"></i> Add Option
+    </button>
+  </div>
+}
+
+<!-- Range settings -->
+@if (el.type === 'range') {
+  <div class="gt-survey-builder__prop-row">
+    <span class="gt-survey-builder__prop-label">Min</span>
+    <input type="number" class="gt-survey-builder__prop-input" [formControl]="f.rangeMin" />
+  </div>
+  <div class="gt-survey-builder__prop-row">
+    <span class="gt-survey-builder__prop-label">Max</span>
+    <input type="number" class="gt-survey-builder__prop-input" [formControl]="f.rangeMax" />
+  </div>
+  <div class="gt-survey-builder__prop-row">
+    <span class="gt-survey-builder__prop-label">Step</span>
+    <input type="number" class="gt-survey-builder__prop-input" [formControl]="f.rangeStep" />
+  </div>
+}
+
+<!-- File upload -->
+@if (el.type === 'file') {
+  <div class="gt-survey-builder__prop-row">
+    <span class="gt-survey-builder__prop-label">Placeholder text</span>
+    <input class="gt-survey-builder__prop-input" [formControl]="f.placeholder" placeholder="e.g. Upload your CV..." />
+  </div>
+  <div class="gt-survey-builder__prop-row gt-survey-builder__prop-row--checkbox">
+    <span class="gt-survey-builder__prop-label">Required</span>
+    <input type="checkbox" [formControl]="f.required" />
+  </div>
+  <div class="gt-survey-builder__prop-row">
+    <span class="gt-survey-builder__prop-label">Sample File</span>
+    <label class="gt-survey-builder__file-upload-label">
+      <input
+        type="file"
+        hidden
+        (change)="onPropFileChange($event)"
+      />
+      <span class="gt-survey-builder__file-upload-btn button button__inverted button__fit-content">
+        <img src="/assets/icons/download.svg" alt="Upload" class="gt-survey-builder__btn-icon" />
+        Choose File
+      </span>
+      @if (selectedPropFile()) {
+        <span class="gt-survey-builder__file-upload-name">{{ selectedPropFile() }}</span>
+      }
+    </label>
+  </div>
+}
+
+<!-- Image upload -->
+@if (el.type === 'image') {
+  <div class="gt-survey-builder__prop-row">
+    <span class="gt-survey-builder__prop-label">Upload Image</span>
+    <p-fileupload
+      name="surveyImage"
+      chooseLabel="Choose"
+      [showUploadButton]="false"
+      [showCancelButton]="false"
+      [customUpload]="true"
+      mode="advanced"
+      accept=".jpg,.jpeg,.png,.gif,.webp"
+      [maxFileSize]="2000000"
+      (onSelect)="imageSelect.emit($event)"
+    />
+  </div>
+}

@@ -1,0 +1,94 @@
+@use 'variables' as *;
+@use 'sass:meta';
+@use 'sass:math';
+
+// REM Conversion Function
+$base-font-size: 16px !default;
+
+@function rem($px-value) {
+  @if meta.type-of($px-value) == number and math.unit($px-value) == px {
+    @return calc($px-value / $base-font-size) * 1rem;
+  }
+  @return $px-value;
+}
+
+// Padding Mixins
+
+// All sides padding
+@mixin p($space) {
+  padding: rem($space);
+}
+
+// Specific padding sides
+@mixin pt($space) {
+  padding-top: rem($space);
+}
+@mixin pr($space) {
+  padding-right: rem($space);
+}
+@mixin pb($space) {
+  padding-bottom: rem($space);
+}
+@mixin pl($space) {
+  padding-left: rem($space);
+}
+
+// Vertical & Horizontal padding
+@mixin py($space) {
+  padding-top: rem($space);
+  padding-bottom: rem($space);
+}
+@mixin px($space) {
+  padding-left: rem($space);
+  padding-right: rem($space);
+}
+
+// Margin Mixins
+
+// All sides margin
+@mixin m($space) {
+  margin: rem($space);
+}
+
+// Specific margin sides
+@mixin mt($space) {
+  margin-top: rem($space);
+}
+@mixin mr($space) {
+  margin-right: rem($space);
+}
+@mixin mb($space) {
+  margin-bottom: rem($space);
+}
+@mixin ml($space) {
+  margin-left: rem($space);
+}
+
+// Vertical & Horizontal margin
+@mixin my($space) {
+  margin-top: rem($space);
+  margin-bottom: rem($space);
+}
+@mixin mx($space) {
+  margin-left: rem($space);
+  margin-right: rem($space);
+}
+
+// Center horizontally
+@mixin mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Combined Spacing Mixins
+
+// Same padding and margin
+@mixin spacing($space) {
+  @include p($space);
+  @include m($space);
+}
+
+// Gap for flexbox/grid
+@mixin gap($space) {
+  gap: rem($space);
+}

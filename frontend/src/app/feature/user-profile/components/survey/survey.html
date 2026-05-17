@@ -1,0 +1,41 @@
+<div
+  class="gt-survey-card"
+  [style.background-image]="'url(' + coverImage() + ')'"
+>
+  <div class="gt-survey-card__overlay">
+    @if (category() && category() !== 'Test') {
+      <span class="gt-survey-card__category">{{ category() }}</span>
+    }
+    @if (category() === 'Test') {
+      <span class="gt-survey-card__category gt-survey-card__category--test">Test</span>
+    }
+    <div class="gt-survey-card__bottom">
+      <div class="gt-survey-card__content">
+        <h3 class="gt-survey-card__title">{{ text() }}</h3>
+
+        <div class="gt-survey-card__meta">
+          @if (description()) {
+            <span class="gt-survey-card__meta-row">
+              <img src="/assets/icons/clock.svg" class="gt-survey-card__clock" alt="" />
+              <span>{{ description() }}</span>
+            </span>
+          }
+          @if (date()) {
+            <span class="gt-survey-card__date">{{ date() }}</span>
+          }
+        </div>
+
+        @if (author()) {
+          <span class="gt-survey-card__author">by {{ author() }}</span>
+        }
+      </div>
+
+      <button
+        class="gt-survey-card__btn"
+        type="button"
+      >
+        <img src="/assets/icons/arrow.svg" alt="→" class="gt-survey-card__arrow" />
+      </button>
+    </div>
+  </div>
+</div>

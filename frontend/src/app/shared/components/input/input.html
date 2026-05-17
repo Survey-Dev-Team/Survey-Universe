@@ -1,0 +1,46 @@
+<div class="gt-input {{ class() }}">
+  <label class="gt-input__label">{{ label() }}</label>
+
+  @if (type() === 'password') {
+    <input
+      type="password"
+      [placeholder]="placeholder()"
+      [value]="value"
+      (input)="onInput($event)"
+      (blur)="onBlur()"
+      [ngClass]="{
+        'gt-input__invalid': BEValidationsErrors()?.length || (control?.invalid && control?.touched),
+        'gt-input__valid': !BEValidationsErrors()?.length && (control?.valid && control?.dirty),
+      }"
+      gtPasswordToggle
+    />
+  } @else {
+    <input
+      [type]="type()"
+      [placeholder]="placeholder()"
+      [value]="value"
+      (input)="onInput($event)"
+      (blur)="onBlur()"
+      [ngClass]="{
+        'gt-input__invalid': (control?.invalid && control?.touched) || BEValidationsErrors(),
+        'gt-input__valid': !BEValidationsErrors()?.length && (control?.valid && control?.dirty),
+      }"
+    />
+  }
+  @if (control?.invalid && control?.touched) {
+    <p class="gt-input__error">
+      @for (error of getErrorMessages(); track $index) {
+        <span>{{ error }}</span>
+      }
+    </p>
+  }
+  @if (description() && !(control?.invalid && control?.touched) && !BEValidationsErrors()) {
+    <small class="gt-input__description">{{ description() }}</small>
+  }
+  @if (BEValidationsErrors()) {
+    <p class="gt-input__error">
+      <span>{{ BEValidationsErrors()}}</span>
+    </p>
+  }
+  
+</div>

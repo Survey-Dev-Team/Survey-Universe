@@ -1,0 +1,150 @@
+@use "../../../../../styles/variables" as *;
+@use "../../../../../styles/fonts" as fonts;
+
+.gt-survey-card {
+  position: relative;
+  border-radius: $space-16;
+  overflow: hidden;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center right;
+  background-color: #0d0820;
+  min-height: 300px;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(100, 60, 200, 0.25);
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(8, 4, 20, 0.92) 0%,
+      rgba(8, 4, 20, 0.55) 40%,
+      rgba(8, 4, 20, 0.0) 100%
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: $space-24;
+  }
+
+  &__category {
+    position: absolute;
+    top: $space-16;
+    left: $space-16;
+    background: rgba(120, 80, 220, 0.75);
+    backdrop-filter: blur(6px);
+    color: #ffffff;
+    font-family: fonts.$font-family;
+    font-size: 0.75rem;
+    font-weight: fonts.$font-weight-semibold;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    white-space: nowrap;
+
+    &--test {
+      left: unset;
+      right: $space-16;
+      background: transparent;
+      backdrop-filter: none;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.68rem;
+      font-weight: fonts.$font-weight-regular;
+      letter-spacing: 0.08em;
+      padding: 3px 8px;
+    }
+  }
+
+  &__bottom {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: $space-12;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $space-8;
+  }
+
+  &__title {
+    font-family: fonts.$font-family-heading;
+    font-size: 1.25rem;
+    font-weight: fonts.$font-weight-semibold;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.35;
+  }
+
+  &__meta {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  &__meta-row {
+    display: flex;
+    align-items: center;
+    gap: $space-8;
+    font-family: fonts.$font-family;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  &__clock {
+    width: 15px;
+    height: 15px;
+    filter: brightness(0) invert(1);
+    opacity: 0.7;
+  }
+
+  &__date {
+    font-family: fonts.$font-family;
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  &__btn {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.07);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  &__arrow {
+    width: 18px;
+    height: 18px;
+    filter: brightness(0) invert(1);
+    transform: rotate(-90deg);
+  }
+
+  &__author {
+    font-family: fonts.$font-family;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.45);
+    margin-top: $space-4;
+  }
+}

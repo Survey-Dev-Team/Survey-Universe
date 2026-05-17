@@ -1,0 +1,16 @@
+export enum ROUTES {
+  LOGIN = 'login',
+  REGISTER = 'register',
+  MAIN_PAGE = 'main-page',
+  USER_PROFILE = 'profile',
+  SURVEYS = 'surveys',
+  SURVEY_DETAIL = 'surveys/:id',
+  ABOUT = 'about',
+  REPORTS = 'reports',
+  PREORDER = 'preorder',
+  STATISTICS = 'statistics',
+  ADMIN_USERS = 'admin/users',
+  ADMIN_SURVEYS = 'admin/surveys',
+  USER_SURVEYS = 'user/surveys',
+  CONTACT = 'contact',
+}

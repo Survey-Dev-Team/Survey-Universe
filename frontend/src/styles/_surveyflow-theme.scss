@@ -1,0 +1,164 @@
+:root,
+[data-theme='dark'] {
+  --sf-surface-app: #030712;
+  --sf-surface-app-2: #070b18;
+  --sf-surface-sidebar: #070a16;
+  --sf-surface-panel: #0b1020;
+  --sf-surface-panel-2: #10162a;
+  --sf-surface-panel-3: #151a2e;
+  --sf-surface-panel-glass: rgba(15, 22, 42, 0.72);
+  --sf-surface-field: #0a0f1e;
+  --sf-surface-field-hover: #10172a;
+  --sf-surface-divider: rgba(148, 163, 184, 0.14);
+  --sf-surface-border: rgba(148, 163, 184, 0.22);
+  --sf-surface-border-strong: rgba(168, 85, 247, 0.45);
+  --sf-text-primary: #f8fafc;
+  --sf-text-secondary: #cbd5e1;
+  --sf-text-muted: #94a3b8;
+  --sf-text-disabled: #64748b;
+  --sf-text-inverse: #020617;
+  --sf-brand-primary: #7c3aed;
+  --sf-brand-primary-hover: #8b5cf6;
+  --sf-brand-primary-dark: #5b21b6;
+  --sf-brand-primary-soft: rgba(124, 58, 237, 0.18);
+  --sf-brand-primary-border: rgba(124, 58, 237, 0.52);
+  --sf-brand-violet: #a855f7;
+  --sf-brand-purple: #9333ea;
+  --sf-accent-cyan: #22d3ee;
+  --sf-accent-teal: #14b8a6;
+  --sf-accent-blue: #3b82f6;
+  --sf-accent-orange: #f97316;
+  --sf-accent-yellow: #facc15;
+  --sf-accent-green: #22c55e;
+  --sf-accent-pink: #ec4899;
+  --sf-accent-red: #ef4444;
+  --sf-status-active-bg: rgba(20, 184, 166, 0.16);
+  --sf-status-active-text: #2dd4bf;
+  --sf-status-new-bg: rgba(124, 58, 237, 0.18);
+  --sf-status-new-text: #a78bfa;
+  --sf-status-completed-bg: rgba(59, 130, 246, 0.16);
+  --sf-status-completed-text: #60a5fa;
+  --sf-status-warning-bg: rgba(249, 115, 22, 0.16);
+  --sf-status-warning-text: #fb923c;
+  --sf-status-danger-bg: rgba(239, 68, 68, 0.16);
+  --sf-status-danger-text: #f87171;
+  --sf-charts-violet: #7c3aed;
+  --sf-charts-cyan: #22d3ee;
+  --sf-charts-blue: #3b82f6;
+  --sf-charts-green: #22c55e;
+  --sf-charts-orange: #f97316;
+  --sf-gradients-app: radial-gradient(circle at 45% 15%, rgba(124, 58, 237, 0.22), transparent 32%),
+    linear-gradient(180deg, #070b18 0%, #030712 100%);
+  --sf-gradients-panel: linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(8, 13, 28, 0.92));
+  --sf-gradients-button-primary: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+  --sf-gradients-button-cyan: linear-gradient(135deg, #22d3ee 0%, #0e7490 100%);
+  --sf-gradients-button-orange: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+  --sf-gradients-hero-glow: radial-gradient(
+    circle,
+    rgba(124, 58, 237, 0.72),
+    rgba(49, 46, 129, 0.18) 52%,
+    transparent 72%
+  );
+  --sf-shadow-panel: 0 24px 80px rgba(0, 0, 0, 0.38);
+  --sf-shadow-card: 0 16px 48px rgba(0, 0, 0, 0.28);
+  --sf-shadow-button: 0 16px 40px rgba(124, 58, 237, 0.32);
+}
+
+[data-theme='light'] {
+  --sf-surface-app: #f8fafc;
+  --sf-surface-app-2: #f3f6fb;
+  --sf-surface-sidebar: #ffffff;
+  --sf-surface-panel: #ffffff;
+  --sf-surface-panel-2: #f8fafc;
+  --sf-surface-panel-3: #eef2ff;
+  --sf-surface-panel-glass: rgba(255, 255, 255, 0.78);
+  --sf-surface-field: #ffffff;
+  --sf-surface-field-hover: #f8fafc;
+  --sf-surface-divider: rgba(15, 23, 42, 0.08);
+  --sf-surface-border: rgba(15, 23, 42, 0.12);
+  --sf-surface-border-strong: rgba(124, 58, 237, 0.34);
+  --sf-text-primary: #0f172a;
+  --sf-text-secondary: #334155;
+  --sf-text-muted: #64748b;
+  --sf-text-disabled: #94a3b8;
+  --sf-text-inverse: #ffffff;
+  --sf-brand-primary: #6d28d9;
+  --sf-brand-primary-hover: #7c3aed;
+  --sf-brand-primary-dark: #4c1d95;
+  --sf-brand-primary-soft: rgba(124, 58, 237, 0.1);
+  --sf-brand-primary-border: rgba(124, 58, 237, 0.26);
+  --sf-brand-violet: #8b5cf6;
+  --sf-brand-purple: #7e22ce;
+  --sf-accent-cyan: #0891b2;
+  --sf-accent-teal: #0f766e;
+  --sf-accent-blue: #2563eb;
+  --sf-accent-orange: #ea580c;
+  --sf-accent-yellow: #ca8a04;
+  --sf-accent-green: #16a34a;
+  --sf-accent-pink: #db2777;
+  --sf-accent-red: #dc2626;
+  --sf-status-active-bg: #dcfce7;
+  --sf-status-active-text: #15803d;
+  --sf-status-new-bg: #ede9fe;
+  --sf-status-new-text: #6d28d9;
+  --sf-status-completed-bg: #dbeafe;
+  --sf-status-completed-text: #1d4ed8;
+  --sf-status-warning-bg: #ffedd5;
+  --sf-status-warning-text: #c2410c;
+  --sf-status-danger-bg: #fee2e2;
+  --sf-status-danger-text: #b91c1c;
+  --sf-charts-violet: #6d28d9;
+  --sf-charts-cyan: #0891b2;
+  --sf-charts-blue: #2563eb;
+  --sf-charts-green: #16a34a;
+  --sf-charts-orange: #ea580c;
+  --sf-gradients-app: radial-gradient(circle at 18% 16%, rgba(124, 58, 237, 0.1), transparent 30%),
+    radial-gradient(circle at 85% 12%, rgba(34, 211, 238, 0.08), transparent 26%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  --sf-gradients-panel: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.96));
+  --sf-gradients-button-primary: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+  --sf-gradients-button-cyan: linear-gradient(135deg, #22d3ee 0%, #0891b2 100%);
+  --sf-gradients-button-orange: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
+  --sf-gradients-hero-glow: radial-gradient(
+    circle,
+    rgba(124, 58, 237, 0.2),
+    rgba(165, 180, 252, 0.1) 52%,
+    transparent 72%
+  );
+  --sf-shadow-panel: 0 24px 80px rgba(15, 23, 42, 0.08);
+  --sf-shadow-card: 0 16px 48px rgba(15, 23, 42, 0.08);
+  --sf-shadow-button: 0 16px 40px rgba(109, 40, 217, 0.24);
+}
+
+:root,
+[data-theme='dark'] {
+  --sf-bg: var(--sf-surface-app);
+  --sf-bg-soft: var(--sf-surface-app-2);
+  --sf-sidebar-bg: var(--sf-surface-sidebar);
+  --sf-card-bg: var(--sf-surface-panel);
+  --sf-card-bg-2: var(--sf-surface-panel-2);
+  --sf-input-bg: var(--sf-surface-field);
+  --sf-border: var(--sf-surface-border);
+  --sf-text: var(--sf-text-primary);
+  --sf-text-soft: var(--sf-text-secondary);
+  --sf-text-muted: var(--sf-text-muted);
+  --sf-accent: var(--sf-brand-primary);
+  --sf-accent-hover: var(--sf-brand-primary-hover);
+  --sf-focus-ring: 0 0 0 4px var(--sf-brand-primary-soft);
+}
+
+[data-theme='light'] {
+  --sf-bg: var(--sf-surface-app);
+  --sf-bg-soft: var(--sf-surface-app-2);
+  --sf-sidebar-bg: var(--sf-surface-sidebar);
+  --sf-card-bg: var(--sf-surface-panel);
+  --sf-card-bg-2: var(--sf-surface-panel-2);
+  --sf-input-bg: var(--sf-surface-field);
+  --sf-border: var(--sf-surface-border);
+  --sf-text: var(--sf-text-primary);
+  --sf-text-soft: var(--sf-text-secondary);
+  --sf-text-muted: var(--sf-text-muted);
+  --sf-accent: var(--sf-brand-primary);
+  --sf-accent-hover: var(--sf-brand-primary-hover);
+  --sf-focus-ring: 0 0 0 4px var(--sf-brand-primary-soft);
+}

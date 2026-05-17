@@ -1,0 +1,79 @@
+body.light {
+  --text-color: var(--sf-text-primary);
+  --accent-color: var(--sf-brand-primary);
+  --button-filled-hover: var(--sf-brand-primary-hover);
+  --button-inverted-hover: var(--sf-brand-primary-soft);
+  --secondary-color: var(--sf-text-secondary);
+  --tertiary-color: var(--sf-text-muted);
+  --border-color: var(--sf-surface-border);
+  --basic-white: var(--sf-surface-panel);
+  --white: #ffffff;
+  --basic-black: var(--sf-text-primary);
+  --black: var(--sf-text-primary);
+  --button-disabled-bg: #cbd5e1;
+  --button-disabled-text: #64748b;
+  --light-bg: var(--sf-bg-soft);
+  --error-color: var(--sf-status-danger-text);
+  --error-bg: var(--sf-status-danger-bg);
+  --success-bg: var(--sf-status-active-bg);
+  --success-color: var(--sf-status-active-text);
+  --warning-color: var(--sf-status-warning-text);
+  --warning-bg: var(--sf-status-warning-bg);
+  --link-color: var(--sf-accent-blue);
+  --popup-bg: var(--sf-surface-panel-glass);
+  --banner-bg: var(--sf-surface-panel-glass);
+  --background-color: var(--sf-bg);
+  --box-shadow: var(--sf-shadow-card);
+  --in-progress-bg: var(--sf-status-completed-bg);
+  --reserved-bg: var(--sf-status-warning-bg);
+  --canceled-bg: var(--sf-status-danger-bg);
+  --transition: 0.3s;
+}
+
+body.dark {
+  --text-color: var(--sf-text-primary);
+  --accent-color: var(--sf-brand-primary);
+  --button-filled-hover: var(--sf-brand-primary-hover);
+  --button-inverted-hover: var(--sf-brand-primary-soft);
+  --secondary-color: var(--sf-text-secondary);
+  --tertiary-color: var(--sf-text-muted);
+  --border-color: var(--sf-surface-border);
+  --basic-white: var(--sf-surface-panel);
+  --white: #ffffff;
+  --basic-black: var(--sf-text-primary);
+  --black: var(--sf-text-primary);
+  --button-disabled-bg: var(--sf-surface-panel-3);
+  --button-disabled-text: var(--sf-text-muted);
+  --light-bg: var(--sf-bg-soft);
+  --error-color: var(--sf-status-danger-text);
+  --error-bg: var(--sf-status-danger-bg);
+  --success-bg: var(--sf-status-active-bg);
+  --success-color: var(--sf-status-active-text);
+  --warning-color: var(--sf-status-warning-text);
+  --warning-bg: var(--sf-status-warning-bg);
+  --link-color: var(--sf-accent-blue);
+  --popup-bg: var(--sf-surface-panel-glass);
+  --banner-bg: var(--sf-surface-panel-glass);
+  --background-color: var(--sf-bg);
+  --box-shadow: var(--sf-shadow-card);
+  --in-progress-bg: var(--sf-status-completed-bg);
+  --reserved-bg: var(--sf-status-warning-bg);
+  --canceled-bg: var(--sf-status-danger-bg);
+}
+
+// Spacing
+$space-4: 4px;
+$space-8: 8px;
+$space-12: 12px;
+$space-14: 14px;
+$space-16: 16px;
+$space-18: 18px;
+$space-20: 20px;
+$space-24: 24px;
+$space-32: 32px;
+$space-40: 40px;
+$space-48: 48px;
+$space-64: 64px;
+$space-72: 72px;
+$space-80: 80px;
+$space-120: 120px;

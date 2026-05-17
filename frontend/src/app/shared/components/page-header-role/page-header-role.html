@@ -1,0 +1,18 @@
+<div
+  class="gt-header-role"
+  [class.gt-header-role--has-bg]="backgroundImage()"
+  [style.background-image]="backgroundImage() ? 'url(' + backgroundImage() + ')' : ''"
+>
+  @if (backgroundImage()) {
+    <div class="gt-header-role__bg-overlay"></div>
+  }
+  <div class="gt-header-role__content"
+    [class.gt-header-role__content--left]="backgroundImage() && !centered()"
+    [class.gt-header-role__content--centered]="backgroundImage() && centered()"
+  >
+    <div [class]="backgroundImage() ? 'container' : ''">
+      <h1 class="gt-header-role__title">{{ title() }}</h1>
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

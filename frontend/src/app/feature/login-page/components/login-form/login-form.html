@@ -1,0 +1,53 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="gt-login-form">
+  
+  @if(errorText429().length > 0) {
+    <div class="form__error">
+      <p class="form__error-text p-14">{{ errorText429() }}</p>
+    </div>
+  }
+  <div class="gt-input__full">
+    <gt-input
+      [type]="inputType.Email"
+      label="Email"
+      placeholder="Enter your Email"
+      description="e.g. username@domain.com"
+      name="email"
+      autocomplete="email"
+      class="gt-input"
+      formControlName="email"
+      [parentForm]="loginForm"
+      [isLoginForm]="true"
+      [BEValidationsErrors]="errorText()"
+    ></gt-input>
+  </div>
+  <div class="gt-input__full">
+ <gt-input
+      [type]="inputType.Password"
+      label="Password"
+      placeholder="Enter your password"
+      description=""
+      name="password"
+      autocomplete="current-password"
+      class="gt-input"
+      formControlName="password"
+      [parentForm]="loginForm"
+      [isLoginForm]="true"
+      [BEValidationsErrors]="errorText()"
+    ></gt-input>
+  </div>
+  <button
+    type="submit"
+    [disabled]="loginForm.invalid"
+    class="button button__full-width gt-login-form__button"
+  >
+    {{ buttonText.Login }}
+  </button>
+  @if(isSuccess) {
+    <gt-toast 
+      [message]="successText"
+      [severity]="'success'"
+      [summary]="'Welcome!'"
+      [life]="5000"
+    />
+  }
+</form>

@@ -1,0 +1,173 @@
+<gt-header />
+<div class="margin-top-header"></div>
+
+<main class="gt-admin-surveys">
+
+  <!-- Hero -->
+  <section class="gt-admin-surveys__hero">
+    <div class="container">
+      <div class="gt-admin-surveys__hero-row">
+        <div>
+          <h1 class="gt-admin-surveys__page-title">Surveys Management</h1>
+          <p class="gt-admin-surveys__page-subtitle">Manage all surveys — publish, edit or remove</p>
+        </div>
+        <button class="gt-admin-surveys__create-btn" (click)="openCreateForm()">
+          <i class="pi pi-plus"></i> Create New Survey
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+
+    <!-- ── KPI row ──────────────────────────────────────────────────────── -->
+    <div class="gt-admin-surveys__kpi-row">
+      <div class="gt-admin-surveys__kpi-card">
+        <i class="pi pi-list gt-admin-surveys__kpi-icon"></i>
+        <span class="gt-admin-surveys__kpi-value">{{ totalSurveys() }}</span>
+        <span class="gt-admin-surveys__kpi-label">Total surveys</span>
+      </div>
+      <div class="gt-admin-surveys__kpi-card gt-admin-surveys__kpi-card--accent">
+        <i class="pi pi-eye gt-admin-surveys__kpi-icon"></i>
+        <span class="gt-admin-surveys__kpi-value">{{ publishedCount() }}</span>
+        <span class="gt-admin-surveys__kpi-label">Published</span>
+      </div>
+      <div class="gt-admin-surveys__kpi-card">
+        <i class="pi pi-check-circle gt-admin-surveys__kpi-icon"></i>
+        <span class="gt-admin-surveys__kpi-value">{{ activeCount() }}</span>
+        <span class="gt-admin-surveys__kpi-label">Active</span>
+      </div>
+      <div class="gt-admin-surveys__kpi-card">
+        <i class="pi pi-users gt-admin-surveys__kpi-icon"></i>
+        <span class="gt-admin-surveys__kpi-value">{{ totalResponses() | number }}</span>
+        <span class="gt-admin-surveys__kpi-label">Total responses</span>
+      </div>
+    </div>
+
+    <!-- ── Toolbar ───────────────────────────────────────────────────────── -->
+    <div class="gt-admin-surveys__toolbar">
+      <div class="gt-admin-surveys__search-wrap">
+        <i class="pi pi-search gt-admin-surveys__search-icon"></i>
+        <input
+          class="gt-admin-surveys__search"
+          type="text"
+          placeholder="Search by title, category or author…"
+          [value]="searchQuery()"
+          (input)="onSearchInput($event)"
+        />
+        @if (searchQuery()) {
+          <i class="pi pi-times gt-admin-surveys__search-clear" (click)="searchQuery.set('')"></i>
+        }
+      </div>
+      <span class="gt-admin-surveys__count">{{ filteredSurveys().length }} surveys</span>
+    </div>
+
+    <!-- ── Survey table ───────────────────────────────────────────────────── -->
+    <div class="gt-admin-surveys__table-card">
+      <div class="gt-admin-surveys__table-wrap">
+        @if (filteredSurveys().length === 0) {
+          <div class="gt-admin-surveys__empty">
+            <i class="pi pi-search gt-admin-surveys__empty-icon"></i>
+            <p>No surveys match your search.</p>
+          </div>
+        } @else {
+          <table class="gt-admin-surveys__table">
+            <thead>
+              <tr>
+                <th class="gt-admin-surveys__th--img"></th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Author</th>
+                <th>Questions</th>
+                <th>Responses</th>
+                <th>Status</th>
+                <th>Published</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (s of filteredSurveys(); track s.id) {
+                <tr [class.gt-admin-surveys__row--draft]="!s.published">
+                  <td class="gt-admin-surveys__td--img">
+                    <div class="gt-admin-surveys__thumb"
+                      [style.background-image]="'url(' + s.coverImage + ')'">
+                    </div>
+                  </td>
+                  <td>
+                    <a class="gt-admin-surveys__title-link"
+                      [routerLink]="'/' + routes.SURVEYS + '/' + s.id">
+                      {{ s.title }}
+                    </a>
+                    <span class="gt-admin-surveys__description">{{ s.description }}</span>
+                  </td>
+                  <td>
+                    <span class="gt-admin-surveys__category-badge"
+                      [class.gt-admin-surveys__category-badge--test]="s.category === 'Test'">
+                      {{ s.category }}
+                    </span>
+                  </td>
+                  <td class="gt-admin-surveys__author">{{ s.author }}</td>
+                  <td class="gt-admin-surveys__center">{{ s.questionCount }}</td>
+                  <td class="gt-admin-surveys__center">{{ s.responses | number }}</td>
+                  <td>
+                    <span class="gt-admin-surveys__status-badge"
+                      [class.gt-admin-surveys__status-badge--active]="s.status === 'Active'"
+                      [class.gt-admin-surveys__status-badge--passed]="s.status === 'Passed'">
+                      {{ s.status }}
+                    </span>
+                  </td>
+                  <td class="gt-admin-surveys__center">
+                    <button class="gt-admin-surveys__publish-toggle"
+                      [class.gt-admin-surveys__publish-toggle--on]="s.published"
+                      [title]="s.published ? 'Unpublish' : 'Publish'"
+                      (click)="togglePublish(s.id)">
+                      <i [class]="s.published ? 'pi pi-eye' : 'pi pi-eye-slash'"></i>
+                    </button>
+                  </td>
+                  <td class="gt-admin-surveys__date">{{ s.createdAt }}</td>
+                  <td>
+                    <div class="gt-admin-surveys__actions">
+                      <button class="gt-admin-surveys__action-btn gt-admin-surveys__action-btn--edit"
+                        title="Edit survey"
+                        (click)="openEditForm(s.id)">
+                        <i class="pi pi-pencil"></i>
+                      </button>
+                      <button class="gt-admin-surveys__action-btn gt-admin-surveys__action-btn--delete"
+                        title="Delete survey"
+                        (click)="deleteSurvey(s.id)">
+                        <i class="pi pi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<gt-footer />
+
+<!-- ── Create / Edit panel ─────────────────────────────────────────────────── -->
+@if (showForm()) {
+  <div class="gt-admin-surveys__overlay" (click)="closeForm()"></div>
+  <aside class="gt-admin-surveys__form-panel">
+    <div class="gt-admin-surveys__form-header">
+      <h2 class="gt-admin-surveys__form-title">
+        @if (formMode() === 'create') { Create New Survey }
+        @else { Edit Survey }
+      </h2>
+      <button class="gt-admin-surveys__form-close" (click)="closeForm()">
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+    <div class="gt-admin-surveys__form-body">
+      <gt-create-survey-form />
+    </div>
+  </aside>
+}
