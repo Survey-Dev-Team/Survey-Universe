@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Observable } from 'rxjs';
+import { delay, Observable } from 'rxjs';
 import { SurveysApiService } from './surveys-api.service';
 import { PagedResponse, SurveyReadSummary, SurveysQueryParams } from '../../models/interfaces';
 
@@ -13,11 +13,13 @@ export class SurveysService {
   totalPages = signal<number>(0);
   totalElements = signal<number>(0);
   hasNext = signal<boolean>(false);
+  availableCategories = signal<string[]>([]);
+  availableCreatorIds = signal<string[]>([]);
 
   loadSurveys(params: SurveysQueryParams = {}): void {
     this.loading.set(true);
 
-    this.api.getSurveys(params).subscribe({
+    this.api.getSurveys(params).pipe(delay(450)).subscribe({
       next: (response) => {
         this.surveys.set(response.content);
         this.currentPage.set(response.currentPage);
@@ -25,6 +27,11 @@ export class SurveysService {
         this.totalElements.set(response.totalElements);
         this.hasNext.set(response.hasNext);
         this.loading.set(false);
+
+        const newCategories = response.content.flatMap(s => s.category);
+        const newCreatorIds = response.content.map(s => s.creatorUrlId);
+        this.availableCategories.update(existing => [...new Set([...existing, ...newCategories])]);
+        this.availableCreatorIds.update(existing => [...new Set([...existing, ...newCreatorIds])]);
       },
       error: () => {
         this.loading.set(false);

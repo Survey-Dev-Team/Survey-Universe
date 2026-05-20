@@ -5,6 +5,7 @@ import {
   inject,
   OnDestroy,
   OnInit,
+  signal,
   ViewChild,
 } from '@angular/core';
 import {
@@ -24,6 +25,7 @@ import { SurveyCard } from '../../shared/components/survey-card/survey-card';
 import { ROUTES } from '../../shared/models/routes.constants';
 import { SurveysService } from '../../shared/services/surveys/surveys.service';
 import { SurveyCardModel } from '../../shared/models/interfaces';
+import { mapSurveyToCard } from '../../shared/utils/survey-mapper.util';
 import { HOT_SURVEYS_MOCK } from './main-page.mock';
 
 @Component({
@@ -57,8 +59,12 @@ export class MainPage implements AfterViewInit, OnDestroy, OnInit {
 
   ngOnInit(): void {
     this.surveysService.getHomeSurveys().subscribe({
-      next: (surveys) => console.log('[MainPage] home surveys:', surveys),
-      error: (err) => console.error('[MainPage] home surveys error:', err),
+      next: (surveys) => {
+        this.hotSurveys.set(surveys.map((s, i) => mapSurveyToCard(s, i)));
+      },
+      error: () => {
+        this.hotSurveys.set(HOT_SURVEYS_MOCK);
+      },
     });
   }
 
@@ -75,7 +81,7 @@ export class MainPage implements AfterViewInit, OnDestroy, OnInit {
   readonly titleWords = this.bannerTitle.split(' ').map(word => word.split(''));
   readonly surveysRoute = `/${ROUTES.SURVEYS}`;
 
-  readonly hotSurveys: SurveyCardModel[] = HOT_SURVEYS_MOCK;
+  hotSurveys = signal<SurveyCardModel[]>(HOT_SURVEYS_MOCK);
 
   titleState: 'hidden' | 'visible' = 'hidden';
   descState: 'hidden' | 'visible' = 'hidden';

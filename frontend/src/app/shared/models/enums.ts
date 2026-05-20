@@ -51,6 +51,11 @@ export enum StatStatus {
   Failed = 'Failed',
 }
 
+export enum VisibilityLabel {
+  Shown  = 'Shown',
+  Hidden = 'Hidden',
+}
+
 export enum TimeRange {
   All = 'all',
   M3  = '3m',

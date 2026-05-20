@@ -45,7 +45,6 @@ export class UpdateUserDataForm implements Validators, OnInit {
   private revision = signal<string>('1');
   inputType = InputType;
   buttonText = ButtonText;
-  previewUrl: string | null = null;
   base64Image: string | null = null;
   currentUserData = signal<UpdateUserData>({
     firstName: '',
@@ -85,7 +84,19 @@ export class UpdateUserDataForm implements Validators, OnInit {
   });
 
   ngOnInit(): void {
-    this.getUserData();
+    const urlId = this.userStoreService.getUser()?.urlId;
+    if (!urlId) return;
+
+    this.usersService.getUserDetails(urlId).subscribe(details => {
+      this.revision.set(details.revision);
+      this.currentUserData.set({
+        imageUrl: details.userSummary.profileImage,
+        firstName: details.userSummary.firstName,
+        lastName: details.userSummary.lastName,
+        role: details.userSummary.role as UpdateUserData['role'],
+        email: details.userSummary.email,
+      });
+    });
   }
 
   getUserData() {
@@ -115,9 +126,8 @@ export class UpdateUserDataForm implements Validators, OnInit {
     const reader = new FileReader();
     reader.onload = () => {
       const result = reader.result as string;
-      const [, base64] = result.split(',') ?? null;
 
-      this.updateUserDataForm.patchValue({ base64encodedImage: base64 });
+      this.updateUserDataForm.patchValue({ base64encodedImage: result });
     };
 
     reader.readAsDataURL(file);
@@ -139,6 +149,17 @@ export class UpdateUserDataForm implements Validators, OnInit {
       lastName: lastName ?? undefined,
       profileImage: base64encodedImage ?? undefined,
       revision: this.revision(),
+    }, (details) => {
+      this.revision.set(details.revision);
+      this.fileUpload.clear();
+      this.updateUserDataForm.patchValue({ base64encodedImage: null });
+      this.currentUserData.set({
+        imageUrl: details.userSummary.profileImage,
+        firstName: details.userSummary.firstName,
+        lastName: details.userSummary.lastName,
+        role: details.userSummary.role as UpdateUserData['role'],
+        email: details.userSummary.email,
+      });
     });
   }
 }

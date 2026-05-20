@@ -1,0 +1,140 @@
+<aside class="gt-surveys-page__filters">
+  <h3 class="gt-surveys-page__filters-title">Filters</h3>
+
+  <div class="gt-surveys-page__filter-group">
+    <button
+      class="gt-surveys-page__filter-group-header"
+      [class.gt-surveys-page__filter-group-header--open]="isGroupOpen(FilterGroup.Date)"
+      (click)="toggleGroup(FilterGroup.Date)"
+    >
+      <span class="gt-surveys-page__filter-label">Date</span>
+      <span class="gt-surveys-page__filter-arrow"></span>
+    </button>
+    @if (isGroupOpen(FilterGroup.Date)) {
+      <div class="gt-surveys-page__filter-options">
+        @for (d of dateOptions; track d) {
+          <button
+            class="gt-surveys-page__filter-btn"
+            [class.gt-surveys-page__filter-btn--active]="filters().dates.includes(d)"
+            (click)="toggleMulti('dates', d)"
+          >{{ d }}</button>
+        }
+      </div>
+    }
+  </div>
+
+  @if (categoryOptions().length > 0) {
+    <div class="gt-surveys-page__filter-group">
+      <button
+        class="gt-surveys-page__filter-group-header"
+        [class.gt-surveys-page__filter-group-header--open]="isGroupOpen(FilterGroup.Category)"
+        (click)="toggleGroup(FilterGroup.Category)"
+      >
+        <span class="gt-surveys-page__filter-label">Category</span>
+        <span class="gt-surveys-page__filter-arrow"></span>
+      </button>
+      @if (isGroupOpen(FilterGroup.Category)) {
+        <div class="gt-surveys-page__filter-options">
+          @for (cat of categoryOptions(); track cat) {
+            <button
+              class="gt-surveys-page__filter-btn"
+              [class.gt-surveys-page__filter-btn--active]="filters().categories.includes(cat)"
+              (click)="toggleMulti('categories', cat)"
+            >{{ cat }}</button>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  @if (authorOptions().length > 0) {
+    <div class="gt-surveys-page__filter-group">
+      <button
+        class="gt-surveys-page__filter-group-header"
+        [class.gt-surveys-page__filter-group-header--open]="isGroupOpen(FilterGroup.Author)"
+        (click)="toggleGroup(FilterGroup.Author)"
+      >
+        <span class="gt-surveys-page__filter-label">Author</span>
+        <span class="gt-surveys-page__filter-arrow"></span>
+      </button>
+      @if (isGroupOpen(FilterGroup.Author)) {
+        <div class="gt-surveys-page__filter-options">
+          @for (author of authorOptions(); track author) {
+            <button
+              class="gt-surveys-page__filter-btn"
+              [class.gt-surveys-page__filter-btn--active]="filters().authors.includes(author)"
+              (click)="toggleMulti('authors', author)"
+            >{{ author }}</button>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  <div class="gt-surveys-page__filter-group">
+    <button
+      class="gt-surveys-page__filter-group-header"
+      [class.gt-surveys-page__filter-group-header--open]="isGroupOpen(FilterGroup.Duration)"
+      (click)="toggleGroup(FilterGroup.Duration)"
+    >
+      <span class="gt-surveys-page__filter-label">Duration</span>
+      <span class="gt-surveys-page__filter-arrow"></span>
+    </button>
+    @if (isGroupOpen(FilterGroup.Duration)) {
+      <div class="gt-surveys-page__filter-options">
+        @for (d of durationOptions; track d) {
+          <button
+            class="gt-surveys-page__filter-btn"
+            [class.gt-surveys-page__filter-btn--active]="filters().durations.includes(d)"
+            (click)="toggleMulti('durations', d)"
+          >{{ d }}</button>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="gt-surveys-page__filter-group">
+    <button
+      class="gt-surveys-page__filter-group-header"
+      [class.gt-surveys-page__filter-group-header--open]="isGroupOpen(FilterGroup.Test)"
+      (click)="toggleGroup(FilterGroup.Test)"
+    >
+      <span class="gt-surveys-page__filter-label">Test surveys</span>
+      <span class="gt-surveys-page__filter-arrow"></span>
+    </button>
+    @if (isGroupOpen(FilterGroup.Test)) {
+      <div class="gt-surveys-page__filter-options">
+        <button
+          class="gt-surveys-page__filter-toggle"
+          [class.gt-surveys-page__filter-toggle--active]="filters().isTest"
+          (click)="toggleTest()"
+        >
+          <span class="gt-surveys-page__filter-toggle-dot"></span>
+          <span>{{ filters().isTest ? VisibilityLabel.Shown : VisibilityLabel.Hidden }}</span>
+        </button>
+      </div>
+    }
+  </div>
+
+  <div class="gt-surveys-page__filter-group">
+    <button
+      class="gt-surveys-page__filter-group-header"
+      [class.gt-surveys-page__filter-group-header--open]="isGroupOpen(FilterGroup.Status)"
+      (click)="toggleGroup(FilterGroup.Status)"
+    >
+      <span class="gt-surveys-page__filter-label">Status</span>
+      <span class="gt-surveys-page__filter-arrow"></span>
+    </button>
+    @if (isGroupOpen(FilterGroup.Status)) {
+      <div class="gt-surveys-page__filter-options">
+        @for (status of statusOptions; track status) {
+          <button
+            class="gt-surveys-page__filter-btn"
+            [class.gt-surveys-page__filter-btn--active]="filters().statuses.includes(status)"
+            (click)="toggleMulti('statuses', status)"
+          >{{ status }}</button>
+        }
+      </div>
+    }
+  </div>
+</aside>

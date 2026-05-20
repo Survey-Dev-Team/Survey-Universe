@@ -4,11 +4,13 @@ import {
   ElementRef,
   inject,
   signal,
+  computed,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service/auth-service';
 import { UserStoreService } from '../../services/user-store-service/user-store-service';
 import { ROUTES } from '../../models/routes.constants';
+import { UserRole } from '../../models/enums';
 
 @Component({
   selector: 'gt-user-menu',
@@ -24,6 +26,7 @@ export class UserMenu {
   readonly routes = ROUTES;
   readonly isOpen = signal(false);
   readonly currentUser = this.userStore.currentUser;
+  readonly isAdmin = computed(() => this.currentUser()?.role === UserRole.Admin);
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {

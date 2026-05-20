@@ -167,6 +167,8 @@ export interface SurveyCardModel {
   description: string;
   date: string;
   category: string;
+  surveyType: string;
   author: string;
+  estimatedTime: number | null;
   status?: 'Active' | 'Passed';
 }

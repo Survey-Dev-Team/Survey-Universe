@@ -1,0 +1,28 @@
+<div class="gt-empty-state">
+  <div class="gt-empty-state__visual">
+    <img
+      src="/assets/images/empty-state.webp"
+      alt=""
+      class="gt-empty-state__img"
+      aria-hidden="true"
+    />
+  </div>
+
+  <div class="gt-empty-state__body">
+    <h3 class="gt-empty-state__title">{{ title() }}</h3>
+
+    @if (message()) {
+      <p class="gt-empty-state__message">{{ message() }}</p>
+    }
+
+    @if (actionLabel()) {
+      <button
+        class="gt-empty-state__btn"
+        type="button"
+        (click)="actionClick.emit()"
+      >
+        {{ actionLabel() }}
+      </button>
+    }
+  </div>
+</div>

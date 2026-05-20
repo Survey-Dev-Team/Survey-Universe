@@ -26,6 +26,8 @@ export class SurveyCard {
   // hero only
   description    = input<string>('');
   author         = input<string>('');
+  surveyType     = input<string>('');
+  estimatedTime  = input<number | null>(null);
 
   // compact only
   metaItems      = input<SurveyCardMetaItem[]>([]);

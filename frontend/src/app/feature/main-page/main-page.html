@@ -51,7 +51,7 @@
       <a [routerLink]="surveysRoute" class="gt-main-page__hot-surveys-link">All surveys →</a>
     </div>
     <div class="gt-main-page__hot-surveys-grid">
-      @for (survey of hotSurveys; track $index) {
+      @for (survey of hotSurveys(); track $index) {
         <a class="gt-main-page__survey-link" [routerLink]="'/surveys/' + survey.id">
           <gt-survey-card
             [title]="survey.title"
@@ -59,6 +59,7 @@
             [description]="survey.description"
             [date]="survey.date"
             [category]="survey.category"
+            [surveyType]="survey.surveyType"
             [author]="survey.author"
           />
         </a>

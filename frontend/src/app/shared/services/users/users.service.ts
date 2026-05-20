@@ -20,11 +20,13 @@ export class UsersService {
     return this.api.getUser(urlId);
   }
 
-  updateUser(urlId: string, data: UserUpdateRequest): void {
+  updateUser(urlId: string, data: UserUpdateRequest, onSuccess?: (details: UserPrivateDetails) => void): void {
     this.loading.set(true);
 
     this.api.updateUser(urlId, data).subscribe({
-      next: () => {
+      next: (response) => {
+        this.userStore.setUser(response.userSummary);
+        onSuccess?.(response);
         this.toastService.showToast({
           severity: 'success',
           message: 'Success',
