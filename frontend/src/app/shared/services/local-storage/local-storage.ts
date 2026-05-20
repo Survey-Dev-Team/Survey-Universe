@@ -4,7 +4,6 @@ import {
   signal
 } from '@angular/core';
 import { InjectionToken } from '@angular/core';
-import { ReservationData } from '../../models/interfaces';
 
 export const WINDOW = new InjectionToken<Window>(
   'Window object',
@@ -19,44 +18,22 @@ export const WINDOW = new InjectionToken<Window>(
 })
 
 export class LocalStorageService {
-  token = signal<string>(''); 
-  isPreorderPage = signal<boolean>(false);
-  reservationData = signal<ReservationData | null>(null);
-  TOKEN = signal<string>('SESSION_TOKEN');
+  token = signal<string>('');
+  private readonly TOKEN_KEY = 'SESSION_TOKEN';
 
   constructor(@Inject(WINDOW) private window: Window) {}
 
   setToken(token: string) {
     this.token.set(token);
-    this.window.localStorage.setItem(this.TOKEN(), token);
-  }
-
-  setIsPreorderPage(isPreorder: boolean) {
-    this.isPreorderPage.set(isPreorder);
-    this.window.localStorage.setItem('isPreorderPage', String(isPreorder));
-  }
-
-  setReservationData(data: ReservationData | null) {
-    this.reservationData.set(data);
-    this.window.localStorage.setItem('reservationData', JSON.stringify(data));
-  }
-
-  getReservationData(): ReservationData | null {
-    const data = this.window.localStorage.getItem('reservationData');
-    return data ? JSON.parse(data) : null;
-  }
-
-  getIsPreorderPage(): boolean {
-    const value = this.window.localStorage.getItem('isPreorderPage');
-    return value === 'true';
+    this.window.localStorage.setItem(this.TOKEN_KEY, token);
   }
 
   getToken(): string | null {
-    return this.window.localStorage.getItem(this.TOKEN());
+    return this.window.localStorage.getItem(this.TOKEN_KEY);
   }
 
   deleteToken() {
-    this.window.localStorage.removeItem(this.TOKEN());
+    this.window.localStorage.removeItem(this.TOKEN_KEY);
   }
 
   hasToken(): boolean {

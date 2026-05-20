@@ -12,6 +12,7 @@ import { StatStatus, SurveysTab, StatsLabel, PrimeIcon } from '../../shared/mode
 import { AdminSurvey } from './admin-surveys.model';
 import { ADMIN_SURVEYS_MOCK } from './admin-surveys.mock';
 import { ADMIN_SURVEYS_COLUMNS } from './admin-surveys.config';
+import { lockBodyScroll, unlockBodyScroll } from '../../shared/utils/scroll-lock.util';
 
 type FormMode = 'create' | 'edit';
 
@@ -39,27 +40,25 @@ export class AdminSurveys {
   // ── Search ────────────────────────────────────────────────────────────────
   readonly searchQuery = signal('');
 
+  private matchesQuery(s: AdminSurvey, q: string): boolean {
+    return (
+      s.title.toLowerCase().includes(q) ||
+      s.category.toLowerCase().includes(q) ||
+      s.author.toLowerCase().includes(q)
+    );
+  }
+
   readonly filteredSurveys = computed(() => {
     const q = this.searchQuery().toLowerCase().trim();
     if (!q) return this.surveys();
-    return this.surveys().filter(
-      (s) =>
-        s.title.toLowerCase().includes(q) ||
-        s.category.toLowerCase().includes(q) ||
-        s.author.toLowerCase().includes(q)
-    );
+    return this.surveys().filter(s => this.matchesQuery(s, q));
   });
 
   readonly unmoderatedSurveys = computed(() => {
     const q = this.searchQuery().toLowerCase().trim();
     return this.surveys()
-      .filter((s) => !s.published)
-      .filter((s) =>
-        !q ||
-        s.title.toLowerCase().includes(q) ||
-        s.category.toLowerCase().includes(q) ||
-        s.author.toLowerCase().includes(q)
-      );
+      .filter(s => !s.published)
+      .filter(s => !q || this.matchesQuery(s, q));
   });
 
   readonly displayedSurveys = computed(() =>
@@ -94,19 +93,19 @@ export class AdminSurveys {
     this.formMode.set('create');
     this.editingSurveyId.set(null);
     this.showForm.set(true);
-    document.body.style.overflow = 'hidden';
+    lockBodyScroll();
   }
 
   openEditForm(id: string): void {
     this.formMode.set('edit');
     this.editingSurveyId.set(id);
     this.showForm.set(true);
-    document.body.style.overflow = 'hidden';
+    lockBodyScroll();
   }
 
   closeForm(): void {
     this.showForm.set(false);
-    document.body.style.overflow = '';
+    unlockBodyScroll();
   }
 
   // ── Actions ───────────────────────────────────────────────────────────────

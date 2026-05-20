@@ -23,6 +23,8 @@ import { Footer } from '../../shared/components/footer/footer';
 import { SurveyCard } from '../../shared/components/survey-card/survey-card';
 import { ROUTES } from '../../shared/models/routes.constants';
 import { SurveysService } from '../../shared/services/surveys/surveys.service';
+import { SurveyCardModel } from '../../shared/models/interfaces';
+import { HOT_SURVEYS_MOCK } from './main-page.mock';
 
 @Component({
   selector: 'gt-main-page',
@@ -73,44 +75,7 @@ export class MainPage implements AfterViewInit, OnDestroy, OnInit {
   readonly titleWords = this.bannerTitle.split(' ').map(word => word.split(''));
   readonly surveysRoute = `/${ROUTES.SURVEYS}`;
 
-  readonly hotSurveys = [
-    {
-      id: '1',
-      text: 'Explore the Unknown',
-      coverImage: '/assets/images/banner/card1.png',
-      description: '7 questions · 3–5 min',
-      date: 'Active until May 15, 2025',
-      category: 'Science',
-      author: 'Alex Monroe',
-    },
-    {
-      id: '2',
-      text: 'Cosmic Perspective Check',
-      coverImage: '/assets/images/banner/card2.png',
-      description: '10 questions · 5 min',
-      date: 'Anonymous survey',
-      category: 'Philosophy',
-      author: 'Lena Oris',
-    },
-    {
-      id: '3',
-      text: 'Signal from the Crowd',
-      coverImage: '/assets/images/banner/card3.png',
-      description: '4 questions · 2 min',
-      date: 'Active until June 1, 2025',
-      category: 'Society',
-      author: 'Mark Vega',
-    },
-    {
-      id: '4',
-      text: 'New Orbit of Thoughts',
-      coverImage: '/assets/images/banner/card4.png',
-      description: '8 questions · 4 min',
-      date: 'Every answer matters',
-      category: 'Test',
-      author: 'Dana Kol',
-    },
-  ];
+  readonly hotSurveys: SurveyCardModel[] = HOT_SURVEYS_MOCK;
 
   titleState: 'hidden' | 'visible' = 'hidden';
   descState: 'hidden' | 'visible' = 'hidden';

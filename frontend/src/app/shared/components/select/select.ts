@@ -10,9 +10,7 @@ import {
 import { SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
 import { 
-  LabeledOption, 
-  LocationSelectOptions, 
-  TableResponse 
+  LabeledOption 
 } from '../../models/interfaces';
 
 @Component({
@@ -36,8 +34,7 @@ export class SelectComponent implements ControlValueAccessor {
   placeholder = input<string>('Select');
 options = input.required<
   string[] |
-  LocationSelectOptions[] |
-  TableResponse[] |
+  { id: string; name: string }[] |
   LabeledOption[]
 >();
   icon = input<string>('');

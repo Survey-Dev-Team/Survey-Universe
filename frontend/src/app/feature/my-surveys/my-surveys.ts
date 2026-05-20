@@ -16,6 +16,7 @@ import {
   MY_SURVEYS_TAB_CONFIG,
   CREATED_STATUS_LABELS,
 } from './my-surveys.config';
+import { lockBodyScroll, unlockBodyScroll } from '../../shared/utils/scroll-lock.util';
 
 @Component({
   selector: 'gt-my-surveys',
@@ -76,11 +77,11 @@ export class MySurveys {
 
   openCreateForm(): void {
     this.showForm.set(true);
-    document.body.style.overflow = 'hidden';
+    lockBodyScroll();
   }
 
   closeForm(): void {
     this.showForm.set(false);
-    document.body.style.overflow = '';
+    unlockBodyScroll();
   }
 }

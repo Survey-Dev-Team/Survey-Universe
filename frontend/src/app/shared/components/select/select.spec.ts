@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SelectComponent } from './select';
 import { FormsModule } from '@angular/forms';
-import { LocationSelectOptions, TableResponse, LabeledOption } from '../../models/interfaces';
+import { LabeledOption } from '../../models/interfaces';
 
 describe('Select', () => {
   let component: SelectComponent;
@@ -43,8 +43,8 @@ describe('Select', () => {
       expect(component.options()).toEqual(options);
     });
 
-    it('should accept LocationSelectOptions array', () => {
-      const options: LocationSelectOptions[] = [
+    it('should accept objects with id/name shape', () => {
+      const options: { id: string; name: string }[] = [
         { id: '1', name: 'Location 1' },
         { id: '2', name: 'Location 2' }
       ];
@@ -53,8 +53,8 @@ describe('Select', () => {
       expect(component.options()).toEqual(options);
     });
 
-    it('should accept TableResponse array', () => {
-      const options: TableResponse[] = [
+    it('should accept objects with id/name table shape', () => {
+      const options: { id: string; name: string }[] = [
         { id: '1', name: 'Table 1' },
         { id: '2', name: 'Table 2' }
       ];

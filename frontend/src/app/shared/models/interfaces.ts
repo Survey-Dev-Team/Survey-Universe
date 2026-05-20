@@ -1,5 +1,3 @@
-import { DishState, DishType } from "./enums";
-
 export interface UserRegistration {
   firstName: string;
   lastName: string;
@@ -58,72 +56,9 @@ export interface UserRegisterResponse {
   firstName: string;
   lastName: string;
 }
-export interface MenuItem {
-  label: string;
-  route: string;
-  isActive: boolean;
-}
-
-export interface Dish {
-  id: string;
-  name: string;
-  price: string;
-  weight: string;
-  imageUrl: string;
-  popularity: number;
-  state: string;
-  quantity?: number;
-}
-
-export interface DishAvailable {
-  content: Dish[];
-}
-
-export interface CurrentDishDetails {
-  id: string;
-  name: string;
-  description: string;
-  imageUrl: string;
-  price: number;
-  popularity: number;
-  dishType: DishType;
-  state: DishState;
-  weight: string;
-  calories: string;
-  proteins: string;
-  fats: string;
-  carbohydrates: string;
-  vitamins: string;
-}
-
-export interface LocationSelectOptions {
-  id: string;
-  name: string;
-}
-
-
-
-export interface TableResponse {
-  id: string;
-  name: string;
-}
-
-export interface AvailableTimeslots {
-  tableId: string;
-  availableSlots: string[];
-}
-
 export interface LabeledOption {
   value: string;
   label: string;
-}
-
-export interface ReservationData {
-  location: string;
-  tableNumber?: string;
-  date: string;
-  timeslot: string;
-  reservationId: string;
 }
 
 export interface ChangeUserPasswordPayload {
@@ -223,4 +158,15 @@ export interface UserPrivateDetails {
 
 export interface MessageResponse {
   message: string;
+}
+
+export interface SurveyCardModel {
+  id: string;
+  title: string;
+  coverImage: string;
+  description: string;
+  date: string;
+  category: string;
+  author: string;
+  status?: 'Active' | 'Passed';
 }

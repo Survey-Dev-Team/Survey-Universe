@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { LocalStorageService, WINDOW } from './local-storage';
-import { ReservationData } from '../../models/interfaces';
 
 describe('LocalStorageService', () => {
   let service: LocalStorageService;
@@ -82,81 +81,6 @@ describe('LocalStorageService', () => {
     });
   });
 
-  describe('Preorder Page Management', () => {
-    it('should set isPreorderPage flag', () => {
-      service.setIsPreorderPage(true);
-      
-      expect(service.isPreorderPage()).toBe(true);
-      expect(mockWindow.localStorage.setItem).toHaveBeenCalledWith('isPreorderPage', 'true');
-    });
-
-    it('should get isPreorderPage flag as true', () => {
-      mockLocalStorage['isPreorderPage'] = 'true';
-      
-      const result = service.getIsPreorderPage();
-      
-      expect(result).toBe(true);
-    });
-
-    it('should get isPreorderPage flag as false when stored as false', () => {
-      mockLocalStorage['isPreorderPage'] = 'false';
-      
-      const result = service.getIsPreorderPage();
-      
-      expect(result).toBe(false);
-    });
-
-    it('should get isPreorderPage flag as false when not stored', () => {
-      const result = service.getIsPreorderPage();
-      
-      expect(result).toBe(false);
-    });
-  });
-
-  describe('Reservation Data Management', () => {
-    const mockReservationData: ReservationData = {
-      location: 'Test Location',
-      tableNumber: 'Table 5',
-      date: '2025-11-24',
-      timeslot: '18:00',
-      reservationId: 'res-123'
-    };
-
-    it('should set reservation data', () => {
-      service.setReservationData(mockReservationData);
-      
-      expect(service.reservationData()).toEqual(mockReservationData);
-      expect(mockWindow.localStorage.setItem).toHaveBeenCalledWith(
-        'reservationData', 
-        JSON.stringify(mockReservationData)
-      );
-    });
-
-    it('should set reservation data to null', () => {
-      service.setReservationData(null);
-      
-      expect(service.reservationData()).toBeNull();
-      expect(mockWindow.localStorage.setItem).toHaveBeenCalledWith(
-        'reservationData', 
-        JSON.stringify(null)
-      );
-    });
-
-    it('should get reservation data', () => {
-      mockLocalStorage['reservationData'] = JSON.stringify(mockReservationData);
-      
-      const result = service.getReservationData();
-      
-      expect(result).toEqual(mockReservationData);
-    });
-
-    it('should return null when reservation data does not exist', () => {
-      const result = service.getReservationData();
-      
-      expect(result).toBeNull();
-    });
-  });
-
   describe('Generic Item Management', () => {
     it('should set item with generic type', () => {
       const testData = { name: 'Test', value: 123 };
@@ -194,3 +118,4 @@ describe('LocalStorageService', () => {
     });
   });
 });
+

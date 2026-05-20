@@ -26,11 +26,7 @@ export class RegistrationPage {
   routes = ROUTES;
   LoginLinkRoute = `/${this.routes.LOGIN}`;
   private themeService = inject(ThemeService);
-  logoSrc = computed(() => 
-    this.themeService.currentTheme() === 'dark' 
-      ? '/assets/icons/surveyflow/survey_universe_centauri_fixed_not_cropped_transparent.png' 
-      : '/assets/icons/surveyflow/survey_universe_centauri_fixed_not_cropped_transparent.png'
-  );
+  readonly logoSrc = '/assets/icons/surveyflow/survey_universe_centauri_fixed_not_cropped_transparent.png';
   formImageSrc = computed(() => 
     this.themeService.currentTheme() === 'dark' 
       ? 'assets/images/form-page-img-dark.svg' 

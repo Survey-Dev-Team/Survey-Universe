@@ -1,9 +1,3 @@
-export enum DishType {
-  APPETIZER = 'APPETIZER',
-  MAIN_COURSE = 'MAIN_COURSE',
-  DESSERT = 'DESSERT',
-}
-
 // ── Admin Stats Tabs ───────────────────────────────────────
 
 export enum AdminTab {
@@ -38,11 +32,6 @@ export enum UserTab {
 export enum UserRole {
   User  = 'user',
   Admin = 'admin',
-}
-
-export enum DishState {
-  AVAILABLE = 'Available',
-  ON_STOP = 'On stop',
 }
 
 export type ToastSeverityType = 'success' | 'error' | 'info' | 'warn';

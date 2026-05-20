@@ -24,7 +24,7 @@ export class UserProfile {
   usersService = inject(UsersService);
   protected readonly ButtonText = ButtonText;
   isLoggedIn = inject(AuthService).isAuthorized;
-  currentUser = computed(() => this.userStoreService.getUser());
+  currentUser = this.userStoreService.currentUser;
   currentUserRole = computed(() => {
     const user = this.currentUser();
     if (!user?.role) return '';

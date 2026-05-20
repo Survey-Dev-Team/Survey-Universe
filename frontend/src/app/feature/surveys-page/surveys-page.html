@@ -143,7 +143,7 @@
           @for (survey of filteredSurveys(); track $index) {
             <a class="gt-surveys-page__card-link" [routerLink]="'/surveys/' + survey.id">
               <gt-survey-card
-                [title]="survey.text"
+                [title]="survey.title"
                 [coverImage]="survey.coverImage"
                 [description]="survey.description"
                 [date]="survey.date"

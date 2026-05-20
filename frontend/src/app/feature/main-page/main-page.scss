@@ -128,15 +128,14 @@
     }
 
     &--terrain {
-      left: auto;
       right: 0;
+      left: -50px !important;
       bottom: -5% !important;
       top: auto !important;
       width: 110%;
-      opacity: 0.95;
 
       img {
-        width: 100%;
+        width: 110%;
         height: auto;
         object-fit: contain;
         object-position: center bottom;

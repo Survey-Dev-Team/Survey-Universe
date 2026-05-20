@@ -19,7 +19,6 @@ export class UserStoreService {
   );
 
   isAdmin = signal<boolean>(false);
-  isWaiter = signal<boolean>(false);
   isCustomer = signal<boolean>(false);
   isLoggin = signal<boolean>(this.localStorage.hasToken());
   currentCode = signal<string>('');
@@ -36,7 +35,6 @@ export class UserStoreService {
     this.currentUser.set(user);
     this.localStorage.setItem(USER_STORE_KEY, user);
     this.isAdmin.set(user.role?.toLowerCase() === 'admin');
-    this.isWaiter.set(false);
     this.isCustomer.set(user.role?.toLowerCase() === 'user');
   }
 
@@ -48,7 +46,6 @@ export class UserStoreService {
     this.currentUser.set(null);
     this.localStorage.removeItem(USER_STORE_KEY);
     this.isAdmin.set(false);
-    this.isWaiter.set(false);
     this.isCustomer.set(false);
   }
 }

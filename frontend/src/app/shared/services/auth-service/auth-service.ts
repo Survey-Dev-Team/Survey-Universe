@@ -103,7 +103,7 @@ export class AuthService {
     }
 
     const now = Date.now();
-    const bufferMs = bufferMinutes * 59 * 1000;
+    const bufferMs = bufferMinutes * 60 * 1000;
 
     return expirationTime - now <= bufferMs;
   }

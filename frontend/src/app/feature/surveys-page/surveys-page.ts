@@ -6,17 +6,8 @@ import { SurveyCard } from '../../shared/components/survey-card/survey-card';
 import { Search } from '../../shared/components/search/search';
 import { RouterLink } from '@angular/router';
 import { SurveysService } from '../../shared/services/surveys/surveys.service';
-
-interface Survey {
-  id: string;
-  text: string;
-  coverImage: string;
-  description: string;
-  date: string;
-  category: string;
-  author: string;
-  status: 'Active' | 'Passed';
-}
+import { SurveyCardModel } from '../../shared/models/interfaces';
+import { ALL_SURVEYS_MOCK } from './surveys-page.mock';
 
 @Component({
   selector: 'gt-surveys-page',
@@ -69,68 +60,7 @@ export class SurveysPage implements OnInit {
     isTest: false,
   });
 
-  readonly allSurveys: Survey[] = [
-    {
-      id: '1',
-      text: 'Explore the Unknown',
-      coverImage: '/assets/images/banner/card1.png',
-      description: '7 questions · 3–5 min',
-      date: 'Active until May 15, 2025',
-      category: 'Science',
-      author: 'Alex Monroe',
-      status: 'Active',
-    },
-    {
-      id: '2',
-      text: 'Cosmic Perspective Check',
-      coverImage: '/assets/images/banner/card2.png',
-      description: '10 questions · 5 min',
-      date: 'Anonymous survey',
-      category: 'Philosophy',
-      author: 'Lena Oris',
-      status: 'Active',
-    },
-    {
-      id: '3',
-      text: 'Signal from the Crowd',
-      coverImage: '/assets/images/banner/card3.png',
-      description: '4 questions · 2 min',
-      date: 'Active until June 1, 2025',
-      category: 'Society',
-      author: 'Mark Vega',
-      status: 'Passed',
-    },
-    {
-      id: '4',
-      text: 'New Orbit of Thoughts',
-      coverImage: '/assets/images/banner/card4.png',
-      description: '8 questions · 4 min',
-      date: 'Every answer matters',
-      category: 'Test',
-      author: 'Dana Kol',
-      status: 'Passed',
-    },
-    {
-      id: '5',
-      text: 'Voices of the Void',
-      coverImage: '/assets/images/banner/card1.png',
-      description: '6 questions · 3 min',
-      date: 'Active until July 1, 2025',
-      category: 'Psychology',
-      author: 'Ivan Petrov',
-      status: 'Active',
-    },
-    {
-      id: '6',
-      text: 'Data and Dreams',
-      coverImage: '/assets/images/banner/card2.png',
-      description: '12 questions · 6 min',
-      date: 'Anonymous survey',
-      category: 'Science',
-      author: 'Sofia Lane',
-      status: 'Passed',
-    },
-  ];
+  readonly allSurveys: SurveyCardModel[] = ALL_SURVEYS_MOCK;
 
   readonly hasActiveFilters = computed(() => {
     const f = this.filters();
@@ -141,10 +71,10 @@ export class SurveysPage implements OnInit {
     const f = this.filters();
     const q = this.searchQuery().toLowerCase();
     return this.allSurveys.filter(s => {
-      if (q && !s.text.toLowerCase().includes(q)) return false;
+      if (q && !s.title.toLowerCase().includes(q)) return false;
       if (f.categories.length && !f.categories.includes(s.category)) return false;
       if (f.authors.length && !f.authors.includes(s.author)) return false;
-      if (f.statuses.length && !f.statuses.includes(s.status)) return false;
+      if (f.statuses.length && !f.statuses.includes(s.status ?? '')) return false;
       if (f.isTest && s.category !== 'Test') return false;
       return true;
     });
