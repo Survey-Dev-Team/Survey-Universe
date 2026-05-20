@@ -1,7 +1,11 @@
 package com.survey.universe.spring.configuration;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -10,11 +14,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import com.survey.universe.spring.filter.JwtTokenFilter;
-
 import lombok.AllArgsConstructor;
 
 @Configuration
@@ -27,26 +30,30 @@ public class SecurityConfiguration {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http.cors(AbstractHttpConfigurer::disable).csrf(AbstractHttpConfigurer::disable).csrf(csrf -> csrf.disable())
+		return http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(request -> {
-					request.requestMatchers("/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/surveys/home")
-							.permitAll().anyRequest().authenticated();
+					request.requestMatchers("/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
+							.permitAll().requestMatchers(HttpMethod.GET, "/surveys/home").permitAll()
+							.requestMatchers(HttpMethod.GET, "/surveys").permitAll()
+							.requestMatchers(HttpMethod.GET, "/surveys/{urlId}").permitAll()
+							.requestMatchers("/surveys/**").authenticated().requestMatchers("/users/**").authenticated()
+							.anyRequest().authenticated();
 				}).sessionManagement(sessionManagementCustomizer -> {
 					sessionManagementCustomizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 				}).addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class).build();
 	}
 
 	@Bean
-	public CorsFilter corsFilter() {
+	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+		configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+		configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+		configuration.setExposedHeaders(List.of("Authorization"));
 		configuration.setAllowCredentials(true);
-		configuration.addAllowedHeader("*");
-		configuration.addAllowedMethod("*");
-		configuration.addAllowedOriginPattern("*");
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
-
-		return new CorsFilter(source);
+		return source;
 	}
 }

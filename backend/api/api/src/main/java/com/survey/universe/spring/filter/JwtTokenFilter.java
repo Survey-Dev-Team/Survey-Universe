@@ -49,23 +49,18 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 			Optional<User> user = userService.findByEmail(email);
 			if (user.isPresent()) {
 				User userRecord = user.get();
-				List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + userRecord.getRole().toUpperCase()));
-				
-				UserPrincipal userPrincipal = new UserPrincipal(userRecord.getId(), userRecord.getEmail(), userRecord.getRole(), authorities);
-				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userPrincipal,
-						null, authorities);
+				List<SimpleGrantedAuthority> authorities = List
+						.of(new SimpleGrantedAuthority("ROLE_" + userRecord.getRole().toUpperCase()));
+
+				UserPrincipal userPrincipal = new UserPrincipal(userRecord.getId(), userRecord.getEmail(),
+						userRecord.getRole(), authorities);
+				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+						userPrincipal, null, authorities);
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 		}
-		filterChain.doFilter(request, response);
+        filterChain.doFilter(request, response);
 	}
 
-	@Override
-	protected boolean shouldNotFilter(HttpServletRequest request) {
-		String path = request.getRequestURI();
-
-		return path.contains("/auth") || path.contains("/v3/api-docs")
-				|| path.contains("/swagger-ui");
-	}
 }
