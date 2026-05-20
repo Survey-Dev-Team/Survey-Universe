@@ -1,1 +1,35 @@
-[]
+[
+  {
+    "_id": "_design/surveys",
+    "_rev": "2-03b8d58c50eb59ec8dffad1a24d57910",
+    "views": {
+      "public_by_status": {
+        "map": "function(doc) { if (doc.root_type === \"survey\" && !doc.is_deleted) { emit(doc.status, null); } }"
+      },
+      "public_by_category": {
+        "map": "function(doc) { if (doc.root_type === \"survey\" && doc.status === \"published\" && !doc.is_deleted) { if (doc.category && Array.isArray(doc.category)) { doc.category.forEach(function(cat) { emit(cat, null); }); } } }"
+      },
+      "public_by_author": {
+        "map": "function(doc) { if (doc.root_type === \"survey\" && doc.status === \"published\" && !doc.is_deleted) { emit(doc.creator_id, null); } }"
+      },
+      "public_by_type": {
+        "map": "function(doc) { if (doc.root_type === \"survey\" && doc.status === \"published\" && !doc.is_deleted) { emit(doc.survey_type, null); } }"
+      },
+      "public_by_date": {
+        "map": "function(doc) { if (doc.root_type === \"survey\" && doc.status === \"published\" && !doc.is_deleted) { emit(doc.published_at, null); } }"
+      }
+    }
+  },
+  {
+    "_id": "_design/users",
+    "_rev": "1-4ffbb4217b6019583df690aa9abb3bc0",
+    "views": {
+      "by_role": {
+        "map": "function(doc) { if (doc.root_type === \"user\" && !doc.is_deleted) { emit(doc.role, null); } }"
+      },
+      "profile_by_id": {
+        "map": "function(doc) { if (doc.root_type === \"user\" && !doc.is_deleted) { emit(doc._id, { first_name: doc.first_name, last_name: doc.last_name, email: doc.email, role: doc.role, profile_image: doc.profile_image, last_session: doc.last_session }); } }"
+      }
+    }
+  }
+]

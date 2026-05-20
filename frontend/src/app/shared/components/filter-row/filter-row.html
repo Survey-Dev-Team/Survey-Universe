@@ -1,0 +1,10 @@
+<div class="gt-filter-row">
+  @for (opt of options(); track opt.value) {
+    <button
+      class="gt-filter-row__btn"
+      [class.gt-filter-row__btn--active]="activeValue() === opt.value"
+      (click)="valueChange.emit(opt.value)">
+      {{ opt.label }}
+    </button>
+  }
+</div>

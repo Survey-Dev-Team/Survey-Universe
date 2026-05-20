@@ -28,6 +28,21 @@ body.light {
   --reserved-bg: var(--sf-status-warning-bg);
   --canceled-bg: var(--sf-status-danger-bg);
   --transition: 0.3s;
+  --chart-text-color:    #64748b;
+  --chart-grid-color:    rgba(0, 0, 0, 0.06);
+  --chart-accent:        #7c3aed;
+  --chart-accent-alpha:  rgba(124, 58, 237, 0.12);
+  --chart-success:       #22c55e;
+  --chart-success-alpha: rgba(34, 197, 94, 0.10);
+  --chart-danger:        #ef4444;
+  --chart-orange:        #f97316;
+  --chart-yellow:        #facc15;
+  --chart-cyan:          #06b6d4;
+  --chart-teal:          #10b981;
+  --chart-amber:         #f59e0b;
+  --chart-pass:          rgba(34, 197, 94, 0.75);
+  --chart-fail:          rgba(239, 68, 68, 0.55);
+  --chart-accent-bar:    rgba(124, 58, 237, 0.70);
 }
 
 body.dark {
@@ -59,6 +74,21 @@ body.dark {
   --in-progress-bg: var(--sf-status-completed-bg);
   --reserved-bg: var(--sf-status-warning-bg);
   --canceled-bg: var(--sf-status-danger-bg);
+  --chart-text-color:    #94a3b8;
+  --chart-grid-color:    rgba(255, 255, 255, 0.08);
+  --chart-accent:        #7c3aed;
+  --chart-accent-alpha:  rgba(124, 58, 237, 0.12);
+  --chart-success:       #22c55e;
+  --chart-success-alpha: rgba(34, 197, 94, 0.10);
+  --chart-danger:        #ef4444;
+  --chart-orange:        #f97316;
+  --chart-yellow:        #facc15;
+  --chart-cyan:          #06b6d4;
+  --chart-teal:          #10b981;
+  --chart-amber:         #f59e0b;
+  --chart-pass:          rgba(34, 197, 94, 0.75);
+  --chart-fail:          rgba(239, 68, 68, 0.55);
+  --chart-accent-bar:    rgba(124, 58, 237, 0.70);
 }
 
 // Spacing

@@ -1,0 +1,8 @@
+@use "../../../../styles/variables" as *;
+
+.gt-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: $space-16;
+  margin: $space-40 0;
+}

@@ -1,0 +1,84 @@
+@if (!isCompact()) {
+  <div
+    class="gt-survey-card"
+    [style.background-image]="'url(' + coverImage() + ')'"
+  >
+    <div class="gt-survey-card__overlay">
+      @if (category() && category() !== 'Test') {
+        <span class="gt-survey-card__category">{{ category() }}</span>
+      }
+      @if (category() === 'Test') {
+        <span class="gt-survey-card__category gt-survey-card__category--test">Test</span>
+      }
+      <div class="gt-survey-card__bottom">
+        <div class="gt-survey-card__content">
+          <h3 class="gt-survey-card__title">{{ title() }}</h3>
+
+          <div class="gt-survey-card__meta">
+            @if (description()) {
+              <span class="gt-survey-card__meta-row">
+                <img src="/assets/icons/clock.svg" class="gt-survey-card__clock" alt="" />
+                <span>{{ description() }}</span>
+              </span>
+            }
+            @if (date()) {
+              <span class="gt-survey-card__date">{{ date() }}</span>
+            }
+          </div>
+
+          @if (author()) {
+            <span class="gt-survey-card__author">by {{ author() }}</span>
+          }
+        </div>
+
+        <button class="gt-survey-card__btn" type="button">
+          <img src="/assets/icons/arrow.svg" alt="→" class="gt-survey-card__arrow" />
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+@if (isCompact()) {
+  <div class="gt-survey-card--compact">
+    <div class="gt-survey-card__thumb" [style.background-image]="'url(' + coverImage() + ')'"></div>
+
+    <div class="gt-survey-card__body">
+      <div class="gt-survey-card__card-top">
+        <span class="gt-survey-card__category-badge">{{ category() }}</span>
+        <span class="gt-survey-card__card-date">{{ date() }}</span>
+      </div>
+
+      <h3 class="gt-survey-card__card-title">{{ title() }}</h3>
+
+      @if (metaItems().length) {
+        <div class="gt-survey-card__card-meta">
+          @for (item of metaItems(); track $index) {
+            <span><i [class]="item.icon"></i> {{ item.text }}</span>
+          }
+        </div>
+      }
+
+      @if (completionRate() !== null) {
+        <div class="gt-survey-card__progress-wrap">
+          <div class="gt-survey-card__progress-bar">
+            <div
+              class="gt-survey-card__progress-fill"
+              [class.gt-survey-card__progress-fill--green]="progressColor() === 'green'"
+              [class.gt-survey-card__progress-fill--amber]="progressColor() === 'amber'"
+              [style.width.%]="completionRate()"
+            ></div>
+          </div>
+          <span class="gt-survey-card__progress-label">{{ completionRate() }}% {{ progressLabel() }}</span>
+        </div>
+      }
+
+      @if (statusLabel()) {
+        <span class="gt-survey-card__status" [class]="'gt-survey-card__status--' + statusClass()">
+          @if (statusIcon()) { <i [class]="statusIcon()"></i> }
+          {{ statusLabel() }}
+        </span>
+      }
+    </div>
+  </div>
+}

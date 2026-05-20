@@ -2,8 +2,8 @@ import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { Header } from '../../shared/components/header/header';
 import { Footer } from '../../shared/components/footer/footer';
 import { PageHeaderRole } from '../../shared/components/page-header-role/page-header-role';
-import { SurveyComponent } from '../user-profile/components/survey/survey';
-import { InputText } from 'primeng/inputtext';
+import { SurveyCard } from '../../shared/components/survey-card/survey-card';
+import { Search } from '../../shared/components/search/search';
 import { RouterLink } from '@angular/router';
 import { SurveysService } from '../../shared/services/surveys/surveys.service';
 
@@ -20,7 +20,7 @@ interface Survey {
 
 @Component({
   selector: 'gt-surveys-page',
-  imports: [Header, Footer, PageHeaderRole, SurveyComponent, InputText, RouterLink],
+  imports: [Header, Footer, PageHeaderRole, SurveyCard, Search, RouterLink],
   templateUrl: './surveys-page.html',
   styleUrl: './surveys-page.scss',
 })

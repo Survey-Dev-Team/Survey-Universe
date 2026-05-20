@@ -1,0 +1,16 @@
+<form class="gt-search" [class.gt-search--hero]="variant() === 'hero'" [formGroup]="form" (ngSubmit)="submit()">
+  <button type="submit" class="gt-search__submit">
+    <i class="pi pi-search"></i>
+  </button>
+  <input
+    class="gt-search__input"
+    type="text"
+    formControlName="query"
+    [placeholder]="placeholder()"
+  />
+  @if (control.value) {
+    <button type="button" class="gt-search__clear" (click)="clear()">
+      <i class="pi pi-times"></i>
+    </button>
+  }
+</form>

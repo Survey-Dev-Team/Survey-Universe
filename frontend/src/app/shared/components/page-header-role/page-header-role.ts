@@ -12,6 +12,9 @@ import {
 })
 export class PageHeaderRole {
   title = input<string>();
+  subtitle = input<string>('');
   backgroundImage = input<string>('');
   centered = input<boolean>(false);
+  leftLayout = input<boolean>(false);
+  columnLeft = input<boolean>(false);
 }

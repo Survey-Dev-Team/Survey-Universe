@@ -4,13 +4,14 @@ import { DecimalPipe } from '@angular/common';
 import { Header } from '../../shared/components/header/header';
 import { Footer } from '../../shared/components/footer/footer';
 import { ROUTES } from '../../shared/models/routes.constants';
+import { StatStatus } from '../../shared/models/enums';
 
 interface SurveyData {
   id: string;
   title: string;
   coverImage: string;
   category: string;
-  status: 'Active' | 'Passed';
+  status: StatStatus;
   description: string;
   about: string;
   questionsCount: number;
@@ -31,6 +32,7 @@ export class SurveyDetail implements OnInit {
   private readonly route = inject(ActivatedRoute);
 
   readonly surveysRoute = `/${ROUTES.SURVEYS}`;
+  readonly StatStatus = StatStatus;
 
   readonly surveyId = signal<string>('');
   readonly isLoading = signal(true);
@@ -43,7 +45,7 @@ export class SurveyDetail implements OnInit {
       title: 'Explore the Unknown',
       coverImage: '/assets/images/banner/card1.png',
       category: 'Science',
-      status: 'Active',
+      status: StatStatus.Active,
       description: 'Take a short journey through questions about space, discovery and the limits of human knowledge.',
       about: 'This survey explores how people think about unknown worlds, future discoveries, scientific progress and cosmic uncertainty. Your answers will help shape a better understanding of how different people imagine the future.',
       questionsCount: 7,
@@ -58,7 +60,7 @@ export class SurveyDetail implements OnInit {
       title: 'Cosmic Perspective Check',
       coverImage: '/assets/images/banner/card2.png',
       category: 'Philosophy',
-      status: 'Active',
+      status: StatStatus.Active,
       description: 'Reflect on your place in the universe through a series of thought-provoking questions.',
       about: 'A philosophical exploration of how humans position themselves in the vast cosmos. This survey gathers diverse perspectives on existence, meaning, and our collective future.',
       questionsCount: 10,
@@ -73,7 +75,7 @@ export class SurveyDetail implements OnInit {
       title: 'Signal from the Crowd',
       coverImage: '/assets/images/banner/card3.png',
       category: 'Society',
-      status: 'Passed',
+      status: StatStatus.Passed,
       description: 'Quick pulse-check on social dynamics and collective behavior patterns.',
       about: 'Society shapes us in ways we rarely notice. This survey digs into attitudes about community, cooperation, and the signals we send each other as members of a shared world.',
       questionsCount: 4,

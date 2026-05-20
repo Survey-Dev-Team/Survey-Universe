@@ -98,8 +98,8 @@
                 </div>
                 <span
                   class="gt-survey-detail__details-val gt-survey-detail__status"
-                  [class.gt-survey-detail__status--active]="s.status === 'Active'"
-                  [class.gt-survey-detail__status--passed]="s.status === 'Passed'"
+                  [class.gt-survey-detail__status--active]="s.status === StatStatus.Active"
+                  [class.gt-survey-detail__status--passed]="s.status === StatStatus.Passed"
                 >{{ s.status }}</span>
               </li>
               <li class="gt-survey-detail__details-row">

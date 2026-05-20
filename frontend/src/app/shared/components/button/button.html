@@ -1,0 +1,6 @@
+<button class="button" [ngClass]="styleClass()" (click)="clicked.emit()">
+  @if (icon()) {
+    <i [class]="icon()"></i>
+  }
+  {{ label() }}
+</button>

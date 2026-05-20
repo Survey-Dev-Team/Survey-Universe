@@ -1,0 +1,31 @@
+@use "../../../../styles/variables" as *;
+
+.gt-filter-row {
+  display: flex;
+  gap: $space-8;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+
+  &__btn {
+    padding: $space-8 $space-16;
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 0.875rem;
+    color: var(--secondary-color);
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      border-color: var(--accent-color);
+      color: var(--text-color);
+    }
+
+    &--active {
+      background: var(--accent-color);
+      border-color: var(--accent-color);
+      color: #fff;
+      font-weight: 500;
+    }
+  }
+}

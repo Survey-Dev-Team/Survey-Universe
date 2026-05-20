@@ -4,231 +4,62 @@
 <main class="gt-admin-users">
 
   <!-- Hero -->
-  <section class="gt-admin-users__hero">
-    <div class="container">
-      <h1 class="gt-admin-users__page-title">User Management</h1>
-      <p class="gt-admin-users__page-subtitle">View, inspect and manage all registered users</p>
-    </div>
-  </section>
+  <gt-page-header-role 
+  title="User Management" 
+  subtitle="View, inspect and manage all registered users" 
+  [leftLayout]="true"/>
 
   <div class="container">
-
-    <!-- ── KPI row ──────────────────────────────────────────────────────── -->
-    <div class="gt-admin-users__kpi-row">
-      <div class="gt-admin-users__kpi-card">
-        <i class="pi pi-users gt-admin-users__kpi-icon"></i>
-        <span class="gt-admin-users__kpi-value">{{ totalUsers() }}</span>
-        <span class="gt-admin-users__kpi-label">Total users</span>
-      </div>
-      <div class="gt-admin-users__kpi-card gt-admin-users__kpi-card--accent">
-        <i class="pi pi-check-circle gt-admin-users__kpi-icon"></i>
-        <span class="gt-admin-users__kpi-value">{{ activeUsers() }}</span>
-        <span class="gt-admin-users__kpi-label">Active users</span>
-      </div>
-      <div class="gt-admin-users__kpi-card">
-        <i class="pi pi-list gt-admin-users__kpi-icon"></i>
-        <span class="gt-admin-users__kpi-value">{{ totalSurveysCompleted() }}</span>
-        <span class="gt-admin-users__kpi-label">Surveys completed</span>
-      </div>
-      <div class="gt-admin-users__kpi-card">
-        <i class="pi pi-pencil gt-admin-users__kpi-icon"></i>
-        <span class="gt-admin-users__kpi-value">{{ totalTestsCompleted() }}</span>
-        <span class="gt-admin-users__kpi-label">Tests completed</span>
-      </div>
-    </div>
-
     <!-- ── Search ───────────────────────────────────────────────────────── -->
     <div class="gt-admin-users__toolbar">
-      <div class="gt-admin-users__search-wrap">
-        <i class="pi pi-search gt-admin-users__search-icon"></i>
-        <input
-          class="gt-admin-users__search"
-          type="text"
-          placeholder="Search by name or email…"
-          [value]="searchQuery()"
-          (input)="onSearchInput($event)"
-        />
-      </div>
+      <gt-search placeholder="Search by name or email…" (queryChange)="searchQuery.set($event)" />
       <span class="gt-admin-users__count">{{ filteredUsers().length }} users</span>
     </div>
 
-    <!-- ── User list ─────────────────────────────────────────────────────── -->
-    <div class="gt-admin-users__list">
+    <!-- ── User table ──────────────────────────────────────────────────────── -->
+    <gt-table
+      [columns]="userColumns"
+      [rows]="filteredUsers()"
+      [expandable]="true"
+      (rowExpand)="userTab.set(UserTab.Surveys)"
+      (deleteRow)="deleteUser($event)">
 
-      @if (filteredUsers().length === 0) {
-        <div class="gt-admin-users__empty">
-          <i class="pi pi-search gt-admin-users__empty-icon"></i>
-          <p>No users match your search.</p>
-        </div>
-      }
+      <ng-template #expandedRow let-user>
+        <div class="gt-admin-users__panel">
 
-      @for (user of filteredUsers(); track user.id) {
-        <div class="gt-admin-users__card" [class.gt-admin-users__card--expanded]="expandedUserId() === user.id">
-
-          <!-- ── User row ── -->
-          <div class="gt-admin-users__row" (click)="toggleUser(user.id)" role="button" tabindex="0" (keydown.enter)="toggleUser(user.id)">
-
-            <div class="gt-admin-users__avatar">{{ getInitials(user.name) }}</div>
-
-            <div class="gt-admin-users__info">
-              <span class="gt-admin-users__name">{{ user.name }}</span>
-              <span class="gt-admin-users__email">{{ user.email }}</span>
-            </div>
-
-            <span class="gt-admin-users__role-badge"
-              [class.gt-admin-users__role-badge--admin]="user.role === 'admin'">
-              {{ user.role }}
-            </span>
-
-            <span class="gt-admin-users__status-badge"
-              [class.gt-admin-users__status-badge--active]="user.status === 'Active'">
-              {{ user.status }}
-            </span>
-
-            <div class="gt-admin-users__meta">
-              <span><i class="pi pi-list"></i> {{ user.surveys.length }} surveys</span>
-              <span><i class="pi pi-pencil"></i> {{ user.tests.length }} tests</span>
-              <span><i class="pi pi-calendar"></i> {{ user.joinedAt }}</span>
-            </div>
-
-            <div class="gt-admin-users__actions">
-              <button class="gt-admin-users__delete-btn"
-                title="Delete user"
-                (click)="$event.stopPropagation(); deleteUser(user.id)">
-                <i class="pi pi-trash"></i>
-              </button>
-              <i class="pi gt-admin-users__chevron"
-                [class.pi-chevron-down]="expandedUserId() !== user.id"
-                [class.pi-chevron-up]="expandedUserId() === user.id">
-              </i>
-            </div>
-
+          <div class="gt-admin-users__panel-tabs">
+            <button class="gt-admin-users__panel-tab"
+              [class.gt-admin-users__panel-tab--active]="userTab() === UserTab.Surveys"
+              (click)="setUserTab(UserTab.Surveys)">
+              <i class="pi pi-list"></i> Surveys ({{ user.surveys.length }})
+            </button>
+            <button class="gt-admin-users__panel-tab"
+              [class.gt-admin-users__panel-tab--active]="userTab() === UserTab.Tests"
+              (click)="setUserTab(UserTab.Tests)">
+              <i class="pi pi-pencil"></i> Tests ({{ user.tests.length }})
+            </button>
           </div>
 
-          <!-- ── Expanded panel ── -->
-          @if (expandedUserId() === user.id) {
-            <div class="gt-admin-users__panel">
+          @if (userTab() === UserTab.Surveys) {
+            @if (user.surveys.length === 0) {
+              <p class="gt-admin-users__panel-empty">No surveys completed yet.</p>
+            } @else {
+              <gt-table [columns]="surveysColumns" [rows]="user.surveys" />
+            }
+          }
 
-              <div class="gt-admin-users__panel-tabs">
-                <button class="gt-admin-users__panel-tab"
-                  [class.gt-admin-users__panel-tab--active]="userTab() === 'surveys'"
-                  (click)="setUserTab('surveys')">
-                  <i class="pi pi-list"></i> Surveys ({{ user.surveys.length }})
-                </button>
-                <button class="gt-admin-users__panel-tab"
-                  [class.gt-admin-users__panel-tab--active]="userTab() === 'tests'"
-                  (click)="setUserTab('tests')">
-                  <i class="pi pi-pencil"></i> Tests ({{ user.tests.length }})
-                </button>
-              </div>
-
-              <!-- Surveys sub-tab -->
-              @if (userTab() === 'surveys') {
-                @if (user.surveys.length === 0) {
-                  <p class="gt-admin-users__panel-empty">No surveys completed yet.</p>
-                } @else {
-                  <div class="gt-admin-users__table-wrap">
-                    <table class="gt-admin-users__table">
-                      <thead>
-                        <tr>
-                          <th>Survey</th>
-                          <th>Category</th>
-                          <th>Completion</th>
-                          <th>Completed on</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @for (s of user.surveys; track s.id) {
-                          <tr>
-                            <td>
-                              <a class="gt-admin-users__link" [routerLink]="'/' + routes.SURVEYS + '/' + s.id">
-                                {{ s.title }}
-                              </a>
-                            </td>
-                            <td>{{ s.category }}</td>
-                            <td>
-                              <div class="gt-admin-users__progress-wrap">
-                                <div class="gt-admin-users__progress-bar">
-                                  <div class="gt-admin-users__progress-fill" [style.width.%]="s.completionRate"></div>
-                                </div>
-                                <span class="gt-admin-users__progress-value">{{ s.completionRate }}%</span>
-                              </div>
-                            </td>
-                            <td>{{ s.completedAt }}</td>
-                          </tr>
-                        }
-                      </tbody>
-                    </table>
-                  </div>
-                }
-              }
-
-              <!-- Tests sub-tab -->
-              @if (userTab() === 'tests') {
-                @if (user.tests.length === 0) {
-                  <p class="gt-admin-users__panel-empty">No tests completed yet.</p>
-                } @else {
-                  <div class="gt-admin-users__table-wrap">
-                    <table class="gt-admin-users__table">
-                      <thead>
-                        <tr>
-                          <th>Test</th>
-                          <th>Category</th>
-                          <th>Score</th>
-                          <th>Result</th>
-                          <th>Completion</th>
-                          <th>Time</th>
-                          <th>Completed on</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @for (t of user.tests; track t.id) {
-                          <tr>
-                            <td>
-                              <a class="gt-admin-users__link" [routerLink]="'/' + routes.SURVEYS + '/' + t.id">
-                                {{ t.title }}
-                              </a>
-                            </td>
-                            <td>{{ t.category }}</td>
-                            <td>
-                              <span class="gt-admin-users__score"
-                                [class.gt-admin-users__score--good]="t.score >= 70"
-                                [class.gt-admin-users__score--mid]="t.score >= 50 && t.score < 70"
-                                [class.gt-admin-users__score--low]="t.score < 50">
-                                {{ t.score }}%
-                              </span>
-                            </td>
-                            <td>
-                              <span class="gt-admin-users__result-badge"
-                                [class.gt-admin-users__result-badge--pass]="t.passed"
-                                [class.gt-admin-users__result-badge--fail]="!t.passed">
-                                {{ t.passed ? 'Passed' : 'Failed' }}
-                              </span>
-                            </td>
-                            <td>
-                              <div class="gt-admin-users__progress-wrap">
-                                <div class="gt-admin-users__progress-bar">
-                                  <div class="gt-admin-users__progress-fill" [style.width.%]="t.completionRate"></div>
-                                </div>
-                                <span class="gt-admin-users__progress-value">{{ t.completionRate }}%</span>
-                              </div>
-                            </td>
-                            <td>{{ t.timeTakenMin }} min</td>
-                            <td>{{ t.completedAt }}</td>
-                          </tr>
-                        }
-                      </tbody>
-                    </table>
-                  </div>
-                }
-              }
-
-            </div>
+          @if (userTab() === UserTab.Tests) {
+            @if (user.tests.length === 0) {
+              <p class="gt-admin-users__panel-empty">No tests completed yet.</p>
+            } @else {
+              <gt-table [columns]="testsColumns" [rows]="user.tests" />
+            }
           }
 
         </div>
-      }
-    </div>
+      </ng-template>
+
+    </gt-table>
 
   </div>
 </main>

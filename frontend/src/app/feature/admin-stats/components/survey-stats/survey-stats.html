@@ -1,0 +1,43 @@
+<div class="gt-survey-stats">
+
+  <!-- KPI -->
+  <div class="gt-survey-stats__section-header">
+    <h2 class="gt-survey-stats__section-title">Overview</h2>
+    <gt-filter-row [options]="timeRanges" [activeValue]="kpiRange()" (valueChange)="setKpiRange($event)" />
+  </div>
+  <gt-kpi-row [cards]="kpiCards()" />
+
+  <!-- Charts -->
+  <div class="gt-survey-stats__section">
+    <div class="gt-survey-stats__section-header">
+      <h2 class="gt-survey-stats__section-title">Monthly activity</h2>
+      <gt-filter-row [options]="timeRanges" [activeValue]="chartRange()" (valueChange)="setChartRange($event)" />
+    </div>
+    <div class="gt-survey-stats__charts-row">
+      <div class="gt-survey-stats__chart-card gt-survey-stats__chart-card--wide">
+        <h3 class="gt-survey-stats__chart-title">Participants by month</h3>
+        <div class="gt-survey-stats__chart-wrap">
+          <p-chart type="bar" [data]="trendData()" [options]="chartOptions()" />
+        </div>
+      </div>
+      <div class="gt-survey-stats__chart-card">
+        <h3 class="gt-survey-stats__chart-title">By category</h3>
+        <div class="gt-survey-stats__chart-wrap gt-survey-stats__chart-wrap--doughnut">
+          <p-chart type="doughnut" [data]="categoryData()" [options]="doughnutOptions()" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="gt-survey-stats__section">
+    <div class="gt-survey-stats__section-header">
+      <h2 class="gt-survey-stats__section-title">All surveys</h2>
+      <gt-filter-row [options]="timeRanges" [activeValue]="tableRange()" (valueChange)="setTableRange($event)" />
+    </div>
+    <div class="gt-survey-stats__table-card">
+      <gt-table [columns]="columns" [rows]="tableData()" />
+    </div>
+  </div>
+
+</div>

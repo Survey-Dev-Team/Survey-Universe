@@ -148,6 +148,26 @@ export interface VerifyTokenResponse {
   userId: string;
 }
 
+// ── Chart ──────────────────────────────────────────────────
+
+export interface ChartTheme {
+  textColor:    string;
+  gridColor:    string;
+  accent:       string;
+  accentAlpha:  string;
+  success:      string;
+  successAlpha: string;
+  danger:       string;
+  orange:       string;
+  yellow:       string;
+  cyan:         string;
+  teal:         string;
+  amber:        string;
+  pass:         string;
+  fail:         string;
+  accentBar:    string;
+}
+
 // Surveys
 export type SurveyStatus = 'draft' | 'published' | 'closed';
 export type SurveyType = 'test' | 'questionnaire' | 'presentation';

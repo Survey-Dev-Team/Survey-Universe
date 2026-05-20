@@ -15,23 +15,6 @@
   background-position: center;
   background-attachment: fixed;
 
-  &__hero {
-    width: 100%;
-    margin-top: $space-24;
-    overflow: hidden;
-  }
-
-  &__hero-placeholder {
-    width: 100%;
-    height: 220px;
-    background: linear-gradient(
-      135deg,
-      rgba(60, 20, 120, 0.35) 0%,
-      rgba(10, 5, 30, 0.6) 100%
-    );
-    border-bottom: 1px solid var(--border-color);
-  }
-
   // ── Search (rendered inside page-header) ────────────────────────
   &__search-desc {
     font-family: fonts.$font-family;
@@ -41,65 +24,6 @@
     margin: 0 0 $space-24;
     line-height: 1.6;
     text-align: center;
-  }
-
-  &__search-input-wrap {
-    position: relative;
-    width: 100%;
-    max-width: 560px;
-  }
-
-  &__search-icon {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--accent-color);
-    opacity: 0.7;
-    font-size: 1rem;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  &__search-clear {
-    position: absolute;
-    right: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--accent-color);
-    opacity: 0.6;
-    font-size: 0.9rem;
-    cursor: pointer;
-    z-index: 1;
-    transition: opacity 0.15s;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
-
-  &__search-input {
-    width: 100%;
-    padding: 14px 44px 14px 46px !important;
-    border-radius: 40px !important;
-    border: 1px solid var(--border-color) !important;
-    background: var(--basic-white) !important;
-    color: var(--text-color) !important;
-    font-family: fonts.$font-family !important;
-    font-size: 0.95rem !important;
-    line-height: 1.5 !important;
-    transition: border-color 0.2s, box-shadow 0.2s !important;
-
-    &::placeholder {
-      color: var(--tertiary-color);
-      line-height: normal;
-    }
-
-    &:focus {
-      border-color: var(--accent-color) !important;
-      box-shadow: 0 0 0 3px rgba(120, 80, 220, 0.15) !important;
-      outline: none !important;
-    }
   }
 
   // ── Layout ───────────────────────────────────────────────────────

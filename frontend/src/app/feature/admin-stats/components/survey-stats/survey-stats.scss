@@ -1,0 +1,167 @@
+@use "../../../../../styles/variables" as *;
+@use "../../../../../styles/functions-and-mixins" as functions;
+@use "../../../../../styles/fonts" as fonts;
+
+.gt-survey-stats {
+
+  // ── Section ─────────────────────────────────────────────────────────────────
+  &__section {
+    margin-bottom: $space-48;
+  }
+
+  &__section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-16;
+    flex-wrap: wrap;
+    margin-bottom: $space-20;
+  }
+
+  &__section-title {
+    font-family: fonts.$font-family-heading;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0;
+  }
+
+  // ── Charts ───────────────────────────────────────────────────────────────────
+  &__charts-row {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: $space-20;
+    margin-bottom: $space-20;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__chart-card {
+    background: var(--basic-white);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: $space-24;
+    box-shadow: var(--box-shadow);
+  }
+
+  &__chart-title {
+    font-family: fonts.$font-family-heading;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0 0 $space-20;
+  }
+
+  &__chart-wrap {
+    height: 280px;
+
+    &--doughnut {
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    ::ng-deep canvas {
+      max-width: 100% !important;
+      height: 100% !important;
+    }
+  }
+
+  // ── Table ────────────────────────────────────────────────────────────────────
+  &__table-card {
+    background: var(--basic-white);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: $space-24;
+    box-shadow: var(--box-shadow);
+    margin-bottom: $space-64;
+  }
+
+  &__table-wrap {
+    overflow-x: auto;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+
+    th {
+      text-align: left;
+      padding: $space-12 $space-16;
+      color: var(--secondary-color);
+      font-weight: 500;
+      border-bottom: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: $space-14 $space-16;
+      color: var(--text-color);
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: middle;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: var(--light-bg); }
+  }
+
+  &__link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover { text-decoration: underline; }
+  }
+
+  // ── Progress ─────────────────────────────────────────────────────────────────
+  &__progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: $space-8;
+  }
+
+  &__progress-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+    min-width: 80px;
+  }
+
+  &__progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #7c3aed, #9333ea);
+    border-radius: 4px;
+    transition: width 0.4s ease;
+  }
+
+  &__progress-value {
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+    white-space: nowrap;
+  }
+
+  // ── Badge ────────────────────────────────────────────────────────────────────
+  &__badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 500;
+
+    &--active {
+      background: var(--success-bg);
+      color: var(--success-color);
+    }
+
+    &--passed {
+      background: var(--light-bg);
+      color: var(--secondary-color);
+    }
+  }
+}

@@ -20,13 +20,13 @@ import Parallax from 'parallax-js';
 import { RouterLink } from '@angular/router';
 import { Header } from '../../shared/components/header/header';
 import { Footer } from '../../shared/components/footer/footer';
-import { SurveyComponent } from '../user-profile/components/survey/survey';
+import { SurveyCard } from '../../shared/components/survey-card/survey-card';
 import { ROUTES } from '../../shared/models/routes.constants';
 import { SurveysService } from '../../shared/services/surveys/surveys.service';
 
 @Component({
   selector: 'gt-main-page',
-  imports: [Header, Footer, SurveyComponent, RouterLink],
+  imports: [Header, Footer, SurveyCard, RouterLink],
   templateUrl: './main-page.html',
   styleUrl: './main-page.scss',
   animations: [

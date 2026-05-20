@@ -1,0 +1,67 @@
+<div class="gt-test-stats">
+
+  <!-- KPI -->
+  <div class="gt-test-stats__section-header">
+    <h2 class="gt-test-stats__section-title">Overview</h2>
+    <gt-filter-row [options]="timeRanges" [activeValue]="kpiRange()" (valueChange)="setKpiRange($event)" />
+  </div>
+  <gt-kpi-row [cards]="kpiCards()" />
+
+  <!-- Funnel -->
+  <div class="gt-test-stats__section">
+    <div class="gt-test-stats__section-header">
+      <h2 class="gt-test-stats__section-title">Completion funnel</h2>
+      <gt-filter-row [options]="timeRanges" [activeValue]="funnelRange()" (valueChange)="setFunnelRange($event)" />
+    </div>
+    <div class="gt-test-stats__funnel">
+      @for (step of funnel(); track step.label) {
+        <div class="gt-test-stats__funnel-step" [style.--pct]="step.pct + '%'">
+          <div class="gt-test-stats__funnel-meta">
+            <span class="gt-test-stats__funnel-label">{{ step.label }}</span>
+            <span class="gt-test-stats__funnel-count">{{ step.count | number }}</span>
+            <span class="gt-test-stats__funnel-pct">{{ step.pct }}%</span>
+          </div>
+          <div class="gt-test-stats__funnel-track">
+            <div class="gt-test-stats__funnel-bar"></div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Performance charts -->
+  <div class="gt-test-stats__section">
+    <div class="gt-test-stats__section-header">
+      <h2 class="gt-test-stats__section-title">Performance analysis</h2>
+      <gt-filter-row [options]="timeRanges" [activeValue]="perfRange()" (valueChange)="setPerfRange($event)" />
+    </div>
+    <div class="gt-test-stats__charts-row">
+      <div class="gt-test-stats__chart-card gt-test-stats__chart-card--wide">
+        <h3 class="gt-test-stats__chart-title">Avg score & pass rate trend</h3>
+        <p class="gt-test-stats__chart-desc">Monthly dynamics for all tests</p>
+        <div class="gt-test-stats__chart-wrap">
+          <p-chart type="line" [data]="trendData()" [options]="chartOptions()" />
+        </div>
+      </div>
+      <div class="gt-test-stats__chart-card">
+        <h3 class="gt-test-stats__chart-title">Score distribution</h3>
+        <p class="gt-test-stats__chart-desc">How participants scored</p>
+        <div class="gt-test-stats__chart-wrap">
+          <p-chart type="bar" [data]="scoreDistData()" [options]="chartOptions()" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="gt-test-stats__section">
+    <div class="gt-test-stats__section-header">
+      <h2 class="gt-test-stats__section-title">All tests</h2>
+      <gt-filter-row [options]="timeRanges" [activeValue]="tableRange()" (valueChange)="setTableRange($event)" />
+    </div>
+    <div class="gt-test-stats__table-card">
+      <gt-table [columns]="columns" [rows]="tableData()" />
+    </div>
+  </div>
+
+</div>

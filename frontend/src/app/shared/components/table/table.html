@@ -1,0 +1,162 @@
+<p-table [value]="rows()" styleClass="gt-table" dataKey="id"
+  (onRowExpand)="rowExpand.emit($event.data['id'])">
+  <ng-template pTemplate="header">
+    <tr>
+      @for (col of columns(); track col.field) {
+        <th>{{ col.header }}</th>
+      }
+      @if (expandable()) { <th></th> }
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-row let-expanded="expanded">
+    <tr>
+      @for (col of columns(); track col.field) {
+        <td>
+          @switch (col.type) {
+
+            @case (ColType.Link) {
+              <a class="gt-table__link"
+                [routerLink]="col.basePath + '/' + row[col.idField ?? 'id']">
+                {{ row[col.field] }}
+              </a>
+            }
+
+            @case (ColType.Number) {
+              {{ row[col.field] | number }}
+            }
+
+            @case (ColType.Progress) {
+              <div class="gt-table__progress-wrap">
+                <div class="gt-table__progress-bar">
+                  <div class="gt-table__progress-fill" [style.width.%]="row[col.field]"></div>
+                </div>
+                <span class="gt-table__progress-value">{{ row[col.field] }}%</span>
+              </div>
+            }
+
+            @case (ColType.Badge) {
+              <span class="gt-table__badge"
+                [class.gt-table__badge--active]="row[col.field] === StatStatus.Active"
+                [class.gt-table__badge--passed]="row[col.field] === StatStatus.Passed"
+                [class.gt-table__badge--failed]="row[col.field] === StatStatus.Failed">
+                {{ row[col.field] }}
+              </span>
+            }
+
+            @case (ColType.Score) {
+              <span class="gt-table__score"
+                [class.gt-table__score--good]="row[col.field] >= (col.goodThreshold ?? 70)"
+                [class.gt-table__score--mid]="row[col.field] >= (col.midThreshold ?? 50) && row[col.field] < (col.goodThreshold ?? 70)"
+                [class.gt-table__score--low]="row[col.field] < (col.midThreshold ?? 50)">
+                {{ row[col.field] }}%
+              </span>
+            }
+
+            @case (ColType.Suffix) {
+              {{ row[col.field] }} {{ col.suffix }}
+            }
+
+            @case (ColType.Image) {
+              <div class="gt-table__thumb"
+                [style.background-image]="'url(' + row[col.field] + ')'">
+              </div>
+            }
+
+            @case (ColType.CategoryBadge) {
+              <span class="gt-table__category-badge"
+                [class.gt-table__category-badge--test]="row[col.field] === 'Test'">
+                {{ row[col.field] }}
+              </span>
+            }
+
+            @case (ColType.Toggle) {
+              <button class="gt-table__toggle"
+                [class.gt-table__toggle--on]="row[col.field]"
+                [title]="row[col.field] ? 'Unpublish' : 'Publish'"
+                (click)="publishToggle.emit(row['id'])">
+                <i [class]="row[col.field] ? 'pi pi-eye' : 'pi pi-eye-slash'"></i>
+              </button>
+            }
+
+            @case (ColType.Actions) {
+              <div class="gt-table__actions">
+                @if (showPublishAction()) {
+                  <button class="gt-table__action-btn gt-table__action-btn--publish"
+                    title="Publish survey"
+                    (click)="publishToggle.emit(row[col.field])">
+                    <i class="pi pi-check"></i>
+                  </button>
+                }
+                <button class="gt-table__action-btn gt-table__action-btn--edit"
+                  title="Edit"
+                  (click)="editRow.emit(row[col.field])">
+                  <i class="pi pi-pencil"></i>
+                </button>
+                <button class="gt-table__action-btn gt-table__action-btn--delete"
+                  title="Delete"
+                  (click)="deleteRow.emit(row[col.field])">
+                  <i class="pi pi-trash"></i>
+                </button>
+              </div>
+            }
+
+            @case (ColType.Delete) {
+              <button class="gt-table__action-btn gt-table__action-btn--delete"
+                title="Delete"
+                (click)="$event.stopPropagation(); deleteRow.emit(row['id'])">
+                <i class="pi pi-trash"></i>
+              </button>
+            }
+
+            @case (ColType.Avatar) {
+              <div class="gt-table__avatar">{{ getInitials(row[col.field]) }}</div>
+            }
+
+            @case (ColType.UserInfo) {
+              <div class="gt-table__user-info">
+                <span class="gt-table__user-name">{{ row[col.field] }}</span>
+                <span class="gt-table__user-email">{{ row[col.secondaryField!] }}</span>
+              </div>
+            }
+
+            @case (ColType.RoleBadge) {
+              <span class="gt-table__role-badge"
+                [class.gt-table__role-badge--admin]="row[col.field] === 'admin'">
+                {{ row[col.field] }}
+              </span>
+            }
+
+            @case (ColType.Length) {
+              {{ row[col.field].length }}
+            }
+
+            @default {
+              {{ row[col.field] }}
+            }
+
+          }
+        </td>
+      }
+      @if (expandable()) {
+        <td>
+          <button class="gt-table__expander" type="button" [pRowToggler]="row">
+            <i class="pi" [class.pi-chevron-down]="!expanded" [class.pi-chevron-up]="expanded"></i>
+          </button>
+        </td>
+      }
+    </tr>
+  </ng-template>
+
+  @if (expandedRowTemplate()) {
+    <ng-template pTemplate="rowexpansion" let-row>
+      <tr>
+        <td [attr.colspan]="columns().length + (expandable() ? 1 : 0)">
+          <ng-container [ngTemplateOutlet]="expandedRowTemplate()!"
+            [ngTemplateOutletContext]="{ $implicit: row }" />
+        </td>
+      </tr>
+    </ng-template>
+  }
+
+</p-table>

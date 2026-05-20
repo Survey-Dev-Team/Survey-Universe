@@ -1,0 +1,11 @@
+<div class="gt-kpi-card" [class.gt-kpi-card--accent]="card().accent">
+  <i [class]="card().icon + ' gt-kpi-card__icon'"></i>
+  <span class="gt-kpi-card__value">
+    @if (card().formatted) {
+      {{ card().value | number }}
+    } @else {
+      {{ card().value }}
+    }
+  </span>
+  <span class="gt-kpi-card__label">{{ card().label }}</span>
+</div>

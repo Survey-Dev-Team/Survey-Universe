@@ -1,0 +1,18 @@
+<div class="gt-tabs">
+  @for (tab of tabs(); track tab.value) {
+    <button
+      class="gt-tabs__tab"
+      [class.gt-tabs__tab--active]="activeTab() === tab.value"
+      (click)="tabChange.emit(tab.value)">
+      @if (tab.icon) {
+        <i [class]="tab.icon"></i>
+      }
+      {{ tab.label }}
+      @if (tab.badge != null) {
+        <span class="gt-tabs__badge" [class.gt-tabs__badge--warn]="tab.badgeVariant === 'warn'">
+          {{ tab.badge }}
+        </span>
+      }
+    </button>
+  }
+</div>
