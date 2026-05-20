@@ -1,5 +1,5 @@
-import { Component, input, output, contentChild, TemplateRef } from '@angular/core';
-import { DecimalPipe, NgTemplateOutlet } from '@angular/common';
+import { Component, input, output, contentChild, TemplateRef, signal } from '@angular/core';
+import { DatePipe, DecimalPipe, NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { StatStatus } from '../../models/enums';
@@ -21,6 +21,7 @@ export enum TableColumnType {
   UserInfo      = 'userInfo',
   RoleBadge     = 'roleBadge',
   Length        = 'length',
+  Date          = 'date',
   Delete        = 'delete',
 }
 
@@ -45,7 +46,7 @@ export interface TableColumn {
 @Component({
   selector: 'gt-table',
   standalone: true,
-  imports: [TableModule, DecimalPipe, RouterLink, NgTemplateOutlet],
+  imports: [TableModule, DecimalPipe, DatePipe, RouterLink, NgTemplateOutlet],
   templateUrl: './table.html',
   styleUrl: './table.scss',
 })
@@ -65,6 +66,14 @@ export class GtTable {
 
   readonly StatStatus = StatStatus;
   readonly ColType    = TableColumnType;
+
+  expandedRowId = signal<string | null>(null);
+
+  toggleRow(id: string): void {
+    const next = this.expandedRowId() === id ? null : id;
+    this.expandedRowId.set(next);
+    if (next !== null) this.rowExpand.emit(id);
+  }
 
   getInitials(name: string): string {
     return (name as string)

@@ -1,9 +1,13 @@
 @use "../../../../styles/variables" as *;
 
-.gt-search {
-  position: relative;
+:host {
+  display: block;
   flex: 1;
   min-width: 220px;
+}
+
+.gt-search {
+  position: relative;
 
   &__submit {
     position: absolute;

@@ -4,15 +4,16 @@
 <main class="gt-admin-users">
 
   <!-- Hero -->
-  <gt-page-header-role 
-  title="User Management" 
-  subtitle="View, inspect and manage all registered users" 
-  [leftLayout]="true"/>
+  <gt-page-header-role
+    title="User Management"
+    subtitle="View, inspect and manage all registered users"
+    backgroundImage="/assets/images/all_surveys_top.png"
+    [leftLayout]="true"/>
 
   <div class="container">
     <!-- ── Search ───────────────────────────────────────────────────────── -->
     <div class="gt-admin-users__toolbar">
-      <gt-search placeholder="Search by name or email…" (queryChange)="searchQuery.set($event)" />
+      <gt-search placeholder="Search by name or email" (queryChange)="searchQuery.set($event)" />
       <span class="gt-admin-users__count">{{ filteredUsers().length }} users</span>
     </div>
 
@@ -21,7 +22,7 @@
       [columns]="userColumns"
       [rows]="filteredUsers()"
       [expandable]="true"
-      (rowExpand)="userTab.set(UserTab.Surveys)"
+      (rowExpand)="onRowExpand($event)"
       (deleteRow)="deleteUser($event)">
 
       <ng-template #expandedRow let-user>

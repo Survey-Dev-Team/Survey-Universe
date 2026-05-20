@@ -4,6 +4,7 @@
   min-height: 100vh;
   background-color: var(--background-color);
   overflow-x: hidden;
+  padding-bottom: $space-48;
 
   // ── Toolbar ───────────────────────────────────────────────────────────────
   &__toolbar {
@@ -23,8 +24,14 @@
   // ── Expanded panel ────────────────────────────────────────────────────────
   &__panel {
     border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
     padding: $space-20 $space-24 $space-24;
     background: rgba(124, 58, 237, 0.02);
+    overflow: hidden;
+
+    ::ng-deep .gt-table.p-datatable {
+      table-layout: fixed;
+    }
   }
 
   &__panel-tabs {

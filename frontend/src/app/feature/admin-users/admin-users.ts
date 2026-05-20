@@ -1,4 +1,4 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, OnInit, signal, computed, inject } from '@angular/core';
 import { Header } from '../../shared/components/header/header';
 import { Footer } from '../../shared/components/footer/footer';
 import { PageHeaderRole } from '../../shared/components/page-header-role/page-header-role';
@@ -6,9 +6,8 @@ import { Search } from '../../shared/components/search/search';
 import { GtTable } from '../../shared/components/table/table';
 import { ROUTES } from '../../shared/models/routes.constants';
 import { UserTab, UserRole } from '../../shared/models/enums';
-import { AppUser } from './admin-users.model';
-import { ADMIN_USERS_MOCK } from './admin-users.mock';
 import { USER_SURVEYS_COLUMNS, USER_TESTS_COLUMNS, USER_COLUMNS } from './admin-users.config';
+import { AdminDataService } from '../../shared/services/admin/admin-data.service';
 
 @Component({
   selector: 'gt-admin-users',
@@ -16,15 +15,18 @@ import { USER_SURVEYS_COLUMNS, USER_TESTS_COLUMNS, USER_COLUMNS } from './admin-
   templateUrl: './admin-users.html',
   styleUrl: './admin-users.scss',
 })
-export class AdminUsers {
-  readonly routes          = ROUTES;
-  readonly UserTab         = UserTab;
-  readonly UserRole        = UserRole;
-  readonly userColumns     = USER_COLUMNS;
-  readonly surveysColumns  = USER_SURVEYS_COLUMNS;
-  readonly testsColumns    = USER_TESTS_COLUMNS;
+export class AdminUsers implements OnInit {
+  private adminDataService = inject(AdminDataService);
 
-  readonly users = signal<AppUser[]>(ADMIN_USERS_MOCK);
+  readonly routes         = ROUTES;
+  readonly UserTab        = UserTab;
+  readonly UserRole       = UserRole;
+  readonly userColumns    = USER_COLUMNS;
+  readonly surveysColumns = USER_SURVEYS_COLUMNS;
+  readonly testsColumns   = USER_TESTS_COLUMNS;
+
+  readonly users   = this.adminDataService.users;
+  readonly loading = this.adminDataService.loading;
 
   // ── Expanded / tab state ──────────────────────────────────────────────────
   userTab = signal<UserTab>(UserTab.Surveys);
@@ -49,12 +51,28 @@ export class AdminUsers {
     this.users().reduce((sum, u) => sum + u.tests.length, 0)
   );
 
+  // ── Lifecycle ─────────────────────────────────────────────────────────────
+  ngOnInit(): void {
+    this.adminDataService.loadUsers();
+  }
+
   // ── Helpers ───────────────────────────────────────────────────────────────
   setUserTab(tab: UserTab): void {
     this.userTab.set(tab);
   }
 
+  onRowExpand(userId: string): void {
+    const user = this.users().find(u => u.id === userId);
+    if (user?.urlId) {
+      this.adminDataService.loadUserResponses(userId, user.urlId);
+    }
+    this.userTab.set(UserTab.Surveys);
+  }
+
   deleteUser(id: string): void {
-    this.users.update((list) => list.filter((u) => u.id !== id));
+    const user = this.users().find(u => u.id === id);
+    if (user?.urlId) {
+      this.adminDataService.deleteUser(user.urlId);
+    }
   }
 }

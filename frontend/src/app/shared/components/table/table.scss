@@ -7,6 +7,9 @@
 ::ng-deep .gt-table {
   &.p-datatable {
     width: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
 
     .p-datatable-thead > tr > th {
       padding: 12px 16px;
@@ -37,6 +40,10 @@
 
       &:hover {
         background: var(--table-row-hover-bg);
+      }
+
+      &.gt-table__expansion-row:hover {
+        background: transparent;
       }
     }
   }
@@ -96,12 +103,20 @@
     border-radius: 3px;
     background: var(--accent);
     transition: width 0.3s;
+
+    &--high { background: #10b981; }
+    &--mid  { background: #f59e0b; }
+    &--low  { background: #ef4444; }
   }
 
   &__progress-value {
     font-size: 13px;
     color: var(--text-muted);
     min-width: 36px;
+
+    &--high { color: #10b981; }
+    &--mid  { color: #f59e0b; }
+    &--low  { color: #ef4444; }
   }
 
   &__score {
@@ -240,5 +255,17 @@
     transition: color 0.2s;
 
     &:hover { color: var(--text-primary); }
+  }
+
+  &__expansion-row {
+    > td {
+      padding: 0 !important;
+      border-bottom: none !important;
+      overflow: hidden;
+    }
+
+    &:hover {
+      background: transparent !important;
+    }
   }
 }

@@ -3,8 +3,8 @@ import { StatStatus, UserRole } from '../../shared/models/enums';
 
 export const ADMIN_USERS_MOCK: AppUser[] = [
   {
-    id: '1', name: 'Olivia Bennett', email: 'olivia.bennett@example.com',
-    role: UserRole.User, createdAt: '2025-03-12', lastSession: '2026-05-17',
+    id: '1', urlId: 'olivia-bennett', name: 'Olivia Bennett', email: 'olivia.bennett@example.com',
+    role: UserRole.User, createdAt: '2025-03-12', lastSession: '2026-05-17', surveysCount: 3, testsCount: 2,
     surveys: [
       { id: 's1', title: 'Remote Work Culture',   category: 'Business',   completedAt: '2026-02-10', completionRate: 100 },
       { id: 's2', title: 'Mental Health at Work', category: 'Health',     completedAt: '2026-03-15', completionRate: 88  },
@@ -16,8 +16,8 @@ export const ADMIN_USERS_MOCK: AppUser[] = [
     ],
   },
   {
-    id: '2', name: 'Lucas Moreau', email: 'lucas.moreau@example.com',
-    role: UserRole.User, createdAt: '2025-05-20', lastSession: '2026-05-15',
+    id: '2', urlId: 'lucas-moreau', name: 'Lucas Moreau', email: 'lucas.moreau@example.com',
+    role: UserRole.User, createdAt: '2025-05-20', lastSession: '2026-05-15', surveysCount: 2, testsCount: 3,
     surveys: [
       { id: 's4', title: 'Climate Awareness 2025', category: 'Science',   completedAt: '2026-01-08', completionRate: 100 },
       { id: 's5', title: 'Education Trends',       category: 'Education', completedAt: '2026-04-01', completionRate: 72  },
@@ -29,8 +29,8 @@ export const ADMIN_USERS_MOCK: AppUser[] = [
     ],
   },
   {
-    id: '3', name: 'Amelia Novak', email: 'amelia.novak@example.com',
-    role: UserRole.Admin, createdAt: '2024-11-05', lastSession: '2026-05-18',
+    id: '3', urlId: 'amelia-novak', name: 'Amelia Novak', email: 'amelia.novak@example.com',
+    role: UserRole.Admin, createdAt: '2024-11-05', lastSession: '2026-05-18', surveysCount: 1, testsCount: 1,
     surveys: [
       { id: 's6', title: 'Customer Satisfaction Q1', category: 'Business', completedAt: '2025-12-20', completionRate: 100 },
     ],
@@ -39,16 +39,16 @@ export const ADMIN_USERS_MOCK: AppUser[] = [
     ],
   },
   {
-    id: '4', name: 'Ethan Clarke', email: 'ethan.clarke@example.com',
-    role: UserRole.User, createdAt: '2026-01-30', lastSession: '2026-02-10',
+    id: '4', urlId: 'ethan-clarke', name: 'Ethan Clarke', email: 'ethan.clarke@example.com',
+    role: UserRole.User, createdAt: '2026-01-30', lastSession: '2026-02-10', surveysCount: 0, testsCount: 1,
     surveys: [],
     tests: [
       { id: 't7', title: 'AI Fundamentals Quiz', category: 'Technology', completedAt: '2026-02-05', completionRate: 60, score: 42, result: StatStatus.Failed, timeTakenMin: 11 },
     ],
   },
   {
-    id: '5', name: 'Sofia Reyes', email: 'sofia.reyes@example.com',
-    role: UserRole.User, createdAt: '2025-08-14', lastSession: '2026-05-16',
+    id: '5', urlId: 'sofia-reyes', name: 'Sofia Reyes', email: 'sofia.reyes@example.com',
+    role: UserRole.User, createdAt: '2025-08-14', lastSession: '2026-05-16', surveysCount: 3, testsCount: 2,
     surveys: [
       { id: 's7', title: 'Remote Work Culture',   category: 'Business',   completedAt: '2026-01-17', completionRate: 100 },
       { id: 's8', title: 'Social Media Habits',   category: 'Technology', completedAt: '2026-03-09', completionRate: 100 },
@@ -60,8 +60,8 @@ export const ADMIN_USERS_MOCK: AppUser[] = [
     ],
   },
   {
-    id: '6', name: 'Noah Fischer', email: 'noah.fischer@example.com',
-    role: UserRole.User, createdAt: '2025-12-01', lastSession: '2026-05-12',
+    id: '6', urlId: 'noah-fischer', name: 'Noah Fischer', email: 'noah.fischer@example.com',
+    role: UserRole.User, createdAt: '2025-12-01', lastSession: '2026-05-12', surveysCount: 2, testsCount: 0,
     surveys: [
       { id: 's10', title: 'Education Trends',       category: 'Education', completedAt: '2026-02-18', completionRate: 68  },
       { id: 's11', title: 'Climate Awareness 2025', category: 'Science',   completedAt: '2026-03-22', completionRate: 100 },

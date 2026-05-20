@@ -1,17 +1,16 @@
-<p-table [value]="rows()" styleClass="gt-table" dataKey="id"
-  (onRowExpand)="rowExpand.emit($event.data['id'])">
+<p-table [value]="rows()" styleClass="gt-table">
   <ng-template pTemplate="header">
     <tr>
-      @for (col of columns(); track col.field) {
+      @for (col of columns(); track $index) {
         <th>{{ col.header }}</th>
       }
       @if (expandable()) { <th></th> }
     </tr>
   </ng-template>
 
-  <ng-template pTemplate="body" let-row let-expanded="expanded">
+  <ng-template pTemplate="body" let-row>
     <tr>
-      @for (col of columns(); track col.field) {
+      @for (col of columns(); track $index) {
         <td>
           @switch (col.type) {
 
@@ -29,9 +28,19 @@
             @case (ColType.Progress) {
               <div class="gt-table__progress-wrap">
                 <div class="gt-table__progress-bar">
-                  <div class="gt-table__progress-fill" [style.width.%]="row[col.field]"></div>
+                  <div class="gt-table__progress-fill"
+                    [style.width.%]="row[col.field]"
+                    [class.gt-table__progress-fill--high]="row[col.field] >= 80"
+                    [class.gt-table__progress-fill--mid]="row[col.field] >= 50 && row[col.field] < 80"
+                    [class.gt-table__progress-fill--low]="row[col.field] < 50">
+                  </div>
                 </div>
-                <span class="gt-table__progress-value">{{ row[col.field] }}%</span>
+                <span class="gt-table__progress-value"
+                  [class.gt-table__progress-value--high]="row[col.field] >= 80"
+                  [class.gt-table__progress-value--mid]="row[col.field] >= 50 && row[col.field] < 80"
+                  [class.gt-table__progress-value--low]="row[col.field] < 50">
+                  {{ row[col.field] }}%
+                </span>
               </div>
             }
 
@@ -131,6 +140,10 @@
               {{ row[col.field].length }}
             }
 
+            @case (ColType.Date) {
+              {{ row[col.field] | date:'dd MMM yyyy' }}
+            }
+
             @default {
               {{ row[col.field] }}
             }
@@ -140,23 +153,20 @@
       }
       @if (expandable()) {
         <td>
-          <button class="gt-table__expander" type="button" [pRowToggler]="row">
-            <i class="pi" [class.pi-chevron-down]="!expanded" [class.pi-chevron-up]="expanded"></i>
+          <button class="gt-table__expander" type="button" (click)="toggleRow(row['id'])">
+            <i class="pi" [class.pi-chevron-down]="expandedRowId() !== row['id']" [class.pi-chevron-up]="expandedRowId() === row['id']"></i>
           </button>
         </td>
       }
     </tr>
-  </ng-template>
-
-  @if (expandedRowTemplate()) {
-    <ng-template pTemplate="rowexpansion" let-row>
-      <tr>
-        <td [attr.colspan]="columns().length + (expandable() ? 1 : 0)">
+    @if (expandable() && expandedRowId() === row['id'] && expandedRowTemplate()) {
+      <tr class="gt-table__expansion-row">
+        <td [attr.colspan]="columns().length + 1">
           <ng-container [ngTemplateOutlet]="expandedRowTemplate()!"
             [ngTemplateOutletContext]="{ $implicit: row }" />
         </td>
       </tr>
-    </ng-template>
-  }
+    }
+  </ng-template>
 
 </p-table>

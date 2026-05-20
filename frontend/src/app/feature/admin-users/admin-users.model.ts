@@ -20,12 +20,15 @@ export interface CompletedTest {
 }
 
 export interface AppUser {
-  id:          string;
-  name:        string;
-  email:       string;
-  role:        UserRole;
-  createdAt:   string;
-  lastSession: string;
-  surveys:     CompletedSurvey[];
-  tests:       CompletedTest[];
+  id:           string;
+  urlId:        string;
+  name:         string;
+  email:        string;
+  role:         UserRole;
+  createdAt:    string;
+  lastSession:  string;
+  surveysCount: number;
+  testsCount:   number;
+  surveys:      CompletedSurvey[];
+  tests:        CompletedTest[];
 }
