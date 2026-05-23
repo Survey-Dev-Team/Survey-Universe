@@ -43,6 +43,7 @@ body.light {
   --chart-pass:          rgba(34, 197, 94, 0.75);
   --chart-fail:          rgba(239, 68, 68, 0.55);
   --chart-accent-bar:    rgba(124, 58, 237, 0.70);
+  --sf-accent-green-dark: #16a34a;
 }
 
 body.dark {
@@ -89,6 +90,52 @@ body.dark {
   --chart-pass:          rgba(34, 197, 94, 0.75);
   --chart-fail:          rgba(239, 68, 68, 0.55);
   --chart-accent-bar:    rgba(124, 58, 237, 0.70);
+  --sf-accent-green-dark: #16a34a;
+}
+
+// ── Alpha tokens (theme-independent) ─────────────────────────────────────
+:root {
+  // Brand rgba
+  --sf-brand-alpha-07:    rgba(124, 58, 237, 0.07);
+  --sf-brand-alpha-08:    rgba(124, 58, 237, 0.08);
+  --sf-brand-alpha-10:    rgba(124, 58, 237, 0.10);
+  --sf-brand-alpha-28:    rgba(124, 58, 237, 0.28);
+  --sf-brand-alpha-30:    rgba(124, 58, 237, 0.30);
+  --sf-brand-alpha-35:    rgba(124, 58, 237, 0.35);
+  --sf-brand-alpha-38:    rgba(124, 58, 237, 0.38);
+  --sf-brand-alpha-40:    rgba(124, 58, 237, 0.40);
+  --sf-brand-alpha-50:    rgba(124, 58, 237, 0.50);
+  --sf-brand-alpha-70:    rgba(124, 58, 237, 0.70);
+  // Danger rgba
+  --danger-alpha-12:      rgba(248, 113, 113, 0.12);
+  --danger-alpha-50:      rgba(248, 113, 113, 0.50);
+  --danger-ef-alpha-12:   rgba(239, 68, 68, 0.12);
+  // Dark overlays
+  --overlay-dark-20:      rgba(4, 8, 18, 0.20);
+  --overlay-dark-45:      rgba(4, 8, 18, 0.45);
+  --overlay-dark-60:      rgba(4, 8, 18, 0.60);
+  --overlay-dark-65:      rgba(4, 8, 18, 0.65);
+  --overlay-dark-75:      rgba(4, 8, 18, 0.75);
+  --overlay-dark-88:      rgba(5, 2, 18, 0.88);
+  --overlay-black-18:     rgba(0, 0, 0, 0.18);
+  --overlay-black-25:     rgba(0, 0, 0, 0.25);
+  --overlay-black-35:     rgba(0, 0, 0, 0.35);
+  --overlay-black-40:     rgba(0, 0, 0, 0.40);
+  --overlay-black-55:     rgba(0, 0, 0, 0.55);
+  // White alpha (for dark sections/heroes)
+  --white-alpha-04:       rgba(255, 255, 255, 0.04);
+  --white-alpha-08:       rgba(255, 255, 255, 0.08);
+  --white-alpha-12:       rgba(255, 255, 255, 0.12);
+  --white-alpha-25:       rgba(255, 255, 255, 0.25);
+  --white-alpha-40:       rgba(255, 255, 255, 0.40);
+  --white-alpha-50:       rgba(255, 255, 255, 0.50);
+  --white-alpha-55:       rgba(255, 255, 255, 0.55);
+  --white-alpha-60:       rgba(255, 255, 255, 0.60);
+  --white-alpha-65:       rgba(255, 255, 255, 0.65);
+  --white-alpha-70:       rgba(255, 255, 255, 0.70);
+  --white-alpha-72:       rgba(255, 255, 255, 0.72);
+  --white-alpha-80:       rgba(255, 255, 255, 0.80);
+  --white-alpha-85:       rgba(255, 255, 255, 0.85);
 }
 
 // Spacing

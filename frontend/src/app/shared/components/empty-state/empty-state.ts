@@ -12,6 +12,7 @@ export class EmptyState {
   title       = input<string>('Nothing here yet');
   message     = input<string>('');
   actionLabel = input<string>('');
+  image       = input<string>('/assets/images/empty-state.webp');
 
   actionClick = output<void>();
 }

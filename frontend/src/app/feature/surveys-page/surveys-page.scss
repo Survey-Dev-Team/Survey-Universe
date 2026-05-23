@@ -6,9 +6,9 @@
   background-image:
     linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 1) 15%,
-      rgba(0, 0, 0, 0) 100%
+      black 0%,
+      black 15%,
+      transparent 100%
     ),
     url('/assets/images/all_surveys_bg.png');
   background-size: cover;
@@ -19,7 +19,7 @@
   &__search-desc {
     font-family: fonts.$font-family;
     font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.65);
+    color: var(--white-alpha-65);
     max-width: 520px;
     margin: 0 0 $space-24;
     line-height: 1.6;
@@ -64,8 +64,8 @@
   &__clear-btn {
     padding: 6px 16px;
     border-radius: $space-8;
-    border: 1px solid rgba(124, 58, 237, 0.4);
-    background: rgba(124, 58, 237, 0.08);
+    border: 1px solid var(--sf-brand-alpha-40);
+    background: var(--sf-brand-alpha-08);
     font-family: fonts.$font-family;
     font-size: 0.8rem;
     font-weight: fonts.$font-weight-medium;
@@ -75,8 +75,8 @@
     transition: background 0.18s, border-color 0.18s, color 0.18s;
 
     &:hover {
-      background: rgba(124, 58, 237, 0.18);
-      border-color: rgba(124, 58, 237, 0.7);
+      background: var(--sf-brand-primary-soft);
+      border-color: var(--sf-brand-alpha-70);
       color: #c4b5fd;
     }
   }
@@ -97,7 +97,7 @@
 
     &:hover {
       transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 12px 32px var(--overlay-black-35);
     }
   }
 }

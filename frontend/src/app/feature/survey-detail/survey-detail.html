@@ -21,10 +21,12 @@
         <h1 class="gt-survey-detail__title">{{ s.title }}</h1>
         <p class="gt-survey-detail__desc">{{ s.description }}</p>
         <div class="gt-survey-detail__cta">
-          <button class="button gt-survey-detail__start-btn">
-            Start survey
-            <i class="pi pi-arrow-right"></i>
-          </button>
+          @if (!alreadySubmitted()) {
+            <a class="button gt-survey-detail__start-btn" [routerLink]="'/surveys/' + surveyId() + '/take'">
+              Start survey
+              <i class="pi pi-arrow-right"></i>
+            </a>
+          }
         </div>
       </div>
     </div>
@@ -47,21 +49,37 @@
           </div>
 
           <div class="gt-survey-detail__card">
-            <div class="gt-survey-detail__card-header">
-              <i class="pi pi-send"></i>
-              <h2 class="gt-survey-detail__card-title">Before you start</h2>
-            </div>
-            <div class="gt-survey-detail__steps">
-              @for (step of beforeYouStart; track step.num) {
-                <div class="gt-survey-detail__step">
-                  <span class="gt-survey-detail__step-num">{{ step.num }}</span>
-                  <div>
-                    <strong class="gt-survey-detail__step-title">{{ step.title }}</strong>
-                    <p class="gt-survey-detail__step-desc">{{ step.desc }}</p>
+            @if (alreadySubmitted()) {
+              <div class="gt-survey-detail__card-header">
+                <i class="pi pi-check-circle"></i>
+                <h2 class="gt-survey-detail__card-title">
+                  {{ surveyType() === 'test' ? 'Test completed!' : 'Thank you for your voice!' }}
+                </h2>
+              </div>
+              <p class="gt-survey-detail__submitted-msg">
+                @if (surveyType() === 'test') {
+                  Your answers have been saved. You can review your results in the My Surveys section.
+                } @else {
+                  Your response has been successfully recorded and will contribute to the final result. We truly appreciate your participation!
+                }
+              </p>
+            } @else {
+              <div class="gt-survey-detail__card-header">
+                <i class="pi pi-send"></i>
+                <h2 class="gt-survey-detail__card-title">Before you start</h2>
+              </div>
+              <div class="gt-survey-detail__steps">
+                @for (step of beforeYouStart; track step.num) {
+                  <div class="gt-survey-detail__step">
+                    <span class="gt-survey-detail__step-num">{{ step.num }}</span>
+                    <div>
+                      <strong class="gt-survey-detail__step-title">{{ step.title }}</strong>
+                      <p class="gt-survey-detail__step-desc">{{ step.desc }}</p>
+                    </div>
                   </div>
-                </div>
-              }
-            </div>
+                }
+              </div>
+            }
           </div>
 
         </div>
@@ -116,10 +134,12 @@
               </li>
             </ul>
 
-            <button class="button gt-survey-detail__sidebar-btn">
-              Start survey
-              <i class="pi pi-arrow-right"></i>
-            </button>
+            @if (!alreadySubmitted()) {
+              <a class="button gt-survey-detail__sidebar-btn" [routerLink]="'/surveys/' + surveyId() + '/take'">
+                Start survey
+                <i class="pi pi-arrow-right"></i>
+              </a>
+            }
           </div>
         </aside>
 

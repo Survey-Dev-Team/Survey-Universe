@@ -78,7 +78,7 @@
 
   &__funnel-track {
     height: 32px;
-    background: rgba(124, 58, 237, 0.1);
+    background: var(--sf-brand-alpha-10);
     border-radius: 6px;
     overflow: hidden;
   }
@@ -86,7 +86,7 @@
   &__funnel-bar {
     height: 100%;
     width: var(--pct);
-    background: linear-gradient(90deg, #7c3aed, #a855f7);
+    background: linear-gradient(90deg, var(--accent-color), var(--sf-brand-violet));
     border-radius: 6px;
     transition: width 0.5s ease;
   }
@@ -252,12 +252,12 @@
 
   &__progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #7c3aed, #9333ea);
+    background: linear-gradient(90deg, var(--accent-color), var(--sf-brand-purple));
     border-radius: 4px;
     transition: width 0.4s ease;
 
     &--pass {
-      background: linear-gradient(90deg, #16a34a, #22c55e);
+      background: linear-gradient(90deg, var(--sf-accent-green-dark), var(--chart-success));
     }
   }
 

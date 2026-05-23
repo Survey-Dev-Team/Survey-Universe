@@ -34,6 +34,27 @@
         placeholder="Survey description (optional)..."
         rows="2"
       ></textarea>
+      <input
+        class="gt-survey-builder__category-input"
+        [class.gt-survey-builder__title-input--error]="submitted() && form.controls.category.invalid"
+        formControlName="category"
+        placeholder="Categories (comma-separated, e.g. technology, science)..."
+      />
+      @if (submitted() && form.controls.category.invalid) {
+        <span class="gt-survey-builder__field-error">At least one category is required</span>
+      }
+      <div class="gt-survey-builder__estimated-wrap">
+        <label class="gt-survey-builder__estimated-label">
+          <i class="pi pi-clock"></i> Estimated time (min)
+        </label>
+        <input
+          class="gt-survey-builder__estimated-input"
+          type="number"
+          min="1"
+          formControlName="estimatedTime"
+          placeholder="e.g. 5"
+        />
+      </div>
     </div>
     <div class="gt-survey-builder__form-actions">
       <button
@@ -59,6 +80,9 @@
       <ul>
         @if (form.controls.title.invalid) {
           <li>Survey title is required.</li>
+        }
+        @if (form.controls.category.invalid) {
+          <li>At least one category is required.</li>
         }
         @if (elementsArray.length === 0) {
           <li>Add at least one element to the survey.</li>

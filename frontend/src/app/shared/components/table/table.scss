@@ -79,8 +79,8 @@
     }
 
     &--failed {
-      background: rgba(239, 68, 68, 0.12);
-      color: #ef4444;
+      background: var(--danger-ef-alpha-12);
+      color: var(--chart-danger);
     }
   }
 
@@ -104,9 +104,9 @@
     background: var(--accent);
     transition: width 0.3s;
 
-    &--high { background: #10b981; }
-    &--mid  { background: #f59e0b; }
-    &--low  { background: #ef4444; }
+    &--high { background: var(--chart-teal); }
+    &--mid  { background: var(--chart-amber); }
+    &--low  { background: var(--chart-danger); }
   }
 
   &__progress-value {
@@ -114,17 +114,17 @@
     color: var(--text-muted);
     min-width: 36px;
 
-    &--high { color: #10b981; }
-    &--mid  { color: #f59e0b; }
-    &--low  { color: #ef4444; }
+    &--high { color: var(--chart-teal); }
+    &--mid  { color: var(--chart-amber); }
+    &--low  { color: var(--chart-danger); }
   }
 
   &__score {
     font-weight: 600;
 
-    &--good { color: #10b981; }
-    &--mid  { color: #f59e0b; }
-    &--low  { color: #ef4444; }
+    &--good { color: var(--chart-teal); }
+    &--mid  { color: var(--chart-amber); }
+    &--low  { color: var(--chart-danger); }
   }
 
   &__thumb {
@@ -193,8 +193,8 @@
     }
 
     &--delete {
-      color: #ef4444;
-      &:hover { background: rgba(239, 68, 68, 0.12); }
+      color: var(--chart-danger);
+      &:hover { background: var(--danger-ef-alpha-12); }
     }
   }
 

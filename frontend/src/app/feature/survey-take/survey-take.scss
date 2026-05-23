@@ -1,0 +1,207 @@
+.gt-survey-take__loading {
+  display: flex;
+  justify-content: center;
+  padding: 80px 0;
+}
+
+.gt-survey-take__spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--accent-color);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.gt-survey-take__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--secondary-color);
+  font-size: 13px;
+  text-decoration: none;
+  margin-bottom: 24px;
+  transition: color 0.2s;
+
+  i { font-size: 11px; }
+
+  &:hover { color: var(--accent-color); }
+}
+
+.gt-survey-take {
+  padding: 48px 0 80px;
+
+  &__form {
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  // ── Content blocks ──────────────────────────────────────────────────────────
+
+  &__q-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  &__q-text {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  &__q-image-wrap {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  &__q-image {
+    width: 100%;
+    max-height: 320px;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__q-space {
+    height: 16px;
+  }
+
+  &__q-break {
+    border: none;
+    border-top: 1px solid var(--border-color);
+  }
+
+  // ── Question block ──────────────────────────────────────────────────────────
+
+  &__question {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__q-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-color);
+    line-height: 1.5;
+  }
+
+  &__required {
+    color: var(--error-color);
+    margin-left: 3px;
+  }
+
+  // ── Options (radio / checkbox) ──────────────────────────────────────────────
+
+  &__options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 10px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: border-color 0.15s, background 0.15s;
+
+    &:hover {
+      border-color: var(--accent-color);
+      background: var(--sf-brand-primary-soft, rgba(124, 58, 237, 0.06));
+    }
+  }
+
+  &__radio,
+  &__checkbox {
+    accent-color: var(--accent-color);
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  &__option-label {
+    font-size: 14px;
+    color: var(--text-color);
+  }
+
+  // ── Range ───────────────────────────────────────────────────────────────────
+
+  &__range-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__range {
+    flex: 1;
+    accent-color: var(--accent-color);
+    cursor: pointer;
+  }
+
+  &__range-min,
+  &__range-max {
+    font-size: 13px;
+    color: var(--text-secondary);
+    min-width: 20px;
+    text-align: center;
+  }
+
+  &__range-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent-color);
+    min-width: 28px;
+    text-align: center;
+  }
+
+  // ── Text inputs ─────────────────────────────────────────────────────────────
+
+  &__input,
+  &__textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-color);
+    background: var(--background-color);
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.15s;
+    box-sizing: border-box;
+
+    &:focus {
+      border-color: var(--accent-color);
+    }
+
+    &::placeholder {
+      color: var(--text-secondary);
+    }
+  }
+
+  // ── Actions ─────────────────────────────────────────────────────────────────
+
+  &__actions {
+    padding-top: 8px;
+  }
+
+  &__submit {
+    min-width: 140px;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

@@ -38,8 +38,8 @@
     inset: 0;
     background: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.25) 0%,
-      rgba(5, 2, 18, 0.88) 100%
+      var(--overlay-black-25) 0%,
+      var(--overlay-dark-88) 100%
     );
     z-index: 0;
   }
@@ -56,7 +56,7 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    color: rgba(255, 255, 255, 0.65);
+    color: var(--white-alpha-65);
     font-size: 0.88rem;
     text-decoration: none;
     margin-bottom: 32px;
@@ -66,8 +66,8 @@
       color: #fff;
 
       .gt-survey-detail__back-icon {
-        border-color: rgba(255, 255, 255, 0.6);
-        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--white-alpha-60);
+        background: var(--white-alpha-08);
 
         &::before,
         &::after {
@@ -84,8 +84,8 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--white-alpha-25);
+    background: var(--white-alpha-04);
     flex-shrink: 0;
     position: relative;
     transition: border-color 0.2s, background 0.2s;
@@ -96,7 +96,7 @@
       position: absolute;
       width: 7px;
       height: 1.5px;
-      background: rgba(255, 255, 255, 0.65);
+      background: var(--white-alpha-65);
       left: 11px;
       transition: background 0.2s;
     }
@@ -141,7 +141,7 @@
   }
 
   &__desc {
-    color: rgba(255, 255, 255, 0.72);
+    color: var(--white-alpha-72);
     font-size: 0.95rem;
     line-height: 1.6;
     margin: 0 0 $space-24;
@@ -159,7 +159,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    color: rgba(255, 255, 255, 0.65);
+    color: var(--white-alpha-65);
     font-size: 0.82rem;
 
     i {
@@ -206,7 +206,7 @@
   &__author-label {
     display: block;
     font-size: 0.72rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--white-alpha-50);
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
@@ -251,15 +251,15 @@
     gap: 8px;
     padding: 14px 22px;
     background: transparent;
-    color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: var(--white-alpha-80);
+    border: 1px solid var(--white-alpha-25);
     border-radius: 8px;
     font-size: 0.95rem;
     cursor: pointer;
     transition: border-color 0.2s, color 0.2s;
 
     &:hover {
-      border-color: rgba(255, 255, 255, 0.6);
+      border-color: var(--white-alpha-60);
       color: #fff;
     }
 
@@ -322,6 +322,17 @@
     font-size: 0.92rem;
     line-height: 1.65;
     margin: 0;
+  }
+
+  &__submitted-msg {
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0;
+    padding: $space-16 $space-16;
+    background: color-mix(in srgb, var(--accent-color) 8%, transparent);
+    border-left: 3px solid var(--accent-color);
+    border-radius: 0 8px 8px 0;
   }
 
   // Steps

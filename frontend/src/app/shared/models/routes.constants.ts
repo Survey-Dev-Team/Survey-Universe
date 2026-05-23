@@ -5,6 +5,7 @@ export enum ROUTES {
   USER_PROFILE = 'profile',
   SURVEYS = 'surveys',
   SURVEY_DETAIL = 'surveys/:id',
+  SURVEY_TAKE = 'surveys/:id/take',
   ABOUT = 'about',
   REPORTS = 'reports',
   PREORDER = 'preorder',

@@ -12,7 +12,7 @@ export enum SurveysTab {
 
 export enum MySurveysTab {
   Completed = 'completed',
-  AboutMe   = 'about-me',
+  Stats     = 'stats',
   Created   = 'created',
 }
 
@@ -20,6 +20,7 @@ export enum CreatedSurveyStatus {
   Draft      = 'draft',
   Pending    = 'pending',
   Published  = 'published',
+  Closed     = 'closed',
 }
 
 // ── User ───────────────────────────────────────────────────
@@ -77,8 +78,10 @@ export enum PrimeIcon {
   Eye         = 'pi pi-eye',
   CheckSquare = 'pi pi-check-square',
   Comment     = 'pi pi-comment',
+  ChartBar    = 'pi pi-chart-bar',
   PenToSquare = 'pi pi-pen-to-square',
   FileEdit    = 'pi pi-file-edit',
+  Lock        = 'pi pi-lock',
 }
 
 // ── Stats Labels ───────────────────────────────────────────
@@ -132,8 +135,6 @@ export enum StatsLabel {
   // ── KPI my-surveys ─────────────────────────────────────────
   SurveysCompleted  = 'Surveys Completed',
   AvgCompletionRate = 'Avg Completion Rate',
-  PeersResponded    = 'Peers Responded About Me',
-  AvgFeedbackScore  = 'Avg Feedback Score',
 }
 
 // ── Table Fields ───────────────────────────────────────────

@@ -55,7 +55,7 @@
 
   &__subtitle {
     font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--white-alpha-55);
     line-height: 1.6;
     margin: 0 0 $space-40;
   }
@@ -75,14 +75,14 @@
     align-items: flex-start;
     gap: $space-16;
     padding: $space-16 $space-20;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--white-alpha-04);
+    border: 1px solid var(--white-alpha-08);
     border-radius: 12px;
     transition: border-color 0.2s, background 0.2s;
 
     &:hover {
-      background: rgba(124, 58, 237, 0.08);
-      border-color: rgba(124, 58, 237, 0.35);
+      background: var(--sf-brand-alpha-08);
+      border-color: var(--sf-brand-alpha-35);
     }
   }
 
@@ -91,8 +91,8 @@
     width: 40px;
     height: 40px;
     border-radius: 10px;
-    border: 1px solid rgba(124, 58, 237, 0.4);
-    background: rgba(124, 58, 237, 0.12);
+    border: 1px solid var(--sf-brand-alpha-40);
+    background: var(--chart-accent-alpha);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -109,14 +109,14 @@
   &__item-label {
     font-size: 0.72rem;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--white-alpha-40);
     text-transform: uppercase;
     letter-spacing: 0.08em;
   }
 
   &__item-value {
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--white-alpha-85);
     line-height: 1.5;
   }
 

@@ -22,7 +22,7 @@
               @if (date()) {
                 <span class="gt-survey-card__chip">
                   <img src="/assets/icons/surveyflow/date.svg" alt="" class="gt-survey-card__chip-icon" />
-                  {{ date() }}
+                  {{ date() | date:'mediumDate' }}
                 </span>
               }
               @if (estimatedTime()) {
@@ -56,7 +56,7 @@
     <div class="gt-survey-card__body">
       <div class="gt-survey-card__card-top">
         <span class="gt-survey-card__category-badge">{{ category() }}</span>
-        <span class="gt-survey-card__card-date">{{ date() }}</span>
+        <span class="gt-survey-card__card-date">{{ date() | date:'mediumDate' }}</span>
       </div>
 
       <h3 class="gt-survey-card__card-title">{{ title() }}</h3>

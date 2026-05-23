@@ -1,7 +1,7 @@
 <div class="gt-empty-state">
   <div class="gt-empty-state__visual">
     <img
-      src="/assets/images/empty-state.webp"
+      [src]="image()"
       alt=""
       class="gt-empty-state__img"
       aria-hidden="true"
@@ -24,5 +24,7 @@
         {{ actionLabel() }}
       </button>
     }
+
+    <ng-content></ng-content>
   </div>
 </div>

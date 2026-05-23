@@ -5,11 +5,18 @@ $palette-width: 200px;
 $props-width: 260px;
 $element-radius: 12px;
 
+:host {
+  flex: 1;
+  min-height: 0;
+  display: block;
+}
+
 .gt-survey-builder {
   display: flex;
   flex-direction: column;
   gap: $space-24;
   height: 100%;
+  overflow: hidden;
 
   &__header {
     display: flex;
@@ -164,11 +171,72 @@ $element-radius: 12px;
     }
   }
 
+  &__category-input {
+    width: 100%;
+    padding: $space-8 $space-12;
+    border: 1px solid var(--border-color);
+    border-radius: $space-8;
+    background: var(--basic-white);
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:focus {
+      border-color: var(--accent-color);
+    }
+
+    &.gt-survey-builder__title-input--error {
+      border-color: var(--error-color);
+    }
+  }
+
+  &__estimated-wrap {
+    display: flex;
+    align-items: center;
+    gap: $space-8;
+  }
+
+  &__estimated-label {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+    font-size: 0.82rem;
+    color: var(--tertiary-color);
+    white-space: nowrap;
+
+    i { font-size: 0.85rem; }
+  }
+
+  &__estimated-input {
+    width: 90px;
+    padding: $space-4 $space-8;
+    border: 1px solid var(--border-color);
+    border-radius: $space-8;
+    background: var(--basic-white);
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:focus {
+      border-color: var(--accent-color);
+    }
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: auto;
+    }
+  }
+
   &__workspace {
     display: flex;
     gap: $space-16;
     flex: 1;
-    min-height: 500px;
+    min-height: 0;
+    overflow: hidden;
   }
 
   // ── Palette ──────────────────────────────────────────────────────────────
@@ -179,6 +247,7 @@ $element-radius: 12px;
     border-radius: $element-radius;
     padding: $space-16;
     border: 1px solid var(--border-color);
+    overflow-y: auto;
   }
 
   &__palette-title {
@@ -233,10 +302,16 @@ $element-radius: 12px;
   &__canvas {
     flex: 1;
     min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 
   &__canvas-list {
-    min-height: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
     padding: $space-12;
     border-radius: $element-radius;
     border: 2px dashed var(--border-color);

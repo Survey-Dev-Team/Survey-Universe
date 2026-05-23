@@ -267,7 +267,7 @@
     background: var(--accent-color);
     transition: width 0.4s ease;
 
-    &--green { background: #22c55e; }
+    &--green { background: var(--chart-success); }
     &--amber { background: #f59e0b; }
   }
 

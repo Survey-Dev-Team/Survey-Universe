@@ -172,3 +172,187 @@ export interface SurveyCardModel {
   estimatedTime: number | null;
   status?: 'Active' | 'Passed';
 }
+
+// ── Question ──────────────────────────────────────────────────────────────────
+
+export type QuestionType =
+  | 'range' | 'checkbox' | 'radio_button' | 'search_select'
+  | 'title' | 'text' | 'input' | 'text_area' | 'date_pick'
+  | 'file_upload' | 'image' | 'space' | 'page_break';
+
+export interface OptionDetails {
+  id: string;
+  label: string;
+  isCorrect?: boolean;
+  imageUrl?: string;
+}
+
+export interface QuestionBase {
+  id: string;
+  label?: string;
+  sort_order: number;
+  type: QuestionType;
+  is_required?: boolean;
+  question_category?: string;
+  // selection subtypes
+  options?: OptionDetails[];
+  // range subtype
+  min?: number;
+  max?: number;
+  step?: number;
+  correct_answer?: number;
+  [key: string]: unknown;
+}
+
+// ── Survey detail summary (admin/my list item) ────────────────────────────────
+
+export interface SurveyDetailsSummary {
+  surveyId: string;
+  urlId: string;
+  creatorId: string;
+  creatorUrlId: string;
+  title: string;
+  description: string;
+  icon: string;
+  category: string[];
+  estimatedTime: number;
+  publishedAt: string | null;
+  closedAt: string | null;
+  createdAt: string;
+  modifiedAt: string;
+  status: SurveyStatus;
+  isDeleted: boolean;
+  responseCount: number;
+}
+
+// ── Survey responses (admin/my single survey with questions) ──────────────────
+
+export interface SurveyDetailsResponse {
+  summary: SurveyDetailsSummary;
+  revision: string;
+  questions: QuestionBase[];
+}
+
+export interface SurveyReadResponse {
+  summary: SurveyReadSummary;
+  questions: QuestionBase[];
+}
+
+// ── Admin/My query params ─────────────────────────────────────────────────────
+
+export interface AdminSurveysQueryParams extends SurveysQueryParams {
+  showDeleted?: boolean;
+}
+
+export interface MySurveysQueryParams {
+  surveyStatus?: SurveyStatus;
+  surveyType?: SurveyType;
+  search?: string;
+  category?: string;
+  showDeleted?: boolean;
+  sortBy?: SurveySortOption;
+  timeRange?: SurveyTimeRange;
+  page?: number;
+  size?: number;
+}
+
+// ── Survey create / update request ───────────────────────────────────────────
+
+export interface SurveyCreateRequest {
+  title: string;
+  description?: string;
+  category: string[];
+  estimatedTime?: number;
+  icon?: string;
+  questions: QuestionBase[];
+}
+
+export interface SurveyUpdateRequest extends SurveyCreateRequest {
+  revision: string;
+  isHome?: boolean;
+}
+
+// ── Revision ─────────────────────────────────────────────────────────────────
+
+export interface RevisionRecord {
+  revision: string;
+}
+
+export interface RevisionMessage {
+  message: string;
+  revision: string;
+  id: string;
+  urlId: string;
+}
+
+export interface SurveyHomePatch {
+  revision: string;
+  isHome: boolean;
+}
+
+// ── Response & stats ─────────────────────────────────────────────────────────
+
+export interface ResponseAnswer {
+  id: string;
+  value?: string;
+  selected_options?: string[];
+}
+
+export interface AnswerSubmit {
+  questionId: string;
+  value?: string;
+  options?: string[];
+}
+
+export interface SurveyResponseSubmit {
+  answers: AnswerSubmit[];
+}
+
+export interface UserSurveyResponse {
+  responseId: string;
+  surveyUrlId: string;
+  userUrlId: string;
+  title: string;
+  submittedAt: string;
+  answers: ResponseAnswer[];
+}
+
+export interface PersonalRespondentAnswer {
+  questionId: string;
+  selectedOptions?: string[];
+  correctOptions?: string[];
+  selectedValue?: string;
+  correctValue?: string;
+  isCorrect?: boolean;
+}
+
+export interface PersonalSurveyResponse {
+  userId: string;
+  surveyUrlId: string;
+  questionsTotal: number;
+  nonContentQuestionsTotal: number;
+  markedQuestionsTotal: number;
+  questionsAnswered: number;
+  markedQuestionsAnswered: number;
+  correctAnswerCount: number;
+  sumbittedAt: string;
+  respondentAswers: PersonalRespondentAnswer[];
+}
+
+export type SubmitResponseResult = MessageResponse | PersonalSurveyResponse;
+
+export interface QuestionStats {
+  questionId: string;
+  label: string;
+  type: QuestionType;
+  answerCounts: Record<string, number>;
+  averageValue: number | null;
+  textSamples: string[];
+}
+
+export interface SurveyStats {
+  surveyUrlId: string;
+  title: string;
+  totalResponses: number;
+  questionStats: QuestionStats[];
+}

@@ -27,10 +27,14 @@
   &__overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.55);
+    background: var(--overlay-black-55);
     backdrop-filter: blur(3px);
     z-index: 100;
-    animation: fadeIn 0.2s ease;
+    animation: fadeIn 0.5s ease both;
+
+    &--closing {
+      animation: fadeOut 0.5s ease both;
+    }
   }
 
   // ── Form panel (slide-in from right) ──────────────────────────────────────
@@ -44,14 +48,18 @@
     z-index: 101;
     display: flex;
     flex-direction: column;
-    box-shadow: -8px 0 40px rgba(0, 0, 0, 0.35);
-    animation: slideInRight 0.25s ease;
+    box-shadow: -8px 0 40px var(--overlay-black-35);
+    animation: slideInRight 0.55s cubic-bezier(0.4, 0, 0.2, 1) both;
+
+    &--closing {
+      animation: slideOutRight 0.55s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
   }
 
   &__form-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: $space-16;
     padding: $space-20 $space-24;
     border-bottom: 1px solid var(--border-color);
     flex-shrink: 0;
@@ -64,6 +72,37 @@
     font-weight: 700;
     color: var(--text-color);
     margin: 0;
+    margin-right: auto;
+  }
+
+  &__form-type-toggle {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+    background: var(--surface-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 3px;
+  }
+
+  &__form-type-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-8;
+    padding: $space-8 $space-14;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--secondary-color);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+
+    i { font-size: 0.85rem; }
+
+    &:hover:not(&--active) { background: var(--border-color); color: var(--text-color); }
+    &--active { background: var(--accent-color); color: #fff; }
   }
 
   &__form-close {
@@ -88,8 +127,20 @@
 
   &__form-body {
     flex: 1;
-    overflow-y: auto;
+    overflow: hidden;
     padding: $space-24;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  &__form-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $space-24;
+    font-size: 2rem;
+    color: var(--primary);
   }
 }
 
@@ -98,7 +149,17 @@
   to   { opacity: 1; }
 }
 
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
 @keyframes slideInRight {
   from { transform: translateX(100%); }
   to   { transform: translateX(0); }
+}
+
+@keyframes slideOutRight {
+  from { transform: translateX(0); }
+  to   { transform: translateX(100%); }
 }

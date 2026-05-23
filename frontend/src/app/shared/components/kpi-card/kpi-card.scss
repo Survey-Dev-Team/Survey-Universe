@@ -12,7 +12,7 @@
   box-shadow: var(--box-shadow);
 
   &--accent {
-    background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--sf-brand-purple) 100%);
     border-color: transparent;
 
     .gt-kpi-card__icon,

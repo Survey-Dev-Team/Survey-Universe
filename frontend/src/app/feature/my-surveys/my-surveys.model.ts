@@ -12,13 +12,14 @@ export interface CompletedSurvey {
   timeSpentMin: number;
 }
 
-export interface ResponseAboutMe {
+export interface SurveyStats {
   id: string;
+  type: 'survey' | 'test';
   title: string;
   coverImage: string;
   category: string;
-  respondents: number;
-  lastResponseAt: string;
+  totalRespondents: number;
+  lastActivityAt: string;
   avgScore: number;
 }
 

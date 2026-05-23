@@ -1053,7 +1053,9 @@
 }
 
 .p-toast-message-success,
-.p-toast-message-error {
+.p-toast-message-error,
+.p-toast-message-warn,
+.p-toast-message-info {
   padding: 16px 24px !important;
   border-radius: 8px !important;
   max-width: 372px;
@@ -1099,6 +1101,54 @@
 
     path {
       fill: var(--error-color) !important;
+    }
+  }
+
+  .p-toast-close-icon {
+    width: 15px !important;
+    height: 15px !important;
+  }
+}
+
+.p-toast-message-warn {
+  background-color: var(--warning-bg) !important;
+  border-color: var(--warning-color) !important;
+
+  .p-toast-summary,
+  .p-toast-detail {
+    color: var(--text-color) !important;
+  }
+
+  .p-toast-message-icon {
+    width: 20px !important;
+    height: 20px !important;
+
+    path {
+      fill: var(--warning-color) !important;
+    }
+  }
+
+  .p-toast-close-icon {
+    width: 15px !important;
+    height: 15px !important;
+  }
+}
+
+.p-toast-message-info {
+  background-color: rgba(124, 58, 237, 0.85) !important;
+  border-color: #5b21b6 !important;
+
+  .p-toast-summary,
+  .p-toast-detail {
+    color: #ffffff !important;
+  }
+
+  .p-toast-message-icon {
+    width: 20px !important;
+    height: 20px !important;
+
+    path {
+      fill: #ffffff !important;
     }
   }
 
@@ -1224,5 +1274,93 @@
 @media screen and (max-width: 475px) {
   .p-breadcrumb-list {
     flex-wrap: wrap !important;
+  }
+}
+
+// ── Survey stat dialog ──────────────────────────────────────────────────────
+.p-dialog.gt-stat-dialog {
+  max-width: 380px !important;
+
+  .p-dialog-header {
+    position: static !important;
+    padding-bottom: variables.$space-4 !important;
+
+    .p-dialog-title {
+      font-size: 1rem !important;
+      font-weight: 600 !important;
+      color: var(--text-color) !important;
+      line-height: 1.4 !important;
+    }
+  }
+}
+
+.gt-stat-dialog__body {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$space-16;
+  padding-top: variables.$space-8;
+}
+
+.gt-stat-dialog__score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: variables.$space-4;
+  padding: variables.$space-20 0 variables.$space-12;
+}
+
+.gt-stat-dialog__score-value {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--chart-success);
+
+  .gt-stat-dialog__score--test & { color: var(--accent-color); }
+}
+
+.gt-stat-dialog__score-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--secondary-color);
+}
+
+.gt-stat-dialog__bar-wrap {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--border-color);
+  overflow: hidden;
+}
+
+.gt-stat-dialog__bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--chart-success);
+  transition: width 0.4s ease;
+
+  &--test { background: var(--accent-color); }
+}
+
+.gt-stat-dialog__rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: variables.$space-12;
+}
+
+.gt-stat-dialog__row {
+  display: flex;
+  align-items: center;
+  gap: variables.$space-8;
+  font-size: 0.9rem;
+  color: var(--text-color);
+
+  i {
+    font-size: 0.95rem;
+    color: var(--secondary-color);
+    width: 16px;
+    text-align: center;
   }
 }

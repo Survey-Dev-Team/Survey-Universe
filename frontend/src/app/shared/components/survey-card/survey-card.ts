@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 export type SurveyCardVariant = 'hero' | 'compact';
 
@@ -10,7 +11,7 @@ export interface SurveyCardMetaItem {
 @Component({
   selector: 'gt-survey-card',
   standalone: true,
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './survey-card.html',
   styleUrl: './survey-card.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

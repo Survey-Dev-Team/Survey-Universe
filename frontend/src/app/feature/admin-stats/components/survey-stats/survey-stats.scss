@@ -135,7 +135,7 @@
 
   &__progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #7c3aed, #9333ea);
+    background: linear-gradient(90deg, var(--accent-color), var(--sf-brand-purple));
     border-radius: 4px;
     transition: width 0.4s ease;
   }

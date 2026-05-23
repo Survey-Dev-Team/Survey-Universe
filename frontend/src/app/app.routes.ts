@@ -46,6 +46,12 @@ export const routes: Routes = [
 			import('./feature/survey-detail/survey-detail').then((m) => m.SurveyDetail),
 	},
 	{
+		path: ROUTES.SURVEY_TAKE,
+		canActivate: [authorizedGuard],
+		loadComponent: () =>
+			import('./feature/survey-take/survey-take').then((m) => m.SurveyTake),
+	},
+	{
 		path: ROUTES.ABOUT,
 		loadComponent: () =>
 			import('./feature/about-page/about-page').then((m) => m.AboutPage),

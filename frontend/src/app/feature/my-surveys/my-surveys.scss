@@ -16,6 +16,55 @@
     @media (max-width: 600px)  { grid-template-columns: 1fr; }
   }
 
+  // ── Clickable stats card wrapper ─────────────────────────────────────────
+  &__stats-card {
+    all: unset;
+    display: block;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover       { transform: translateY(-2px); box-shadow: 0 6px 24px var(--overlay-black-18); }
+    &:focus-visible { box-shadow: 0 0 0 3px var(--accent-color); border-radius: 12px; }
+  }
+
+  // ── Clickable created survey card wrapper ─────────────────────────────────
+  &__card-btn {
+    all: unset;
+    display: block;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover       { transform: translateY(-2px); box-shadow: 0 6px 24px var(--overlay-black-18); }
+    &:focus-visible { box-shadow: 0 0 0 3px var(--accent-color); border-radius: 12px; }
+  }
+
+  // ── Edit form loading ─────────────────────────────────────────────────────
+  &__form-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    font-size: 2rem;
+    color: var(--accent-color);
+  }
+
+  // ── Section label ─────────────────────────────────────────────────────────
+  &__section-label {
+    display: flex;
+    align-items: center;
+    gap: $space-8;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--secondary-color);
+    margin-bottom: $space-16;
+
+    i { font-size: 0.9rem; }
+  }
+
   // ── Empty state ───────────────────────────────────────────────────────────
   &__empty {
     display: flex;
@@ -43,32 +92,62 @@
   }
 
   // ── Form overlay / panel ──────────────────────────────────────────────────
+  @keyframes overlay-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes overlay-fade-out {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+
+  @keyframes panel-slide-in {
+    from { transform: translateX(100%); }
+    to   { transform: translateX(0); }
+  }
+
+  @keyframes panel-slide-out {
+    from { transform: translateX(0); }
+    to   { transform: translateX(100%); }
+  }
+
   &__overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.55);
+    background: var(--overlay-black-55);
     backdrop-filter: blur(3px);
     z-index: 100;
+    animation: overlay-fade-in 0.8s ease both;
+
+    &--closing {
+      animation: overlay-fade-out 0.5s ease both;
+    }
   }
 
   &__form-panel {
     position: fixed;
     top: 0;
     right: 0;
-    width: min(560px, 100vw);
+    width: 100vw;
     height: 100dvh;
     background: var(--basic-white);
-    box-shadow: -4px 0 32px rgba(0, 0, 0, 0.18);
+    box-shadow: -4px 0 32px var(--overlay-black-18);
     z-index: 101;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    animation: panel-slide-in 0.55s cubic-bezier(0.4, 0, 0.2, 1) both;
+
+    &--closing {
+      animation: panel-slide-out 0.55s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
   }
 
   &__form-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: $space-16;
     padding: $space-20 $space-24;
     border-bottom: 1px solid var(--border-color);
     flex-shrink: 0;
@@ -79,6 +158,45 @@
     font-weight: 700;
     color: var(--text-color);
     margin: 0;
+    margin-right: auto;
+  }
+
+  &__form-type-toggle {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+    background: var(--surface-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 3px;
+  }
+
+  &__form-type-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-8;
+    padding: $space-8 $space-14;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--secondary-color);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+
+    i { font-size: 0.85rem; }
+
+    &:hover:not(&--active) {
+      background: var(--border-color);
+      color: var(--text-color);
+    }
+
+    &--active {
+      background: var(--accent-color);
+      color: #fff;
+    }
   }
 
   &__form-close {
@@ -102,7 +220,10 @@
 
   &__form-body {
     flex: 1;
-    overflow-y: auto;
+    overflow: hidden;
     padding: $space-24;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
   }
 }

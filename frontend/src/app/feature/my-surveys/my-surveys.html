@@ -1,4 +1,5 @@
 <gt-header></gt-header>
+<p-toast position="top-right" [baseZIndex]="5000" />
 <div class="margin-top-header"></div>
 
 <div class="gt-my-surveys">
@@ -6,28 +7,25 @@
   <gt-page-header-role
     title="My Surveys"
     subtitle="Track surveys you've completed and feedback others have shared about you"
-    [columnLeft]="true"
+    backgroundImage="/assets/images/all_surveys_top.png"
+    [leftLayout]="true"
   >
-    <button class="gt-header-role__action-btn" type="button" (click)="openCreateForm()">
-      <i class="pi pi-plus"></i> Create Survey
-    </button>
+    <gt-button label="Create Survey" icon="pi pi-plus" styleClass="button__fit-content" (clicked)="openCreateForm()" />
   </gt-page-header-role>
 
   <div class="container">
-    <!-- KPI row -->
-    <gt-kpi-row [cards]="kpiCards()" />
-
     <!-- Tabs -->
     <gt-tabs [tabs]="tabItems()" [activeTab]="activeTab()" (tabChange)="setTab($any($event))" />
 
     <!-- ── Surveys I Completed ─────────────────────────────────────────────── -->
     @if (activeTab() === MySurveysTab.Completed) {
       @if (completedSurveys().length === 0) {
-        <div class="gt-my-surveys__empty">
-          <i class="pi pi-inbox gt-my-surveys__empty-icon"></i>
-          <span>You haven't completed any surveys yet.</span>
-          <a [routerLink]="'/' + routes.SURVEYS" class="gt-my-surveys__empty-link">Browse surveys</a>
-        </div>
+        <gt-empty-state
+          title="No completed surveys yet"
+          message="You haven't completed any surveys yet."
+          actionLabel="Browse surveys"
+          (actionClick)="browseSurveys()"
+        />
       } @else {
         <div class="gt-my-surveys__grid">
           @for (s of completedSurveys(); track s.id) {
@@ -50,70 +48,216 @@
       }
     }
 
-    <!-- ── Responses About Me ─────────────────────────────────────────────── -->
-    @if (activeTab() === MySurveysTab.AboutMe) {
-      @if (responsesAboutMe().length === 0) {
-        <div class="gt-my-surveys__empty">
-          <i class="pi pi-comment gt-my-surveys__empty-icon"></i>
-          <span>No one has responded about you yet.</span>
-        </div>
+    <!-- ── Survey Statistics ────────────────────────────────────────────── -->
+    @if (activeTab() === MySurveysTab.Stats) {
+      @if (surveyStats().length === 0) {
+        <gt-empty-state
+          title="No statistics yet"
+          message="Complete a survey to see how others answered it."
+        />
       } @else {
-        <div class="gt-my-surveys__grid">
-          @for (r of responsesAboutMe(); track r.id) {
-            <gt-survey-card
-              variant="compact"
-              [title]="r.title"
-              [coverImage]="r.coverImage"
-              [category]="r.category"
-              [date]="r.lastResponseAt"
-              [metaItems]="[{ icon: 'pi pi-users', text: r.respondents + ' respondents' }]"
-              [completionRate]="r.avgScore"
-              progressColor="amber"
-              progressLabel="positive"
-            />
-          }
-        </div>
+
+        <!-- Surveys -->
+        @if (surveyStatsOnly().length > 0) {
+          <h3 class="gt-my-surveys__section-label">
+            <i class="pi pi-clipboard"></i> Surveys
+          </h3>
+          <div class="gt-my-surveys__grid">
+            @for (r of surveyStatsOnly(); track r.id) {
+              <button class="gt-my-surveys__stats-card" type="button" (click)="openStatDialog(r)">
+                <gt-survey-card
+                  variant="compact"
+                  [title]="r.title"
+                  [coverImage]="r.coverImage"
+                  [category]="r.category"
+                  [date]="r.lastActivityAt"
+                  [metaItems]="[{ icon: 'pi pi-users', text: r.totalRespondents + ' respondents' }]"
+                  [completionRate]="r.avgScore"
+                  progressColor="green"
+                  progressLabel="avg score"
+                />
+              </button>
+            }
+          </div>
+        }
+
+        <!-- Tests -->
+        @if (testStatsOnly().length > 0) {
+          <h3 class="gt-my-surveys__section-label">
+            <i class="pi pi-check-square"></i> Tests
+          </h3>
+          <div class="gt-my-surveys__grid">
+            @for (r of testStatsOnly(); track r.id) {
+              <button class="gt-my-surveys__stats-card" type="button" (click)="openStatDialog(r)">
+                <gt-survey-card
+                  variant="compact"
+                  [title]="r.title"
+                  [coverImage]="r.coverImage"
+                  [category]="r.category"
+                  [date]="r.lastActivityAt"
+                  [metaItems]="[{ icon: 'pi pi-users', text: r.totalRespondents + ' respondents' }]"
+                  [completionRate]="r.avgScore"
+                  progressColor="accent"
+                  progressLabel="avg score"
+                />
+              </button>
+            }
+          </div>
+        }
+
       }
     }
+
+    <!-- Stat detail dialog -->
+    <p-dialog
+      [visible]="statDialogVisible()"
+      (visibleChange)="statDialogVisible.set($event)"
+      [modal]="true"
+      [closable]="true"
+      [dismissableMask]="true"
+      [draggable]="false"
+      [resizable]="false"
+      [header]="selectedStat()?.title ?? ''"
+      styleClass="gt-stat-dialog"
+    >
+      @if (selectedStat(); as stat) {
+        <div class="gt-stat-dialog__body">
+          <div class="gt-stat-dialog__score" [class.gt-stat-dialog__score--test]="stat.type === 'test'">
+            <span class="gt-stat-dialog__score-value">{{ stat.avgScore }}%</span>
+            <span class="gt-stat-dialog__score-label">avg score</span>
+          </div>
+          <div class="gt-stat-dialog__bar-wrap">
+            <div class="gt-stat-dialog__bar-fill"
+              [class.gt-stat-dialog__bar-fill--test]="stat.type === 'test'"
+              [style.width.%]="stat.avgScore">
+            </div>
+          </div>
+          <ul class="gt-stat-dialog__rows">
+            <li class="gt-stat-dialog__row">
+              <i [class]="stat.type === 'survey' ? 'pi pi-clipboard' : 'pi pi-check-square'"></i>
+              <span>{{ stat.type === 'survey' ? 'Survey' : 'Test' }}</span>
+            </li>
+            <li class="gt-stat-dialog__row">
+              <i class="pi pi-tag"></i>
+              <span>{{ stat.category }}</span>
+            </li>
+            <li class="gt-stat-dialog__row">
+              <i class="pi pi-users"></i>
+              <span>{{ stat.totalRespondents }} total respondents</span>
+            </li>
+            <li class="gt-stat-dialog__row">
+              <i class="pi pi-calendar"></i>
+              <span>Last activity: {{ stat.lastActivityAt }}</span>
+            </li>
+          </ul>
+        </div>
+      }
+    </p-dialog>
+
     <!-- ── My Created Surveys ─────────────────────────────────────────────── -->
     @if (activeTab() === MySurveysTab.Created) {
 
       @if (createdSurveys().length === 0) {
-        <div class="gt-my-surveys__empty">
-          <i class="pi pi-file-plus gt-my-surveys__empty-icon"></i>
-          <span>You haven't created any surveys yet.</span>
-        </div>
+        <gt-empty-state
+          title="No surveys created yet"
+          message="You haven't created any surveys yet."
+        />
       } @else {
         <div class="gt-my-surveys__grid">
           @for (s of createdSurveys(); track s.id) {
-            <gt-survey-card
-              variant="compact"
-              [title]="s.title"
-              [coverImage]="s.coverImage"
-              [category]="s.category"
-              [date]="s.createdAt"
-              [metaItems]="[{ icon: 'pi pi-list', text: s.questionCount + ' questions' }]"
-              [statusLabel]="createdStatusLabel[s.status]"
-              [statusIcon]="s.status === CreatedSurveyStatus.Published ? PrimeIcon.CheckCircle : s.status === CreatedSurveyStatus.Pending ? PrimeIcon.Clock : PrimeIcon.FileEdit"
-              [statusClass]="s.status"
-            />
+            @if (s.status === CreatedSurveyStatus.Draft) {
+              <gt-survey-card
+                variant="compact"
+                [title]="s.title"
+                [coverImage]="s.coverImage"
+                [category]="s.category"
+                [date]="s.createdAt"
+                [metaItems]="[{ icon: 'pi pi-list', text: s.questionCount + ' questions' }]"
+                [statusLabel]="createdStatusLabel[s.status]"
+                [statusIcon]="PrimeIcon.FileEdit"
+                [statusClass]="s.status"
+                (keydown.enter)="openEditForm(s)"
+                (click)="openEditForm(s)"
+                style="cursor: pointer"
+              />
+            } @else if (s.status === CreatedSurveyStatus.Published) {
+              <gt-survey-card
+                variant="compact"
+                [title]="s.title"
+                [coverImage]="s.coverImage"
+                [category]="s.category"
+                [date]="s.createdAt"
+                [metaItems]="[{ icon: 'pi pi-list', text: s.questionCount + ' questions' }]"
+                [statusLabel]="createdStatusLabel[s.status]"
+                [statusIcon]="PrimeIcon.CheckCircle"
+                [statusClass]="s.status"
+                (keydown.enter)="showPublishedNotice()"
+                (click)="showPublishedNotice()"
+                style="cursor: pointer"
+              />
+            } @else {
+              <gt-survey-card
+                variant="compact"
+                [title]="s.title"
+                [coverImage]="s.coverImage"
+                [category]="s.category"
+                [date]="s.createdAt"
+                [metaItems]="[{ icon: 'pi pi-list', text: s.questionCount + ' questions' }]"
+                [statusLabel]="createdStatusLabel[s.status]"
+                [statusIcon]="s.status === CreatedSurveyStatus.Pending ? PrimeIcon.Clock : PrimeIcon.Lock"
+                [statusClass]="s.status"
+              />
+            }
           }
         </div>
       }
     }
   </div>
   <!-- ── Create Survey panel ──────────────────────────────────────────────── -->
-  @if (showForm()) {
-    <div class="gt-my-surveys__overlay" (click)="closeForm()" (keydown.escape)="closeForm()"></div>
-    <aside class="gt-my-surveys__form-panel">
+  @if (showForm() || closingForm()) {
+    <div class="gt-my-surveys__overlay" [class.gt-my-surveys__overlay--closing]="closingForm()" (click)="closeForm()" (keydown.escape)="closeForm()"></div>
+    <aside class="gt-my-surveys__form-panel" [class.gt-my-surveys__form-panel--closing]="closingForm()">
       <div class="gt-my-surveys__form-header">
-        <h2 class="gt-my-surveys__form-title">Create New Survey</h2>
+        <h2 class="gt-my-surveys__form-title">
+          @if (formMode() === 'create') { Create New Survey } @else { Edit Survey }
+        </h2>
+        @if (formMode() === 'create') {
+          <div class="gt-my-surveys__form-type-toggle">
+            <button
+              type="button"
+              class="gt-my-surveys__form-type-btn"
+              [class.gt-my-surveys__form-type-btn--active]="formType() === 'survey'"
+              (click)="formType.set('survey')"
+            >
+              <i class="pi pi-clipboard"></i> Survey
+            </button>
+            <button
+              type="button"
+              class="gt-my-surveys__form-type-btn"
+              [class.gt-my-surveys__form-type-btn--active]="formType() === 'test'"
+              (click)="formType.set('test')"
+            >
+              <i class="pi pi-check-square"></i> Test
+            </button>
+          </div>
+        }
         <button class="gt-my-surveys__form-close" (click)="closeForm()">
           <i class="pi pi-times"></i>
         </button>
       </div>
       <div class="gt-my-surveys__form-body">
-        <gt-create-survey-form />
+        @if (loadingEdit()) {
+          <div class="gt-my-surveys__form-loading">
+            <i class="pi pi-spin pi-spinner"></i>
+          </div>
+        } @else {
+          <gt-create-survey-form
+            [saving]="savingForm()"
+            [initialData]="editingData()"
+            (formSave)="onFormSave($event)"
+            (formDraft)="onFormDraft($event)"
+          />
+        }
       </div>
     </aside>
   }

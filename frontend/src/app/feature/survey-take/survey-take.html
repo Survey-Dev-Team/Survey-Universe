@@ -1,0 +1,202 @@
+<gt-header></gt-header>
+<div class="margin-top-header"></div>
+<p-toast position="top-right" [baseZIndex]="5000" />
+
+@if (isLoading()) {
+  <div class="gt-survey-take__loading">
+    <div class="gt-survey-take__spinner"></div>
+  </div>
+}
+
+@if (!isLoading() && summary(); as s) {
+
+  <gt-page-header-role
+    [title]="s.title"
+    [subtitle]="s.description"
+    [backgroundImage]="s.icon || '/assets/images/all_surveys_top.png'"
+  >
+  </gt-page-header-role>
+
+  <div class="gt-survey-take">
+    <div class="container">
+      <a class="gt-survey-take__back" [routerLink]="surveyDetailRoute()">
+        <i class="pi pi-arrow-left"></i>
+        Back to survey details
+      </a>
+
+      @if (isSubmitted()) {
+        <gt-empty-state
+          image="/assets/images/thank_you.webp"
+          title="Thank you!"
+          message="Your response has been successfully submitted."
+          actionLabel="Back to survey"
+          (actionClick)="router.navigate([surveyDetailRoute()])"
+        >
+          <a class="gt-empty-state__btn gt-empty-state__btn--secondary" [routerLink]="mySurveysRoute">
+            Go to My Surveys
+          </a>
+        </gt-empty-state>
+      } @else {
+      <div class="gt-survey-take__form">
+
+        @for (q of questions(); track q.id) {
+
+          <!-- title -->
+          @if (q.type === 'title') {
+            <h2 class="gt-survey-take__q-title">{{ q.label }}</h2>
+          }
+
+          <!-- text / info block -->
+          @else if (q.type === 'text') {
+            <p class="gt-survey-take__q-text">{{ q.label }}</p>
+          }
+
+          <!-- image -->
+          @else if (q.type === 'image') {
+            @if (q['link']) {
+              <div class="gt-survey-take__q-image-wrap">
+                <img [src]="q['link']" [alt]="q.label ?? ''" class="gt-survey-take__q-image" />
+              </div>
+            }
+          }
+
+          <!-- space -->
+          @else if (q.type === 'space') {
+            <div class="gt-survey-take__q-space"></div>
+          }
+
+          <!-- page_break -->
+          @else if (q.type === 'page_break') {
+            <hr class="gt-survey-take__q-break" />
+          }
+
+          <!-- radio_button -->
+          @else if (q.type === 'radio_button') {
+            <div class="gt-survey-take__question">
+              <p class="gt-survey-take__q-label">
+                {{ q.label }}
+                @if (q.is_required) { <span class="gt-survey-take__required">*</span> }
+              </p>
+              <div class="gt-survey-take__options">
+                @for (opt of q.options ?? []; track opt.id) {
+                  <label class="gt-survey-take__option">
+                    <input
+                      type="radio"
+                      [name]="q.id"
+                      [value]="opt.id"
+                      [checked]="isRadioSelected(q.id, opt.id)"
+                      (change)="setRadio(q.id, opt.id)"
+                      class="gt-survey-take__radio"
+                    />
+                    <span class="gt-survey-take__option-label">{{ opt.label }}</span>
+                  </label>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- checkbox -->
+          @else if (q.type === 'checkbox') {
+            <div class="gt-survey-take__question">
+              <p class="gt-survey-take__q-label">
+                {{ q.label }}
+                @if (q.is_required) { <span class="gt-survey-take__required">*</span> }
+              </p>
+              <div class="gt-survey-take__options">
+                @for (opt of q.options ?? []; track opt.id) {
+                  <label class="gt-survey-take__option">
+                    <input
+                      type="checkbox"
+                      [checked]="isOptionSelected(q.id, opt.id)"
+                      (change)="toggleCheckbox(q.id, opt.id)"
+                      class="gt-survey-take__checkbox"
+                    />
+                    <span class="gt-survey-take__option-label">{{ opt.label }}</span>
+                  </label>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- range -->
+          @else if (q.type === 'range') {
+            <div class="gt-survey-take__question">
+              <p class="gt-survey-take__q-label">
+                {{ q.label }}
+                @if (q.is_required) { <span class="gt-survey-take__required">*</span> }
+              </p>
+              <div class="gt-survey-take__range-wrap">
+                <span class="gt-survey-take__range-min">{{ q.min ?? 0 }}</span>
+                <input
+                  type="range"
+                  [min]="q.min ?? 0"
+                  [max]="q.max ?? 10"
+                  [step]="q.step ?? 1"
+                  [value]="getValue(q.id) || (q.min ?? 0)"
+                  (input)="setValue(q.id, $any($event.target).value)"
+                  class="gt-survey-take__range"
+                />
+                <span class="gt-survey-take__range-max">{{ q.max ?? 10 }}</span>
+                <span class="gt-survey-take__range-value">{{ getValue(q.id) || (q.min ?? 0) }}</span>
+              </div>
+            </div>
+          }
+
+          <!-- text_area -->
+          @else if (q.type === 'text_area') {
+            <div class="gt-survey-take__question">
+              <p class="gt-survey-take__q-label">
+                {{ q.label }}
+                @if (q.is_required) { <span class="gt-survey-take__required">*</span> }
+              </p>
+              <textarea
+                class="gt-survey-take__textarea"
+                rows="4"
+                [placeholder]="q['placeholder'] ?? ''"
+                [value]="getValue(q.id)"
+                (input)="setValue(q.id, $any($event.target).value)"
+              ></textarea>
+            </div>
+          }
+
+          <!-- input / date_pick / search_select -->
+          @else {
+            <div class="gt-survey-take__question">
+              <p class="gt-survey-take__q-label">
+                {{ q.label }}
+                @if (q.is_required) { <span class="gt-survey-take__required">*</span> }
+              </p>
+              <input
+                class="gt-survey-take__input"
+                [type]="q.type === 'date_pick' ? 'date' : 'text'"
+                [placeholder]="q['placeholder'] ?? ''"
+                [value]="getValue(q.id)"
+                (input)="setValue(q.id, $any($event.target).value)"
+              />
+            </div>
+          }
+
+        }
+
+        <div class="gt-survey-take__actions">
+          <button
+            class="button button--primary gt-survey-take__submit"
+            type="button"
+            [disabled]="isSubmitting()"
+            (click)="submit()"
+          >
+            @if (isSubmitting()) {
+              <i class="pi pi-spin pi-spinner"></i>
+            } @else {
+              Submit
+            }
+          </button>
+        </div>
+
+        </div>
+      } <!-- /@else isSubmitted -->
+    </div>
+  </div>
+}
+
+<gt-footer></gt-footer>

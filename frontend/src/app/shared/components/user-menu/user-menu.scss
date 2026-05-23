@@ -83,7 +83,7 @@
     }
 
     &--danger {
-      color: #f87171;
+      color: var(--error-color);
 
       svg {
         opacity: 1;

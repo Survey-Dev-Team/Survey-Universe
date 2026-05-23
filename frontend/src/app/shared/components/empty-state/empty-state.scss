@@ -12,7 +12,7 @@
   padding: $space-40;
   border-radius: $space-16;
   background: color-mix(in srgb, var(--basic-white) 75%, transparent);
-  border: 1px solid rgba(124, 58, 237, 0.28);
+  border: 1px solid var(--sf-brand-alpha-28);
 
   &__visual {
     position: relative;
@@ -28,7 +28,7 @@
     height: auto;
     display: block;
     // white bg from the webp is transparent on dark — add a subtle glow
-    filter: drop-shadow(0 0 40px rgba(124, 58, 237, 0.35));
+    filter: drop-shadow(0 0 40px var(--sf-brand-alpha-35));
   }
 
   &__body {
@@ -59,8 +59,8 @@
     margin-top: $space-4;
     padding: 10px 28px;
     border-radius: $space-8;
-    border: 1px solid rgba(124, 58, 237, 0.4);
-    background: rgba(124, 58, 237, 0.08);
+    border: 1px solid var(--sf-brand-alpha-40);
+    background: var(--sf-brand-alpha-08);
     font-family: fonts.$font-family;
     font-size: 0.88rem;
     font-weight: fonts.$font-weight-medium;

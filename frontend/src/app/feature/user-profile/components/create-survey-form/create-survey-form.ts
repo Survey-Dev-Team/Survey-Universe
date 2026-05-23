@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, signal, computed } from '@angular/core';
+import { Component, DestroyRef, inject, signal, computed, input, output, effect } from '@angular/core';
 import {
   CdkDragDrop,
   moveItemInArray,
@@ -26,6 +26,7 @@ import {
   INPUT_SUB_TYPES,
 } from './models/survey.models';
 import { SurveyPropsPanelComponent, SurveyPropForm } from './elements/survey-props-panel/survey-props-panel';
+import { SurveyCreateRequest, QuestionBase, QuestionType, SurveyDetailsResponse } from '../../../../shared/models/interfaces';
 import { SurveyInputElement } from './elements/survey-input/survey-input';
 import { SurveyTextareaElement } from './elements/survey-textarea/survey-textarea';
 import { SurveySelectRadioElement } from './elements/survey-select-radio/survey-select-radio';
@@ -68,6 +69,11 @@ import { SurveyDateElement } from './elements/survey-date/survey-date';
 export class CreateSurveyForm {
   private readonly destroyRef = inject(DestroyRef);
 
+  saving      = input(false);
+  initialData = input<SurveyDetailsResponse | null>(null);
+  formSave    = output<SurveyCreateRequest>();
+  formDraft   = output<SurveyCreateRequest>();
+
   readonly palette: SurveyElementPalette[] = SURVEY_PALETTE;
   readonly paletteItems: SurveyElementPalette[] = [...SURVEY_PALETTE];
   readonly inputSubTypes = INPUT_SUB_TYPES;
@@ -79,7 +85,9 @@ export class CreateSurveyForm {
       validators: [Validators.required],
     }),
     description: new FormControl<string>('', { nonNullable: true }),
+    category:    new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
     coverImage:  new FormControl<string>('', { nonNullable: true }),
+    estimatedTime: new FormControl<number | null>(null),
     elements: new FormArray<FormControl<SurveyElement>>([]),
   });
 
@@ -99,6 +107,13 @@ export class CreateSurveyForm {
   readonly submitted = signal<boolean>(false);
   private readonly _propSub$ = new Subject<void>();
 
+  constructor() {
+    effect(() => {
+      const data = this.initialData();
+      if (data) this._loadData(data);
+    });
+  }
+
   get elementsArray(): FormArray<FormControl<SurveyElement>> {
     return this.form.controls.elements;
   }
@@ -110,7 +125,7 @@ export class CreateSurveyForm {
   });
 
   get isValid(): boolean {
-    return this.form.valid && this.elementsArray.length > 0;
+    return this.form.valid && this.elementsArray.length > 0 && this.form.controls.category.value.trim().length > 0;
   }
 
   hasErrorForElement(id: string): boolean {
@@ -211,11 +226,71 @@ export class CreateSurveyForm {
     this.submitted.set(true);
     this.form.markAllAsTouched();
     if (!this.isValid) return;
-    console.log(this.form.getRawValue());
+    this.formSave.emit(this._buildPayload());
   }
 
   saveAsDraft(): void {
-    console.log('draft', this.form.getRawValue());
+    this.formDraft.emit(this._buildPayload());
+  }
+
+  private _buildPayload(): SurveyCreateRequest {
+    const TYPE_MAP: Record<SurveyElementType, QuestionType> = {
+      'input':        'input',
+      'textarea':     'text_area',
+      'select-radio': 'radio_button',
+      'select':       'checkbox',
+      'text':         'text',
+      'title':        'title',
+      'image':        'image',
+      'range':        'range',
+      'paginator':    'page_break',
+      'space':        'space',
+      'file':         'file_upload',
+      'date-picker':  'date_pick',
+    };
+
+    const { title, description, coverImage, category, estimatedTime, elements } = this.form.getRawValue();
+
+    const questions: QuestionBase[] = elements.map((el, i) => {
+      const base: QuestionBase = {
+        id:          el.id,
+        type:        TYPE_MAP[el.type],
+        sort_order:  i,
+        label:       el.label,
+        is_required: el.required,
+      };
+      if (el.options?.length) {
+        base['options'] = el.options.map((opt, j) => ({
+          id:         `opt-${el.id}-${j}`,
+          label:      opt,
+          sort_order: j,
+        }));
+      }
+      if (el.type === 'range') {
+        base.min  = el.rangeMin;
+        base.max  = el.rangeMax;
+        base.step = el.rangeStep;
+      }
+      if (el.type === 'input' && el.inputSubType) {
+        base['input_type'] = el.inputSubType;
+      }
+      if (el.type === 'title' || el.type === 'text') {
+        base.label = el.content || el.label || '';
+      }
+      if (el.type === 'image') {
+        base['link'] = el.imageUrl ?? '';
+      }
+      return base;
+    });
+
+    return {
+      title:         title.trim(),
+      description:   description.trim() || undefined,
+      icon:          coverImage || undefined,
+      category:      category.split(',').map(s => s.trim()).filter(Boolean),
+      estimatedTime: estimatedTime ?? undefined,
+      questions,
+    };
   }
 
   private _syncPropForm(elementCtrl: FormControl<SurveyElement>): void {
@@ -254,6 +329,23 @@ export class CreateSurveyForm {
           options:      this.propForm.controls.options.controls.map(c => c.value),
         });
       });
+
+    // Reverse sync: when the element changes externally (e.g. contenteditable blur),
+    // update propForm so the properties panel always reflects the current value.
+    elementCtrl.valueChanges
+      .pipe(takeUntil(this._propSub$), takeUntilDestroyed(this.destroyRef))
+      .subscribe((newEl) => {
+        this.propForm.patchValue({
+          label:        newEl.label        ?? '',
+          content:      newEl.content      ?? '',
+          placeholder:  newEl.placeholder  ?? '',
+          required:     newEl.required     ?? false,
+          inputSubType: newEl.inputSubType ?? 'text',
+          rangeMin:     newEl.rangeMin     ?? 0,
+          rangeMax:     newEl.rangeMax     ?? 100,
+          rangeStep:    newEl.rangeStep    ?? 1,
+        }, { emitEvent: false });
+      });
   }
 
   private _createDefaultElement(type: SurveyElementType): SurveyElement {
@@ -273,5 +365,55 @@ export class CreateSurveyForm {
       'date-picker':  { label: 'Date', placeholder: '', required: false },
     };
     return { id, type, ...defaults[type] };
+  }
+
+  private _loadData(data: SurveyDetailsResponse): void {
+    const REVERSE_TYPE_MAP: Record<QuestionType, SurveyElementType> = {
+      'input':        'input',
+      'text_area':    'textarea',
+      'radio_button': 'select-radio',
+      'checkbox':     'select',
+      'text':         'text',
+      'title':        'title',
+      'image':        'image',
+      'range':        'range',
+      'page_break':   'paginator',
+      'space':        'space',
+      'file_upload':  'file',
+      'date_pick':    'date-picker',
+      'search_select': 'select',
+    };
+
+    const { summary, questions } = data;
+
+    this.form.patchValue({
+      title:         summary.title,
+      description:   summary.description ?? '',
+      category:      summary.category.join(', '),
+      coverImage:    summary.icon ?? '',
+      estimatedTime: summary.estimatedTime ?? null,
+    }, { emitEvent: false });
+
+    this.elementsArray.clear({ emitEvent: false });
+    for (const q of [...questions].sort((a, b) => a.sort_order - b.sort_order)) {
+      const type = REVERSE_TYPE_MAP[q.type] ?? 'text';
+      const el: SurveyElement = {
+        id:           q.id,
+        type,
+        label:        q.label,
+        required:     q.is_required,
+        options:      q.options?.map((o: { label: string }) => o.label),
+        rangeMin:     q.min,
+        rangeMax:     q.max,
+        rangeStep:    q.step,
+        inputSubType: (q['input_type'] as InputSubType) ?? undefined,
+        content:      (type === 'title' || type === 'text') ? (q.label ?? undefined) : ((q['content'] as string) ?? undefined),
+        imageUrl:     (type === 'image') ? ((q['link'] as string) ?? undefined) : ((q['imageUrl'] as string) ?? undefined),
+      };
+      this.elementsArray.push(new FormControl<SurveyElement>(el, { nonNullable: true }), { emitEvent: false });
+    }
+
+    this.selectedElementId.set(null);
+    this.submitted.set(false);
   }
 }

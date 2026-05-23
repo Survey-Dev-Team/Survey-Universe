@@ -36,7 +36,7 @@ export function mapSurveyToCard(survey: SurveyReadSummary, index: number): Surve
     id: survey.urlId,
     title: survey.title,
     description: survey.description,
-    coverImage: CARD_IMAGES[index % CARD_IMAGES.length],
+    coverImage: survey.icon || CARD_IMAGES[index % CARD_IMAGES.length],
     category,
     surveyType: survey.surveyType,
     author: CREATOR_NAMES[survey.creatorUrlId] ?? 'Survey Universe',

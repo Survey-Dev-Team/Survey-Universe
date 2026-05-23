@@ -21,12 +21,13 @@ body {
   font-family: fonts.$font-family;
   background-color: var(--background-color);
   transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
 }
 
 // ── Scrollbar ──────────────────────────────────────────────────────────────
 html {
   scrollbar-width: thin;
-  scrollbar-color: #7c3aed transparent;
+  scrollbar-color: var(--accent-color) transparent;
 }
 
 ::-webkit-scrollbar {
@@ -39,12 +40,12 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #7c3aed;
+  background: var(--accent-color);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #8b5cf6;
+  background: var(--button-filled-hover);
 }
 
 ::-webkit-scrollbar-corner {

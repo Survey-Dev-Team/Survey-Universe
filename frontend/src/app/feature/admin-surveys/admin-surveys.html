@@ -36,20 +36,51 @@
 <gt-footer />
 
 <!-- ── Create / Edit panel ─────────────────────────────────────────────────── -->
-@if (showForm()) {
-  <div class="gt-admin-surveys__overlay" (click)="closeForm()"></div>
-  <aside class="gt-admin-surveys__form-panel">
+@if (showForm() || closingForm()) {
+  <div class="gt-admin-surveys__overlay" [class.gt-admin-surveys__overlay--closing]="closingForm()" (click)="closeForm()"></div>
+  <aside class="gt-admin-surveys__form-panel" [class.gt-admin-surveys__form-panel--closing]="closingForm()">
     <div class="gt-admin-surveys__form-header">
       <h2 class="gt-admin-surveys__form-title">
         @if (formMode() === 'create') { Create New Survey }
         @else { Edit Survey }
       </h2>
+      @if (formMode() === 'create') {
+        <div class="gt-admin-surveys__form-type-toggle">
+          <button
+            type="button"
+            class="gt-admin-surveys__form-type-btn"
+            [class.gt-admin-surveys__form-type-btn--active]="formType() === 'survey'"
+            (click)="formType.set('survey')"
+          >
+            <i class="pi pi-clipboard"></i> Survey
+          </button>
+          <button
+            type="button"
+            class="gt-admin-surveys__form-type-btn"
+            [class.gt-admin-surveys__form-type-btn--active]="formType() === 'test'"
+            (click)="formType.set('test')"
+          >
+            <i class="pi pi-check-square"></i> Test
+          </button>
+        </div>
+      }
       <button class="gt-admin-surveys__form-close" (click)="closeForm()">
         <i class="pi pi-times"></i>
       </button>
     </div>
     <div class="gt-admin-surveys__form-body">
-      <gt-create-survey-form />
+      @if (loadingEdit()) {
+        <div class="gt-admin-surveys__form-loading">
+          <i class="pi pi-spin pi-spinner"></i>
+        </div>
+      } @else {
+      <gt-create-survey-form
+        [saving]="savingForm()"
+        [initialData]="editingData()"
+        (formSave)="onFormSave($event)"
+        (formDraft)="onFormDraft($event)"
+      />
+      }
     </div>
   </aside>
 }
