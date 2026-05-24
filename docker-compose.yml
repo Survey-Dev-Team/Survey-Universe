@@ -26,6 +26,17 @@ services:
     volumes:
       - couchdb_data:/opt/couchdb/data
 
+  db-seed:
+    build:
+      context: ./database/config
+      dockerfile: Dockerfile.seed
+    container_name: couchdb_seed_worker
+    restart: "no"
+    volumes:
+      - ./shared/data:/shared/data
+    depends_on:
+      - database
+
   db-sync:
     build:
       context: ./database/config

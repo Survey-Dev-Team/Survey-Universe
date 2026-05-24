@@ -10,18 +10,6 @@ export interface UserLogin {
   password: string;
 }
 
-export interface UserLoginResponse {
-  accessToken: string;
-  idToken: string;
-  refreshToken: string;
-  username: string;
-  firstName?: string;
-  lastName?: string;
-  role: string;
-  email: string;
-  imageUrl: string;
-}
-
 export interface UserSuccessResponse {
   message: string;
 }
@@ -183,7 +171,7 @@ export type QuestionType =
 export interface OptionDetails {
   id: string;
   label: string;
-  isCorrect?: boolean;
+  correct?: boolean;
   imageUrl?: string;
 }
 
@@ -200,7 +188,7 @@ export interface QuestionBase {
   min?: number;
   max?: number;
   step?: number;
-  correct_answer?: number;
+  correct_answer?: string | number;
   [key: string]: unknown;
 }
 
