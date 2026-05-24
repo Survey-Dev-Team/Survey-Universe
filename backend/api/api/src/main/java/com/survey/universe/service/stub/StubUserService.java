@@ -1,5 +1,6 @@
 package com.survey.universe.service.stub;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,10 +8,10 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.survey.universe.domain.model.User;
-import com.survey.universe.domain.model.survey.Survey;
 import com.survey.universe.domain.stub.provider.StubUsersProvider;
 import com.survey.universe.domain.stub.storage.StubUserStorage;
 import com.survey.universe.service.UserService;
+import com.survey.universe.spring.configuration.bean.SlugIdGenerator;
 
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,8 @@ public class StubUserService implements UserService {
 	private final StubUserStorage users;
 
 	private final StubUsersProvider provider;
+	
+	private SlugIdGenerator slugGenerator;
 
 	@PostConstruct
 	private void init() {
@@ -43,6 +46,8 @@ public class StubUserService implements UserService {
 			return Optional.empty();
 		}
 		user.setRevision("1-stub");
+		user.setSlugId(slugGenerator.generate());
+		user.setCreatedAt(Instant.now());
 		users.add(email, user);
 		return Optional.of(user);
 	}
@@ -82,6 +87,11 @@ public class StubUserService implements UserService {
 		String lowerTerm = term.toLowerCase();
 		return u.getFirstName().toLowerCase().contains(lowerTerm) || u.getLastName().toLowerCase().contains(lowerTerm)
 				|| u.getEmail().toLowerCase().contains(lowerTerm);
+	}
+
+	@Override
+	public Optional<User> findBySlugId(String slugId) {
+		return users.findBySlugId(slugId);
 	}
 
 }

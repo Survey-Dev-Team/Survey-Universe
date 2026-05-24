@@ -18,7 +18,7 @@ public class StubSurveyResponseStorage {
 	public void add(SurveyResponse response) {
 		responseStorage.put(response.getId(), response);
 	}
-
+		
 	public List<SurveyResponse> findAllBySurveyId(String surveyId) {
 		return responseStorage.values().stream().filter(r -> r.getSurveyId().equals(surveyId)).toList();
 	}

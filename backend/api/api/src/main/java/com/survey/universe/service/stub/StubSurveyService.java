@@ -15,6 +15,7 @@ import com.survey.universe.domain.stub.provider.StubSurveysProvider;
 import com.survey.universe.domain.stub.storage.StubSurveyStorage;
 import com.survey.universe.service.SurveyService;
 import com.survey.universe.service.constant.TimeRange;
+import com.survey.universe.spring.configuration.bean.SlugIdGenerator;
 
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,8 @@ public class StubSurveyService implements SurveyService {
 	private final StubSurveyStorage surveys;
 
 	private final StubSurveysProvider provider;
+	
+	private SlugIdGenerator slugGenerator;
 
 	@PostConstruct
 	private void initialize() {
@@ -53,6 +56,7 @@ public class StubSurveyService implements SurveyService {
 	@Override
 	public Optional<Survey> add(Survey survey) {
 		String id = survey.getId();
+		survey.setSlugId(slugGenerator.generate());
 		if (findById(id).isPresent()) {
 			return Optional.empty();
 		}
@@ -129,6 +133,11 @@ public class StubSurveyService implements SurveyService {
 				.filter(s -> category == null || (s.getCategory() != null && s.getCategory().contains(category)))
 				.filter(s -> isWithinTimeRange(s.getCreatedAt(), timeRange)).filter(s -> containsSearchTerm(s, search))
 				.toList();
+	}
+
+	@Override
+	public Optional<Survey> findBySlugId(String slugId) {
+		return surveys.findBySlugId(slugId);
 	}
 
 }

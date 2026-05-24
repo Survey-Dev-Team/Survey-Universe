@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.survey.universe.service.SurveyResponseFacadeService;
+import com.survey.universe.service.constant.TimeRange;
 import com.survey.universe.web.dto.SurveyStatsDto;
 import com.survey.universe.web.dto.UserSurveyResponseDto;
 import com.survey.universe.web.dto.generic.MessageDto;
@@ -36,20 +38,15 @@ public class SurveyResponseController {
 
 	@GetMapping(path = "/{surveyUrlId}/responses/{userUrlId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ADMIN') or @userSecurity.isOwner(authentication, #userUrlId)")
-	public ResponseEntity<PersonalSurveyResponseDto> getUserResponse(@PathVariable String surveyUrlId, @PathVariable String userUrlId) {
+	public ResponseEntity<PersonalSurveyResponseDto> getUserResponse(@PathVariable String surveyUrlId,
+			@PathVariable String userUrlId) {
 		return ResponseEntity.ok(responseService.getUserResponse(surveyUrlId, userUrlId));
 	}
-	
+
 	@PostMapping(path = "/{urlId}/responses", produces = MediaType.APPLICATION_JSON_VALUE)
 	@Operation(summary = "DTO response depends on whether the survey is a test")
-	@ApiResponse(
-	    responseCode = "200",
-	    description = "On success code, return PersonalSurveyResponseDto for Surveys that are tests, and MessageDto else)",
-	    content = @Content(
-	        mediaType = "application/json",
-	        schema = @Schema(oneOf = {MessageDto.class, PersonalSurveyResponseDto.class})
-	    )
-	)
+	@ApiResponse(responseCode = "200", description = "On success code, return PersonalSurveyResponseDto for Surveys that are tests, and MessageDto else)", content = @Content(mediaType = "application/json", schema = @Schema(oneOf = {
+			MessageDto.class, PersonalSurveyResponseDto.class })))
 	public ResponseEntity<ConditionalResponseDto> submitResponse(@PathVariable String urlId,
 			@Valid @RequestBody SurveyResponseSubmitDto submitDto) {
 		return ResponseEntity.ok(responseService.submitResponse(urlId, submitDto));
@@ -63,5 +60,10 @@ public class SurveyResponseController {
 	@GetMapping(path = "/{urlId}/stats", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SurveyStatsDto> getStats(@PathVariable String urlId) {
 		return ResponseEntity.ok(responseService.getSurveyStats(urlId));
+	}
+
+	@GetMapping(path = "/stats", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<SurveyStatsDto>> getStats(@RequestParam String category, @RequestParam(required = false) TimeRange timeRange) {
+		return ResponseEntity.ok(responseService.filterSurveyStats(category, timeRange));
 	}
 }

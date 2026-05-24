@@ -33,7 +33,19 @@ public class StubSurveyResponseService implements SurveyResponseService {
 	
 	@Override
 	public Optional<SurveyResponse> add(SurveyResponse response) {
-		response.setRevision("1-stub");
+		Optional<SurveyResponse> responseCandidate = findByResponseId(response.getId());
+		if (responseCandidate.isEmpty()) {
+			response.setRevision("1-stub");
+		} else {
+			SurveyResponse oldResponse = responseCandidate.get();
+			if (oldResponse.getIsComplete()) {
+				return Optional.empty();
+			}
+			String currentRev = oldResponse.getRevision();
+			int revNum = currentRev != null && currentRev.contains("-") ? Integer.parseInt(currentRev.split("-")[0]) : 0;
+			response.setRevision((revNum + 1) + "-stub");
+			
+		}
 		responseStorage.add(response);
 		response.setSubmittedAt(Instant.now());
 		return Optional.of(response);

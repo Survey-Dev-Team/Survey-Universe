@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import com.survey.universe.domain.constant.DocType;
 import com.survey.universe.domain.constant.SurveyStatus;
 import com.survey.universe.domain.constant.SurveyType;
+import com.survey.universe.domain.model.User;
 import com.survey.universe.domain.model.survey.Survey;
 import com.survey.universe.exception.type.ForbiddenException;
 import com.survey.universe.exception.type.ResourceNotFoundException;
@@ -19,9 +19,9 @@ import com.survey.universe.mapper.SurveyToDtoMapper;
 import com.survey.universe.service.SurveyReadFacadeService;
 import com.survey.universe.service.SurveyResponseService;
 import com.survey.universe.service.SurveyService;
+import com.survey.universe.service.UserService;
 import com.survey.universe.service.constant.SurveySortOption;
 import com.survey.universe.service.constant.TimeRange;
-import com.survey.universe.spring.util.Base64UrlUtil;
 import com.survey.universe.web.dto.SurveyReadSummaryDto;
 import com.survey.universe.web.dto.generic.PagedResponseDto;
 import com.survey.universe.web.dto.request.survey.SurveyReadResponseDto;
@@ -36,23 +36,25 @@ public class StubSurveyReadFacadeService implements SurveyReadFacadeService {
 	private static List<SurveyStatus> ALLOWED_STATUSES = List.of(SurveyStatus.CLOSED, SurveyStatus.PUBLISHED);
 
 	private SurveyService surveyService;
-	private Base64UrlUtil base64Url;
 	private SurveyResponseService responseService;
+	private UserService userService;
 	private SurveyToDtoMapper surveyToDto;
 	private PagedDtoMapper toPaged;
-	
+
 	@Override
 	public SurveyReadResponseDto getSurveyByUrlId(String urlId) {
-		String id = base64Url.decode(urlId, DocType.SURVEY);
 
-		Survey survey = surveyService.findById(id)
+		Survey survey = surveyService.findBySlugId(urlId)
 				.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
 
 		if (survey.isDeleted() || !survey.getStatus().equals(SurveyStatus.PUBLISHED)) {
 			throw new ForbiddenException("You do not have authority to access this survey");
 		}
 
-		return surveyToDto.toReadResponseDto(survey);
+		User creator = userService.findById(survey.getCreatorId())
+				.orElseThrow(() -> new ResourceNotFoundException("Resoucrce not found"));
+
+		return surveyToDto.toReadResponseDto(survey, creator);
 	}
 
 	@Override
@@ -73,13 +75,20 @@ public class StubSurveyReadFacadeService implements SurveyReadFacadeService {
 			Comparator.comparing((Survey s) -> responseCounts.getOrDefault(s.getId(), 0)).reversed();
 		default -> Comparator.comparing(Survey::getCreatedAt).reversed();
 		};
-		
-		return toPaged.toPagedResponse(filtered, comparator, page, size, s -> surveyToDto.toReadSummaryDto(s));
+
+		return toPaged.toPagedResponse(filtered, comparator, page, size,
+				s -> surveyToDto.toReadSummaryDto(s, userService.findById(s.getCreatorId())
+						.orElseThrow(() -> new ResourceNotFoundException("Resource not found"))));
+
 	}
 
 	@Override
 	public List<SurveyReadSummaryDto> getHomeSurveys() {
-		return surveyService.findAllHome().stream().map(s -> surveyToDto.toReadSummaryDto(s)).toList();
+		return surveyService.findAllHome().stream().map(s -> {
+			User creator = userService.findById(s.getCreatorId())
+					.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+			return surveyToDto.toReadSummaryDto(s, creator);
+		}).toList();
 	}
 
 }

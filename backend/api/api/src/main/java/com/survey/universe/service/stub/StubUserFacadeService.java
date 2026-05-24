@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import com.survey.universe.domain.constant.DocType;
 import com.survey.universe.domain.model.User;
 import com.survey.universe.exception.type.InternalConflictException;
 import com.survey.universe.exception.type.ResourceNotFoundException;
@@ -17,7 +16,6 @@ import com.survey.universe.mapper.UserToDtoMapper;
 import com.survey.universe.service.UserFacadeService;
 import com.survey.universe.service.UserService;
 import com.survey.universe.service.constant.UsersSortOption;
-import com.survey.universe.spring.util.Base64UrlUtil;
 import com.survey.universe.web.dto.UserSurveyResponseDto;
 import com.survey.universe.web.dto.generic.MessageDto;
 import com.survey.universe.web.dto.generic.PagedResponseDto;
@@ -32,7 +30,6 @@ import lombok.AllArgsConstructor;
 @Profile("test")
 public class StubUserFacadeService implements UserFacadeService {
 
-	private final Base64UrlUtil base64Url;
 	private final UserService userService;
 	private final StubSurveyResponseService responseService;
 	private final StubSurveyService surveyService;
@@ -48,18 +45,19 @@ public class StubUserFacadeService implements UserFacadeService {
 
 	@Override
 	public UserPrivateDetailsResponseDto getPrivateUserByUrlId(String urlId) {
-		String id = base64Url.decode(urlId, DocType.USER);
-		User user = userService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+		User user = userService.findBySlugId(urlId)
+				.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
 
 		validateActive(user);
 
-		return userToDto.toUserPrivateDetailsDto(user, urlId, responseService.findAllByRespondentId(id).size());
+		return userToDto.toUserPrivateDetailsDto(user, urlId,
+				responseService.findAllByRespondentId(user.getId()).size());
 	}
 
 	@Override
 	public MessageDto deleteUserByUrlId(String urlId) {
-		String id = base64Url.decode(urlId, DocType.USER);
-		User user = userService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+		User user = userService.findBySlugId(urlId)
+				.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
 
 		if (user.isDeleted()) {
 			return new MessageDto("User successfully deleted");
@@ -77,7 +75,7 @@ public class StubUserFacadeService implements UserFacadeService {
 			UsersSortOption sortBy, int page, int size) {
 
 		List<User> privateDetails = userService.filter(search, showDeleted);
-		
+
 		Comparator<User> comparator = switch (sortBy) {
 		case userId -> Comparator.comparing(User::getId).reversed();
 		case email -> Comparator.comparing(User::getEmail).reversed();
@@ -87,14 +85,14 @@ public class StubUserFacadeService implements UserFacadeService {
 		};
 
 		return pagedDtoMapper.toPagedResponse(privateDetails, comparator, page, size,
-				user -> userToDto.toUserPrivateDetailsDto(user, base64Url.encode(user.getId(), DocType.USER),
+				user -> userToDto.toUserPrivateDetailsDto(user, user.getSlugId(),
 						responseService.findAllByRespondentId(user.getId()).size()));
 	}
 
 	@Override
 	public UserPrivateDetailsResponseDto updateUserByUrlId(String urlId, UserUpdateRequestDto updateRequestDto) {
-		String id = base64Url.decode(urlId, DocType.USER);
-		User user = userService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+		User user = userService.findBySlugId(urlId)
+				.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
 
 		validateActive(user);
 
@@ -107,13 +105,14 @@ public class StubUserFacadeService implements UserFacadeService {
 		user = userService.update(user).orElseThrow(
 				() -> new InternalConflictException("User could not be updated at this time, please try again"));
 
-		return userToDto.toUserPrivateDetailsDto(user, urlId, responseService.findAllByRespondentId(id).size());
+		return userToDto.toUserPrivateDetailsDto(user, urlId,
+				responseService.findAllByRespondentId(user.getId()).size());
 	}
 
 	@Override
 	public UserPublicSummaryDto getPublicUserByUrlId(String urlId) {
-		String id = base64Url.decode(urlId, DocType.USER);
-		User user = userService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+		User user = userService.findBySlugId(urlId)
+				.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
 
 		validateActive(user);
 
@@ -122,16 +121,16 @@ public class StubUserFacadeService implements UserFacadeService {
 
 	@Override
 	public List<UserSurveyResponseDto> getUserResponses(String urlId) {
-		String id = base64Url.decode(urlId, DocType.USER);
-		User user = userService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+		User user = userService.findBySlugId(urlId)
+				.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
 
 		validateActive(user);
 
-		return responseService.findAllByRespondentId(id).stream()
+		return responseService.findAllByRespondentId(user.getId()).stream()
 				.map(response -> surveyService.findById(response.getSurveyId())
-						.map(survey -> new UserSurveyResponseDto(response.getId(),
-								base64Url.encode(survey.getId(), DocType.SURVEY), urlId, survey.getTitle(),
-								response.getSubmittedAt(), response.getResponseAnswers())))
+						.map(survey -> new UserSurveyResponseDto(response.getId(), survey.getSlugId(), urlId,
+								survey.getTitle(), response.getSubmittedAt(), survey.getCategory(),
+								survey.getSurveyType(), response.getResponseAnswers())))
 				.flatMap(Optional::stream).toList();
 	}
 }

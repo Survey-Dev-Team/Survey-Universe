@@ -9,6 +9,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
 public record SurveyUpdateRequestDto(@NotBlank String revision, @NotBlank String title, String description,
-		List<String> category, Integer estimatedTime, String icon, Boolean isHome,
+		List<String> category, Integer estimatedTime, String icon, Boolean isHome, Integer passThreshold,
 		@Valid @NotEmpty List<Question> questions) {
 }

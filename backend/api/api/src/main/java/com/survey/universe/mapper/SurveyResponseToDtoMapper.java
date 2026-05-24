@@ -11,8 +11,10 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import com.survey.universe.domain.constant.QuestionCategory;
+import com.survey.universe.domain.constant.SurveyType;
 import com.survey.universe.domain.model.ResponseAnswer;
 import com.survey.universe.domain.model.SurveyResponse;
+import com.survey.universe.domain.model.UserResponseStatsSnapshot;
 import com.survey.universe.domain.model.survey.Question;
 import com.survey.universe.domain.model.survey.RangeQuestion;
 import com.survey.universe.domain.model.survey.SelectionQuestion;
@@ -49,16 +51,31 @@ public class SurveyResponseToDtoMapper {
 				samples);
 	}
 
-	public SurveyStatsDto toSurveyStatsDto(String urlId, Survey survey, List<SurveyResponse> responses) {
+	public SurveyStatsDto toSurveyStatsDto(String urlId, Survey survey, List<SurveyResponse> responses,
+			List<UserResponseStatsSnapshot> snapshots) {
 		List<QuestionStatsDto> stats = survey.getQuestions().stream()
 				.filter(q -> !q.getQuestionCategory().equals(QuestionCategory.CONTENT_ONLY))
 				.<QuestionStatsDto>map(q -> toQuestionStatsDto(q, responses)).toList();
 
-		return new SurveyStatsDto(urlId, survey.getTitle(), responses.size(), stats);
+		UserResponseStatsSnapshot statsProvider = snapshots.getFirst();
+
+		return new SurveyStatsDto(urlId, survey.getTitle(), (long) responses.size(),
+				(long) responses.stream().filter(r -> r.getIsComplete() == true).toList().size(),
+				survey.getSurveyType().equals(SurveyType.TEST)
+						? (long) snapshots.stream().filter(s -> s.getCorrectAnswerCount() >= survey.getPassThreshold())
+								.toList().size()
+						: null,
+				statsProvider.getQuestionsTotal(), statsProvider.getMarkedQuestionsTotal(),
+				statsProvider.getNonContentQuestionsTotal(),
+				snapshots.stream().mapToInt(UserResponseStatsSnapshot::getQuestionsAnswered).average().orElse(0.0),
+				snapshots.stream().mapToInt(UserResponseStatsSnapshot::getMarkedQuestionsAnswered).average()
+						.orElse(0.0),
+				stats);
+
 	}
 
 	public PersonalSurveyResponseDto toPersonalSurveyResponseDto(String surveyUrlId, Survey survey,
-			SurveyResponse response) {
+			UserResponseStatsSnapshot stats, SurveyResponse response) {
 		List<Question> questions = survey.getQuestions();
 		Map<String, Question> questionsMap = questions.stream().collect(Collectors.toMap(Question::getId, q -> q));
 
@@ -67,14 +84,12 @@ public class SurveyResponseToDtoMapper {
 						.map(q -> q.accept(new QuestionToPersonalResponseMapper(a))).stream())
 				.toList();
 
-		List<PersonalRespondentAnswerDto> markedAnswers = answers.stream().filter(a -> a.isCorrect() != null).toList();
-
-		return new PersonalSurveyResponseDto(response.getId(), surveyUrlId, questions.size(),
-				questions.stream().filter(q -> !q.getQuestionCategory().equals(QuestionCategory.CONTENT_ONLY)).toList()
-						.size(),
-				questions.stream().filter(q -> q.getQuestionCategory().equals(QuestionCategory.MARKED)).toList().size(),
-				answers.size(), markedAnswers.size(),
-				markedAnswers.stream().filter(a -> Boolean.TRUE.equals(a.isCorrect())).toList().size(),
-				response.getSubmittedAt(), answers);
+		return stats == null
+				? new PersonalSurveyResponseDto(response.getId(), surveyUrlId, questions.size(), null, null, null, null,
+						null, null, answers)
+				: new PersonalSurveyResponseDto(response.getId(), surveyUrlId, questions.size(),
+						stats.getNonContentQuestionsTotal(), stats.getMarkedQuestionsTotal(),
+						stats.getQuestionsAnswered(), stats.getMarkedQuestionsAnswered(), stats.getCorrectAnswerCount(),
+						response.getSubmittedAt(), answers);
 	}
 }

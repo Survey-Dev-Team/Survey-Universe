@@ -44,6 +44,10 @@ public class User {
     private String email;
     
     @NotBlank
+    @JsonProperty("slug_id")
+    private String slugId;
+    
+    @NotBlank
     @JsonProperty(value = "password", access = Access.WRITE_ONLY)
     private String password;
     
@@ -55,6 +59,9 @@ public class User {
     
     @JsonProperty("last_session")
     private Instant lastSession;
+    
+    @JsonProperty("created_at")
+    private Instant createdAt;
     
     @JsonProperty("is_deleted")
     private boolean isDeleted = false;

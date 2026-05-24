@@ -33,6 +33,6 @@ public class UserToDtoMapper {
 
 	public UserPrivateDetailsResponseDto toUserPrivateDetailsDto(User user, String urlId, int responseCount) {
 		return new UserPrivateDetailsResponseDto(toUserPrivateSummaryDto(user, urlId), responseCount, user.getRevision(),
-				user.getLastSession());
+				user.getCreatedAt(), user.getLastSession());
 	}
 }
