@@ -1,5 +1,35 @@
 [
   {
+    "_id": "response:019ded6a-82a7-7c3b-a9ba-8655b4eff6a0",
+    "_rev": "1-f4cc73b98ed4f299b1528bb7a65b5120",
+    "root_type": "response",
+    "survey_rev": null,
+    "respondent_id": "user:019de94b-06be-7bf6-a972-ce3da920d965",
+    "survey_id": "survey:019ded26-cabe-71af-bc58-ac1b804617c0",
+    "submitted_at": "2026-05-03T15:39:20Z",
+    "response_answers": [
+      {
+        "id": "q1",
+        "selected_options": [
+          "opt2"
+        ]
+      },
+      {
+        "id": "q2",
+        "selected_options": [
+          "opt1",
+          "opt4"
+        ]
+      },
+      {
+        "id": "q3",
+        "selected_options": [
+          "opt2"
+        ]
+      }
+    ]
+  },
+  {
     "_id": "response:019ded3d-c0c8-7fc0-ac2b-c9fbf0ee4840",
     "_rev": "1-0454e6c4ea7c8c9abb0b4b7cba4abbda",
     "root_type": "response",
@@ -39,36 +69,6 @@
       {
         "id": "q12",
         "value": null
-      }
-    ]
-  },
-  {
-    "_id": "response:019ded6a-82a7-7c3b-a9ba-8655b4eff6a0",
-    "_rev": "1-f4cc73b98ed4f299b1528bb7a65b5120",
-    "root_type": "response",
-    "survey_rev": null,
-    "respondent_id": "user:019de94b-06be-7bf6-a972-ce3da920d965",
-    "survey_id": "survey:019ded26-cabe-71af-bc58-ac1b804617c0",
-    "submitted_at": "2026-05-03T15:39:20Z",
-    "response_answers": [
-      {
-        "id": "q1",
-        "selected_options": [
-          "opt2"
-        ]
-      },
-      {
-        "id": "q2",
-        "selected_options": [
-          "opt1",
-          "opt4"
-        ]
-      },
-      {
-        "id": "q3",
-        "selected_options": [
-          "opt2"
-        ]
       }
     ]
   },
@@ -490,7 +490,7 @@
   },
   {
     "_id": "survey:019de95c-3401-7001-a1b2-c3d4e5f60001",
-    "_rev": "1-daa12c91a2a668952174593a0a1e0890",
+    "_rev": "2-16fa68c96badf6091b235e7bdd60119e",
     "root_type": "survey",
     "title": "How Do You Handle Stress?",
     "description": "Stress is part of modern life — but how we handle it varies widely. Share your coping strategies and what genuinely works for you.",
@@ -509,7 +509,7 @@
     "survey_type": "questionnaire",
     "published_at": "2026-05-01T09:30:00Z",
     "is_deleted": false,
-    "creator_id": "user:ivan-petrov",
+    "creator_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
     "questions": [
       {
         "id": "q1",
@@ -555,11 +555,12 @@
         "is_required": false,
         "options": []
       }
-    ]
+    ],
+    "slug_id": "how-do-you-handle-stress"
   },
   {
     "_id": "survey:019de95c-3401-7001-a1b2-c3d4e5f60003",
-    "_rev": "1-b7182902a68ef8954d327806dd2ac01c",
+    "_rev": "2-75d09c5db01254d286f57ee70fd0b155",
     "root_type": "survey",
     "title": "If You Could Ask the World One Question",
     "category": [
@@ -574,7 +575,7 @@
     "survey_type": "questionnaire",
     "created_at": "2026-04-25T14:20:00Z",
     "modified_at": "2026-04-25T14:20:00Z",
-    "creator_id": "user:lena-oris",
+    "creator_id": "user:019de94a-d11f-761e-ba08-8f389fa1c4ff",
     "closed_at": null,
     "published_at": "2026-04-25T14:20:00Z",
     "is_deleted": false,
@@ -589,11 +590,12 @@
         "is_required": true,
         "options": []
       }
-    ]
+    ],
+    "slug_id": "if-you-could-ask-the-world-one-question"
   },
   {
     "_id": "survey:019de9f1-0001-7001-b001-c3d4e5f60101",
-    "_rev": "1-d9a3aed860a49e98dd378a347f8349f1",
+    "_rev": "2-7153b9518f6005626a07e608b0c90f58",
     "root_type": "survey",
     "title": "Do We Rely Too Much on Technology?",
     "description": "Explore how dependent modern society has become on digital tools — and whether that dependence is leading us somewhere we actually want to go.",
@@ -612,7 +614,7 @@
     "closed_at": null,
     "published_at": "2026-05-14T10:00:00Z",
     "is_deleted": false,
-    "creator_id": "user:alex-monroe",
+    "creator_id": "user:019de94b-4fc0-7659-a7de-a19f279a943b",
     "questions": [
       {
         "id": "q1",
@@ -697,11 +699,12 @@
         "is_required": false,
         "options": []
       }
-    ]
+    ],
+    "slug_id": "do-we-rely-too-much-on-technology"
   },
   {
     "_id": "survey:019de96a-0001-7000-8000-c3d4e5f60001",
-    "_rev": "1-97887d3e6029ff4c2f490a3ea245e36e",
+    "_rev": "2-f2172148508cd59188f2d5eb248263b2",
     "root_type": "survey",
     "title": "How Do You Learn Best?",
     "description": "Everyone absorbs information differently. Help us understand what makes learning click — your preferred formats, timing, and goals.",
@@ -719,7 +722,7 @@
     "closed_at": null,
     "published_at": "2026-04-30T09:30:00Z",
     "is_deleted": false,
-    "creator_id": "user:dana-kol",
+    "creator_id": "user:019de94b-06be-7bf6-a972-ce3da920d965",
     "status": "published",
     "questions": [
       {
@@ -798,11 +801,12 @@
         "is_required": false,
         "options": []
       }
-    ]
+    ],
+    "slug_id": "how-do-you-learn-best"
   },
   {
     "_id": "survey:019de9f2-0001-7001-b002-c3d4e5f60102",
-    "_rev": "1-bbeed85c7e9abd95e9088470a52618ff",
+    "_rev": "2-055cd3482236c8ffd474839505f75c20",
     "root_type": "survey",
     "title": "Is Space Exploration Worth the Cost?",
     "description": "Humanity spends billions reaching for the stars. Share your perspective on whether that investment makes sense — or where it should go instead.",
@@ -821,7 +825,7 @@
     "closed_at": null,
     "published_at": "2026-05-10T14:00:00Z",
     "is_deleted": false,
-    "creator_id": "user:lena-oris",
+    "creator_id": "user:019de94a-d11f-761e-ba08-8f389fa1c4ff",
     "questions": [
       {
         "id": "q1",
@@ -901,11 +905,12 @@
         "is_required": false,
         "options": []
       }
-    ]
+    ],
+    "slug_id": "is-space-exploration-worth-the-cost"
   },
   {
     "_id": "survey:019de9f3-0001-7001-b003-c3d4e5f60103",
-    "_rev": "1-627121ade9852be177d77d4c782819ec",
+    "_rev": "2-1447949d3367080b7b5343a1d4024735",
     "root_type": "survey",
     "title": "What Shapes Who We Are?",
     "description": "Nature, environment, or chance — what do you believe has the greatest influence on a person's identity? No wrong answers.",
@@ -924,7 +929,7 @@
     "closed_at": null,
     "published_at": "2026-05-06T09:00:00Z",
     "is_deleted": false,
-    "creator_id": "user:mark-vega",
+    "creator_id": "user:019de94b-92d1-7f88-bbdc-f590f2186541",
     "questions": [
       {
         "id": "q1",
@@ -1004,11 +1009,12 @@
         "is_required": false,
         "options": []
       }
-    ]
+    ],
+    "slug_id": "what-shapes-who-we-are"
   },
   {
     "_id": "survey:019ded05-5fbc-7e45-919f-ea20c34a34ac",
-    "_rev": "1-abb9a333ad01021315f0265087ef791e",
+    "_rev": "2-26e6dafb220fc271cfec9145fb381b2c",
     "root_type": "survey",
     "title": "Sleep & Your Daily Energy",
     "description": "Sleep shapes everything — mood, focus, productivity. Tell us about your sleep habits and what you wish you could change.",
@@ -1022,7 +1028,7 @@
     "survey_type": "questionnaire",
     "is_home": false,
     "icon": null,
-    "creator_id": "user:alex-monroe",
+    "creator_id": "user:019de94b-4fc0-7659-a7de-a19f279a943b",
     "created_at": "2026-04-20T10:00:00Z",
     "modified_at": "2026-04-20T10:00:00Z",
     "closed_at": null,
@@ -1094,11 +1100,109 @@
         "sort_order": 3,
         "options": []
       }
-    ]
+    ],
+    "slug_id": "sleep-your-daily-energy"
+  },
+  {
+    "_id": "survey:019ded10-b3a3-7bc1-a0bc-7a31ff091616",
+    "_rev": "2-6c92ea31966cf63b8ed7821c50a8e1e2",
+    "root_type": "survey",
+    "title": "The Human Body: Fact or Fiction?",
+    "category": [
+      "science",
+      "biology",
+      "quiz"
+    ],
+    "estimated_time": "10",
+    "description": "How well do you know your own body? Test your knowledge of human biology with these quick questions.",
+    "status": "published",
+    "survey_type": "test",
+    "is_home": false,
+    "icon": null,
+    "creator_id": "user:019de94b-92d1-7f88-bbdc-f590f2186541",
+    "created_at": "2026-04-25T11:00:00Z",
+    "modified_at": "2026-04-25T11:00:00Z",
+    "closed_at": null,
+    "published_at": "2026-04-25T11:00:00Z",
+    "is_deleted": false,
+    "questions": [
+      {
+        "id": "q1",
+        "label": "True or false: the human heart beats roughly 100,000 times a day.",
+        "type": "radio_button",
+        "sort_order": 1,
+        "is_required": true,
+        "options": [
+          {
+            "id": "opt1",
+            "label": "True",
+            "sort_order": 1,
+            "correct": true
+          },
+          {
+            "id": "opt2",
+            "label": "False",
+            "sort_order": 2,
+            "correct": false
+          },
+          {
+            "id": "opt3",
+            "label": "It depends on the person",
+            "sort_order": 3,
+            "correct": false
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "label": "Which of these are genuine functions of the liver?",
+        "type": "checkbox",
+        "sort_order": 2,
+        "is_required": true,
+        "options": [
+          {
+            "id": "opt1",
+            "label": "Producing bile",
+            "sort_order": 1,
+            "correct": true
+          },
+          {
+            "id": "opt2",
+            "label": "Filtering blood",
+            "sort_order": 2,
+            "correct": true
+          },
+          {
+            "id": "opt3",
+            "label": "Generating electrical impulses",
+            "sort_order": 3,
+            "correct": false
+          },
+          {
+            "id": "opt4",
+            "label": "Breaking down toxins",
+            "sort_order": 4,
+            "correct": true
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "label": "What is the longest bone in the human body?",
+        "sort_order": 3,
+        "is_required": true,
+        "type": "input",
+        "placeholder": "Enter the bone name",
+        "input_type": "text",
+        "correct_answer": "femur",
+        "options": []
+      }
+    ],
+    "slug_id": "the-human-body-fact-or-fiction"
   },
   {
     "_id": "survey:019de9f4-0001-7001-b004-c3d4e5f60104",
-    "_rev": "1-9c70c964c2dd2e92a9b8963c7272c098",
+    "_rev": "2-119a3abbc6030b52136036b0271f860d",
     "root_type": "survey",
     "title": "Myths & Facts: The Human Brain",
     "description": "We only use 10% of our brains. Or do we? Separate common misconceptions from science in this quick knowledge test.",
@@ -1117,7 +1221,7 @@
     "closed_at": null,
     "published_at": "2026-04-12T09:30:00Z",
     "is_deleted": false,
-    "creator_id": "user:sofia-lane",
+    "creator_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
     "questions": [
       {
         "id": "q1",
@@ -1217,261 +1321,12 @@
         "correct_answer": "neuroplasticity",
         "options": []
       }
-    ]
-  },
-  {
-    "_id": "survey:019ded10-74bd-7a6e-8cc1-50de7ba23977",
-    "_rev": "1-a633180ea62b638f7b5411862176e24f",
-    "root_type": "survey",
-    "title": "Our Planet: Environmental Basics",
-    "survey_type": "test",
-    "category": [
-      "science",
-      "environment",
-      "quiz"
     ],
-    "estimated_time": 10,
-    "is_home": false,
-    "icon": null,
-    "description": "How much do you know about Earth's environment? A draft quiz on climate, ecosystems, and sustainability.",
-    "status": "draft",
-    "creator_id": "user:sofia-lane",
-    "created_at": "2026-04-25T11:47:00Z",
-    "modified_at": "2026-05-03T13:00:00Z",
-    "closed_at": null,
-    "published_at": "2026-05-03T13:00:00Z",
-    "is_deleted": false,
-    "questions": [
-      {
-        "id": "q1",
-        "label": "Which of these are greenhouse gases?",
-        "type": "checkbox",
-        "sort_order": 1,
-        "is_required": true,
-        "options": [
-          {
-            "id": "opt1",
-            "label": "Carbon dioxide (CO₂)",
-            "sort_order": 1,
-            "correct": true
-          },
-          {
-            "id": "opt2",
-            "label": "Oxygen (O₂)",
-            "sort_order": 2,
-            "correct": false
-          },
-          {
-            "id": "opt3",
-            "label": "Methane (CH₄)",
-            "sort_order": 3,
-            "correct": true
-          },
-          {
-            "id": "opt4",
-            "label": "Nitrous oxide (N₂O)",
-            "sort_order": 4,
-            "correct": true
-          }
-        ]
-      },
-      {
-        "id": "q2",
-        "label": "Which layer of the atmosphere contains the ozone layer?",
-        "type": "search_select",
-        "sort_order": 2,
-        "is_required": true,
-        "options": [
-          {
-            "id": "opt1",
-            "label": "Troposphere",
-            "sort_order": 1,
-            "correct": false
-          },
-          {
-            "id": "opt2",
-            "label": "Stratosphere",
-            "sort_order": 2,
-            "correct": true
-          },
-          {
-            "id": "opt3",
-            "label": "Mesosphere",
-            "sort_order": 3,
-            "correct": false
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "_id": "survey:019ded10-b3a3-7bc1-a0bc-7a31ff091616",
-    "_rev": "1-56be5df5de0a4800bf35cab34220c7dd",
-    "root_type": "survey",
-    "title": "The Human Body: Fact or Fiction?",
-    "category": [
-      "science",
-      "biology",
-      "quiz"
-    ],
-    "estimated_time": "10",
-    "description": "How well do you know your own body? Test your knowledge of human biology with these quick questions.",
-    "status": "published",
-    "survey_type": "test",
-    "is_home": false,
-    "icon": null,
-    "creator_id": "user:mark-vega",
-    "created_at": "2026-04-25T11:00:00Z",
-    "modified_at": "2026-04-25T11:00:00Z",
-    "closed_at": null,
-    "published_at": "2026-04-25T11:00:00Z",
-    "is_deleted": false,
-    "questions": [
-      {
-        "id": "q1",
-        "label": "True or false: the human heart beats roughly 100,000 times a day.",
-        "type": "radio_button",
-        "sort_order": 1,
-        "is_required": true,
-        "options": [
-          {
-            "id": "opt1",
-            "label": "True",
-            "sort_order": 1,
-            "correct": true
-          },
-          {
-            "id": "opt2",
-            "label": "False",
-            "sort_order": 2,
-            "correct": false
-          },
-          {
-            "id": "opt3",
-            "label": "It depends on the person",
-            "sort_order": 3,
-            "correct": false
-          }
-        ]
-      },
-      {
-        "id": "q2",
-        "label": "Which of these are genuine functions of the liver?",
-        "type": "checkbox",
-        "sort_order": 2,
-        "is_required": true,
-        "options": [
-          {
-            "id": "opt1",
-            "label": "Producing bile",
-            "sort_order": 1,
-            "correct": true
-          },
-          {
-            "id": "opt2",
-            "label": "Filtering blood",
-            "sort_order": 2,
-            "correct": true
-          },
-          {
-            "id": "opt3",
-            "label": "Generating electrical impulses",
-            "sort_order": 3,
-            "correct": false
-          },
-          {
-            "id": "opt4",
-            "label": "Breaking down toxins",
-            "sort_order": 4,
-            "correct": true
-          }
-        ]
-      },
-      {
-        "id": "q3",
-        "label": "What is the longest bone in the human body?",
-        "sort_order": 3,
-        "is_required": true,
-        "type": "input",
-        "placeholder": "Enter the bone name",
-        "input_type": "text",
-        "correct_answer": "femur",
-        "options": []
-      }
-    ]
-  },
-  {
-    "_id": "survey:019ded3a-dead-beef-8888-c3d4e5f60001",
-    "_rev": "1-45e4452022c0466eb6f361f145614c0e",
-    "root_type": "survey",
-    "title": "Digital Wellbeing Check — Winter 2026",
-    "survey_type": "questionnaire",
-    "category": [
-      "wellbeing",
-      "technology",
-      "society"
-    ],
-    "estimated_time": "7",
-    "description": "A snapshot of how digital habits affected our community's wellbeing at the start of 2026. Now closed.",
-    "status": "closed",
-    "is_home": false,
-    "icon": null,
-    "created_at": "2026-01-10T09:00:00Z",
-    "modified_at": "2026-01-20T17:00:00Z",
-    "closed_at": "2026-01-20T17:00:00Z",
-    "published_at": "2026-01-10T17:00:00Z",
-    "is_deleted": false,
-    "creator_id": "user:dana-kol",
-    "questions": [
-      {
-        "id": "q1",
-        "label": "How would you rate your overall digital wellbeing in January 2026? (0 = very poor, 10 = excellent)",
-        "type": "range",
-        "min": 0,
-        "max": 10,
-        "step": 1,
-        "sort_order": 1,
-        "is_required": true,
-        "options": []
-      },
-      {
-        "id": "q2",
-        "label": "Which digital habits did you practice regularly?",
-        "type": "checkbox",
-        "sort_order": 2,
-        "is_required": true,
-        "options": [
-          {
-            "id": "opt1",
-            "label": "Setting screen time limits",
-            "sort_order": 1
-          },
-          {
-            "id": "opt2",
-            "label": "Taking regular breaks",
-            "sort_order": 2
-          },
-          {
-            "id": "opt3",
-            "label": "Managing notifications",
-            "sort_order": 3
-          }
-        ]
-      },
-      {
-        "id": "q3",
-        "label": "What digital habit most improved your quality of life?",
-        "type": "text_area",
-        "placeholder": "Share your experience",
-        "sort_order": 3,
-        "is_required": false,
-        "options": []
-      }
-    ]
+    "slug_id": "myths-facts-the-human-brain"
   },
   {
     "_id": "survey:019ded26-cabe-71af-bc58-ac1b804617c0",
-    "_rev": "1-341d92c396142966f592ee7ac6bb7899",
+    "_rev": "2-c2ef87a33f7db3bc194fe6853fc70d0a",
     "root_type": "survey",
     "title": "Great Thinkers: Know Your Philosophy?",
     "survey_type": "test",
@@ -1487,7 +1342,7 @@
     "icon": null,
     "description": "From Socrates to Nietzsche — how much do you know about the world's most influential philosophical ideas?",
     "status": "published",
-    "creator_id": "user:ivan-petrov",
+    "creator_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
     "created_at": "2026-04-29T11:47:00Z",
     "modified_at": "2026-05-03T11:47:01Z",
     "closed_at": null,
@@ -1581,11 +1436,237 @@
           }
         ]
       }
-    ]
+    ],
+    "slug_id": "great-thinkers-know-your-philosophy"
+  },
+  {
+    "_id": "survey:019ded10-74bd-7a6e-8cc1-50de7ba23977",
+    "_rev": "2-94a0863d31d9993576801e5ddcabfb96",
+    "root_type": "survey",
+    "title": "Our Planet: Environmental Basics",
+    "survey_type": "test",
+    "category": [
+      "science",
+      "environment",
+      "quiz"
+    ],
+    "estimated_time": 10,
+    "is_home": false,
+    "icon": null,
+    "description": "How much do you know about Earth's environment? A draft quiz on climate, ecosystems, and sustainability.",
+    "status": "draft",
+    "creator_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
+    "created_at": "2026-04-25T11:47:00Z",
+    "modified_at": "2026-05-03T13:00:00Z",
+    "closed_at": null,
+    "published_at": "2026-05-03T13:00:00Z",
+    "is_deleted": false,
+    "questions": [
+      {
+        "id": "q1",
+        "label": "Which of these are greenhouse gases?",
+        "type": "checkbox",
+        "sort_order": 1,
+        "is_required": true,
+        "options": [
+          {
+            "id": "opt1",
+            "label": "Carbon dioxide (CO₂)",
+            "sort_order": 1,
+            "correct": true
+          },
+          {
+            "id": "opt2",
+            "label": "Oxygen (O₂)",
+            "sort_order": 2,
+            "correct": false
+          },
+          {
+            "id": "opt3",
+            "label": "Methane (CH₄)",
+            "sort_order": 3,
+            "correct": true
+          },
+          {
+            "id": "opt4",
+            "label": "Nitrous oxide (N₂O)",
+            "sort_order": 4,
+            "correct": true
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "label": "Which layer of the atmosphere contains the ozone layer?",
+        "type": "search_select",
+        "sort_order": 2,
+        "is_required": true,
+        "options": [
+          {
+            "id": "opt1",
+            "label": "Troposphere",
+            "sort_order": 1,
+            "correct": false
+          },
+          {
+            "id": "opt2",
+            "label": "Stratosphere",
+            "sort_order": 2,
+            "correct": true
+          },
+          {
+            "id": "opt3",
+            "label": "Mesosphere",
+            "sort_order": 3,
+            "correct": false
+          }
+        ]
+      }
+    ],
+    "slug_id": "our-planet-environmental-basics"
+  },
+  {
+    "_id": "survey:019deda9-096f-7d0c-825e-226ce4c946ff",
+    "_rev": "2-ccd5af16e471ca243c9d815d81fabbfa",
+    "root_type": "survey",
+    "title": "A Place That Changed You",
+    "description": "We all have places that shaped who we are — a city, a room, a corner of the world. Share yours.",
+    "status": "published",
+    "category": [
+      "society",
+      "travel",
+      "psychology"
+    ],
+    "estimated_time": "5",
+    "is_home": false,
+    "survey_type": "questionnaire",
+    "icon": null,
+    "created_at": "2026-05-02T09:00:00Z",
+    "modified_at": "2026-05-02T17:00:00Z",
+    "closed_at": null,
+    "published_at": "2026-05-02T17:00:00Z",
+    "is_deleted": false,
+    "creator_id": "user:019de94b-4fc0-7659-a7de-a19f279a943b",
+    "questions": [
+      {
+        "id": "q1",
+        "label": "Name a place that had a significant impact on your life.",
+        "type": "input",
+        "input_type": "text",
+        "placeholder": "City, village, building — anything counts",
+        "sort_order": 1,
+        "is_required": true,
+        "options": []
+      },
+      {
+        "id": "q2",
+        "label": "What made that place so meaningful to you?",
+        "type": "input",
+        "input_type": "text",
+        "placeholder": "Describe in a few words",
+        "sort_order": 2,
+        "is_required": true,
+        "options": []
+      },
+      {
+        "id": "q3",
+        "label": "Share a photo of that place if you have one.",
+        "type": "file_upload",
+        "link": null,
+        "placeholder": "Upload your photo here",
+        "sort_order": 3,
+        "is_required": true,
+        "options": []
+      }
+    ],
+    "slug_id": "a-place-that-changed-you"
+  },
+  {
+    "_id": "survey:019ded3a-dead-beef-8888-c3d4e5f60001",
+    "_rev": "2-5dc2e4ff39be36a964091df3dacf40cf",
+    "root_type": "survey",
+    "title": "Digital Wellbeing Check — Winter 2026",
+    "survey_type": "questionnaire",
+    "category": [
+      "wellbeing",
+      "technology",
+      "society"
+    ],
+    "estimated_time": "7",
+    "description": "A snapshot of how digital habits affected our community's wellbeing at the start of 2026. Now closed.",
+    "status": "closed",
+    "is_home": false,
+    "icon": null,
+    "created_at": "2026-01-10T09:00:00Z",
+    "modified_at": "2026-01-20T17:00:00Z",
+    "closed_at": "2026-01-20T17:00:00Z",
+    "published_at": "2026-01-10T17:00:00Z",
+    "is_deleted": false,
+    "creator_id": "user:019de94b-06be-7bf6-a972-ce3da920d965",
+    "questions": [
+      {
+        "id": "q1",
+        "label": "How would you rate your overall digital wellbeing in January 2026? (0 = very poor, 10 = excellent)",
+        "type": "range",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "sort_order": 1,
+        "is_required": true,
+        "options": []
+      },
+      {
+        "id": "q2",
+        "label": "Which digital habits did you practice regularly?",
+        "type": "checkbox",
+        "sort_order": 2,
+        "is_required": true,
+        "options": [
+          {
+            "id": "opt1",
+            "label": "Setting screen time limits",
+            "sort_order": 1
+          },
+          {
+            "id": "opt2",
+            "label": "Taking regular breaks",
+            "sort_order": 2
+          },
+          {
+            "id": "opt3",
+            "label": "Managing notifications",
+            "sort_order": 3
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "label": "What digital habit most improved your quality of life?",
+        "type": "text_area",
+        "placeholder": "Share your experience",
+        "sort_order": 3,
+        "is_required": false,
+        "options": []
+      }
+    ],
+    "slug_id": "digital-wellbeing-check-winter-2026"
+  },
+  {
+    "_id": "user:019de94b-06be-7bf6-a972-ce3da920d965",
+    "_rev": "2-b99f7e292e5efd1570cb193e34c4f126",
+    "root_type": "user",
+    "first_name": "Edie",
+    "last_name": "Levine",
+    "email": "2ft12@deltajohnsons.com",
+    "password": "$2a$12$iOKlQ50uDDfu7qGAUKO2fuxI7y4MbhkqidOX5YeZVpqNmJeumkA72",
+    "role": "user",
+    "profile_image": null,
+    "last_session": "2026-05-03T21:26:26+00:00",
+    "slug_id": "edie-levine"
   },
   {
     "_id": "survey:019df434-1423-76e1-9e23-2808d5d51fbf",
-    "_rev": "1-32472744c882c27f8bd9175da0fb050e",
+    "_rev": "2-87805cf209ab945105e2d1dd95293737",
     "root_type": "survey",
     "title": "Survey Universe Community Profile",
     "description": "Help us understand our community better. Tell us about yourself and the topics you care about most.",
@@ -1604,7 +1685,7 @@
     "closed_at": null,
     "published_at": "2026-05-02T17:00:00Z",
     "is_deleted": false,
-    "creator_id": "user:lena-oris",
+    "creator_id": "user:019de94a-d11f-761e-ba08-8f389fa1c4ff",
     "questions": [
       {
         "id": "q1",
@@ -1740,102 +1821,12 @@
         "sort_order": 12,
         "options": []
       }
-    ]
-  },
-  {
-    "_id": "survey:019deda9-096f-7d0c-825e-226ce4c946ff",
-    "_rev": "1-1f7dc5edf9f5c6cf7f6ff0bbc76dbb81",
-    "root_type": "survey",
-    "title": "A Place That Changed You",
-    "description": "We all have places that shaped who we are — a city, a room, a corner of the world. Share yours.",
-    "status": "published",
-    "category": [
-      "society",
-      "travel",
-      "psychology"
     ],
-    "estimated_time": "5",
-    "is_home": false,
-    "survey_type": "questionnaire",
-    "icon": null,
-    "created_at": "2026-05-02T09:00:00Z",
-    "modified_at": "2026-05-02T17:00:00Z",
-    "closed_at": null,
-    "published_at": "2026-05-02T17:00:00Z",
-    "is_deleted": false,
-    "creator_id": "user:alex-monroe",
-    "questions": [
-      {
-        "id": "q1",
-        "label": "Name a place that had a significant impact on your life.",
-        "type": "input",
-        "input_type": "text",
-        "placeholder": "City, village, building — anything counts",
-        "sort_order": 1,
-        "is_required": true,
-        "options": []
-      },
-      {
-        "id": "q2",
-        "label": "What made that place so meaningful to you?",
-        "type": "input",
-        "input_type": "text",
-        "placeholder": "Describe in a few words",
-        "sort_order": 2,
-        "is_required": true,
-        "options": []
-      },
-      {
-        "id": "q3",
-        "label": "Share a photo of that place if you have one.",
-        "type": "file_upload",
-        "link": null,
-        "placeholder": "Upload your photo here",
-        "sort_order": 3,
-        "is_required": true,
-        "options": []
-      }
-    ]
-  },
-  {
-    "_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
-    "_rev": "1-2d00615ee568d8cfa7034da4728cfde6",
-    "root_type": "user",
-    "first_name": "Jaxson",
-    "last_name": "Stokes",
-    "email": "hajamag257@lohinja.com",
-    "password": "$2a$12$uKj8.dokVynHGbTEtel1uutkVwvNqqcPpNX.AGRSrdFffCdCl/2AK",
-    "role": "admin",
-    "profile_image": null,
-    "last_session": "2026-05-03T15:30:26+00:00"
-  },
-  {
-    "_id": "user:019de94b-06be-7bf6-a972-ce3da920d965",
-    "_rev": "1-2a13f1bd77f40e5861c933de498f31fe",
-    "root_type": "user",
-    "first_name": "Edie",
-    "last_name": "Levine",
-    "email": "2ft12@deltajohnsons.com",
-    "password": "$2a$12$iOKlQ50uDDfu7qGAUKO2fuxI7y4MbhkqidOX5YeZVpqNmJeumkA72",
-    "role": "user",
-    "profile_image": null,
-    "last_session": "2026-05-03T21:26:26+00:00"
-  },
-  {
-    "_id": "user:019de94a-d11f-761e-ba08-8f389fa1c4ff",
-    "_rev": "1-4756a2a7f2c3cd6dac14e3287c24555d",
-    "root_type": "user",
-    "first_name": "Emily",
-    "last_name": "Bean",
-    "email": "bv7oo@deltajohnsons.com",
-    "password": "$2a$12$0fgUCi6BxbXI5TLOWkqodOZC1UxuK/jDXl5BJvW0rOHf6Lwog4Ti6",
-    "role": "user",
-    "profile_image": null,
-    "last_session": "2026-05-03T20:30:26+00:00"
+    "slug_id": "survey-universe-community-profile"
   },
   {
     "_id": "user:019de94b-4fc0-7659-a7de-a19f279a943b",
-    "_rev": "1-17e3af0e822b1aed910c37a86b232b75",
+    "_rev": "2-2285323ae0d2af160bd429e92d723486",
     "root_type": "user",
     "first_name": "Peter",
     "last_name": "Delacruz",
@@ -1843,11 +1834,25 @@
     "password": "$2a$12$SAjYKuY1gcFu38PV5nYWPuWmc7Fi4VW0vPeArWBvNeFIpTUpPJVFe",
     "role": "user",
     "profile_image": null,
-    "last_session": "2026-04-29T17:29:29+00:00"
+    "last_session": "2026-04-29T17:29:29+00:00",
+    "slug_id": "peter-delacruz"
+  },
+  {
+    "_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
+    "_rev": "2-505f4f8dc49029c87205b5376b6e184a",
+    "root_type": "user",
+    "first_name": "Jaxson",
+    "last_name": "Stokes",
+    "email": "hajamag257@lohinja.com",
+    "password": "$2a$12$uKj8.dokVynHGbTEtel1uutkVwvNqqcPpNX.AGRSrdFffCdCl/2AK",
+    "role": "admin",
+    "profile_image": null,
+    "last_session": "2026-05-03T15:30:26+00:00",
+    "slug_id": "jaxson-stokes"
   },
   {
     "_id": "user:019de94b-92d1-7f88-bbdc-f590f2186541",
-    "_rev": "1-27b3f0307369a49ba1e910d7ff04c999",
+    "_rev": "2-3811a3a35fe29c6186f67dc603381008",
     "root_type": "user",
     "first_name": "Kamil",
     "last_name": "Orr",
@@ -1855,6 +1860,20 @@
     "password": "$2a$12$dMn6DqKm2jP2Fvb67vXUNeBu9LXxLZkofnz8nvLU7t4wC3Wnva2/O",
     "role": "user",
     "profile_image": null,
-    "last_session": "2026-04-30T21:47:36+00:00"
+    "last_session": "2026-04-30T21:47:36+00:00",
+    "slug_id": "kamil-orr"
+  },
+  {
+    "_id": "user:019de94a-d11f-761e-ba08-8f389fa1c4ff",
+    "_rev": "2-241d882ff3f9d6b45feca1686d55221f",
+    "root_type": "user",
+    "first_name": "Emily",
+    "last_name": "Bean",
+    "email": "bv7oo@deltajohnsons.com",
+    "password": "$2a$12$0fgUCi6BxbXI5TLOWkqodOZC1UxuK/jDXl5BJvW0rOHf6Lwog4Ti6",
+    "role": "user",
+    "profile_image": null,
+    "last_session": "2026-05-03T20:30:26+00:00",
+    "slug_id": "emily-bean"
   }
 ]

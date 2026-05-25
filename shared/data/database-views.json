@@ -1,7 +1,7 @@
 [
   {
     "_id": "_design/surveys",
-    "_rev": "3-eda8c92ea3443e47db17683a556d0ab6",
+    "_rev": "4-946124d2ebf27796f29441e019b0f329",
     "views": {
       "public_by_status": {
         "map": "function(doc) { if (doc.root_type === \"survey\" && !doc.is_deleted) { emit(doc.status, null); } }"
@@ -22,7 +22,7 @@
   },
   {
     "_id": "_design/users",
-    "_rev": "2-975c8af165f1d5eeab20973afc582355",
+    "_rev": "3-90a05257843e27aef38f986ed3f0a511",
     "views": {
       "by_role": {
         "map": "function(doc) { if (doc.root_type === \"user\" && !doc.is_deleted) { emit(doc.role, null); } }"
@@ -34,7 +34,7 @@
   },
   {
     "_id": "_design/508473ff223a2f9acc3509a2ebcbc770b089577d",
-    "_rev": "1-3a2e1382ea91b8ee65be2b8ad70f7364",
+    "_rev": "2-0d5790fe7f80b83553fc2dcfbe5f5ad6",
     "language": "query",
     "views": {
       "idx-root-email": {
@@ -59,7 +59,7 @@
   },
   {
     "_id": "_design/3e39550092abfdfae3e79aa12ac4a3708b769925",
-    "_rev": "1-31ed336b5638acbc6ca473580a6939a2",
+    "_rev": "2-09fb9b42dd578a943446978e9e6b8211",
     "language": "query",
     "views": {
       "idx-root-deleted": {
@@ -84,7 +84,7 @@
   },
   {
     "_id": "_design/24875a2fc1d1dce8b74ac1dc31b341b29623ffab",
-    "_rev": "1-3dd6396dcd274d06741191b7879655b3",
+    "_rev": "2-bef5b43aff9d098e82dbe3bb88903009",
     "language": "query",
     "views": {
       "idx-root-home": {
@@ -111,7 +111,7 @@
   },
   {
     "_id": "_design/b2b5b886294870a5042b4dff11c1551f893a11b0",
-    "_rev": "1-452344adcc992e432a14ac2d221807c3",
+    "_rev": "2-0947b9112b9785d42a6d155c28da39b8",
     "language": "query",
     "views": {
       "idx-root-creator": {
@@ -138,7 +138,7 @@
   },
   {
     "_id": "_design/52e62c5ee9f9e56a79297d651b26f89571838a9f",
-    "_rev": "1-fe21a15038b31fc3386d856206e888db",
+    "_rev": "2-e0e6ac78c2233dde51a6f92816da979b",
     "language": "query",
     "views": {
       "idx-root-status": {
@@ -165,7 +165,7 @@
   },
   {
     "_id": "_design/1df931b985512b32dc2f009863e2d42e44d33a81",
-    "_rev": "1-8d556cdf9741426cee8f5203eaf5fe7f",
+    "_rev": "2-3e403ddedb99b2e77e669702b80909b2",
     "language": "query",
     "views": {
       "idx-response-survey": {
@@ -190,7 +190,7 @@
   },
   {
     "_id": "_design/f6fcf57ed490e8f61f6dd1be4268a2433acd8858",
-    "_rev": "1-792b3ca71a9c36464c2cff31732893cd",
+    "_rev": "2-1db43ef8b12aa871dbc59b7bbba67103",
     "language": "query",
     "views": {
       "idx-root-type-status": {
@@ -219,7 +219,7 @@
   },
   {
     "_id": "_design/d7f4afbe89d58d7a007cd3b3080ebccc4d3908d7",
-    "_rev": "1-c03e7f5387acd654f5b5f06fbfa8f1d3",
+    "_rev": "2-a013bd8581e1624ba89cf30bd9211be0",
     "language": "query",
     "views": {
       "idx-response-user": {
@@ -244,7 +244,7 @@
   },
   {
     "_id": "_design/20e811b89bee634e72317e9cadde8f6d77a511a1",
-    "_rev": "1-bfda22799a89a310f0e91f2889b6d7ed",
+    "_rev": "2-3044c3ca1ac586838757e8f7772c39ed",
     "language": "query",
     "views": {
       "idx-token": {
