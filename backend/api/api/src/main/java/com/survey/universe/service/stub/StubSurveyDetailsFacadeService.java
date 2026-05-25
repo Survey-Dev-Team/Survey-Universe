@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Profile;
@@ -59,8 +60,7 @@ public class StubSurveyDetailsFacadeService implements SurveyDetailsFacadeServic
 	private DtoToSurveyMapper dtoToSurvey;
 	private SurveyToDtoMapper surveyToDto;
 	private PagedDtoMapper toPaged;
-	
-	
+
 	private SurveyDetailsResponseDto createSurvey(SurveyCreateRequestDto surveyCreateDto, SurveyStatus status) {
 		String creatorId = UserAuthContextUtil.getCurrentUserId();
 
@@ -70,7 +70,12 @@ public class StubSurveyDetailsFacadeService implements SurveyDetailsFacadeServic
 		Survey survey = dtoToSurvey.mapPost(surveyCreateDto, DocType.SURVEY.join(uuidGenerator.generateUUIDv7()),
 				creatorId, status);
 		domainService.normalizeQuestionIds(survey.getQuestions());
-		domainService.setSurveyType(survey);
+
+		Optional.ofNullable(surveyCreateDto.type()).ifPresentOrElse(t -> {
+			survey.setSurveyType(SurveyType.valueOf(t));
+		}, () -> {
+			domainService.setSurveyType(survey);
+		});
 
 		Survey savedSurvey = surveyService.add(survey).orElseThrow(
 				() -> new InternalConflictException("Could not create survey at this time, please try again"));
@@ -83,12 +88,12 @@ public class StubSurveyDetailsFacadeService implements SurveyDetailsFacadeServic
 	public SurveyDetailsResponseDto createSurvey(SurveyCreateRequestDto surveyCreateDto) {
 		return createSurvey(surveyCreateDto, SurveyStatus.DRAFT);
 	}
-	
+
 	@Override
 	public SurveyDetailsResponseDto createSurvey(AdminSurveyCreateRequestDto surveyCreateDto) {
 		return createSurvey(surveyCreateDto.surveyData(), surveyCreateDto.status());
 	}
-	
+
 	@Override
 	public SurveyDetailsResponseDto updateSurvey(String urlId, SurveyUpdateRequestDto surveyUpdateDto) {
 		Survey survey = surveyService.findBySlugId(urlId)
@@ -111,13 +116,17 @@ public class StubSurveyDetailsFacadeService implements SurveyDetailsFacadeServic
 
 		dtoToSurvey.mapUpdate(surveyUpdateDto, survey);
 		domainService.normalizeQuestionIds(survey.getQuestions());
-		domainService.setSurveyType(survey);
+		Optional.ofNullable(surveyUpdateDto.type()).ifPresentOrElse(t -> {
+			survey.setSurveyType(SurveyType.valueOf(t));
+		}, () -> {
+			domainService.setSurveyType(survey);
+		});
 
-		survey = surveyService.update(survey)
+		Survey createdSurvey = surveyService.update(survey)
 				.orElseThrow(() -> new InternalConflictException("Could not update survey"));
 
-		return surveyToDto.toAdminResponseDto(survey, creator,
-				responseService.findAllBySurveyId(survey.getId()).size());
+		return surveyToDto.toAdminResponseDto(createdSurvey, creator,
+				responseService.findAllBySurveyId(createdSurvey.getId()).size());
 	}
 
 	@Override
@@ -153,19 +162,20 @@ public class StubSurveyDetailsFacadeService implements SurveyDetailsFacadeServic
 
 		User creator = userService.findById(survey.getCreatorId())
 				.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
-		
+
 		if (!UserAuthContextUtil.getRole().equals("admin")) {
 			domainService.validateOwnership(survey, UserAuthContextUtil.getCurrentUserId());
 		}
 
-		return surveyToDto.toAdminResponseDto(survey, creator, responseService.findAllBySurveyId(survey.getId()).size());
+		return surveyToDto.toAdminResponseDto(survey, creator,
+				responseService.findAllBySurveyId(survey.getId()).size());
 	}
 
 	@Override
 	public MessageDto deleteSurvey(String urlId) {
 		Survey survey = surveyService.findBySlugId(urlId)
 				.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
-		
+
 		if (!UserAuthContextUtil.getRole().equals("admin")) {
 			if (survey.getStatus().equals(SurveyStatus.DRAFT)) {
 				domainService.validateOwnership(survey, UserAuthContextUtil.getCurrentUserId());
@@ -197,7 +207,7 @@ public class StubSurveyDetailsFacadeService implements SurveyDetailsFacadeServic
 
 		Survey survey = surveyService.findBySlugId(urlId)
 				.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
-		
+
 		if (!survey.getRevision().equals(revision.revision())) {
 			throw new InternalConflictException("Survey was modified by someone else. Please refresh");
 		}
