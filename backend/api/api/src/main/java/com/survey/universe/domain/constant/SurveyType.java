@@ -1,5 +1,6 @@
 package com.survey.universe.domain.constant;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum SurveyType {
@@ -17,12 +18,14 @@ public enum SurveyType {
 		return value;
 	}
 
+	@JsonCreator
 	public static SurveyType fromString(String text) {
+		if (text == null) return null;
 		for (SurveyType status : SurveyType.values()) {
 			if (status.value.equalsIgnoreCase(text)) {
 				return status;
 			}
 		}
-		throw new IllegalArgumentException("Unknown status: " + text);
+		return null;
 	}
 }

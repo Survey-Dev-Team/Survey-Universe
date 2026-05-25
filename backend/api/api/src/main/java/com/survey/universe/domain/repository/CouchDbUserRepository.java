@@ -22,6 +22,14 @@ public class CouchDbUserRepository {
 
     private static final String DB_NAME = "survey-universe";
 
+    private User documentToUser(Document doc) throws Exception {
+        Map<String, Object> props = new java.util.HashMap<>(doc.getProperties() != null ? doc.getProperties() : Map.of());
+        props.put("_id", doc.getId());
+        props.put("_rev", doc.getRev());
+        String json = jacksonMapper.writeValueAsString(props);
+        return jacksonMapper.readValue(json, User.class);
+    }
+
     public Optional<User> save(User user) {
         try {
             user.setRootType("user");
@@ -79,7 +87,7 @@ public class CouchDbUserRepository {
             List<Document> docs = result.getDocs();
 
             if (docs == null || docs.isEmpty()) return Optional.empty();
-            return Optional.of(jacksonMapper.convertValue(docs.get(0), User.class));
+            return Optional.of(documentToUser(docs.get(0)));
         } catch (Exception e) {
             return Optional.empty();
         }
@@ -101,7 +109,11 @@ public class CouchDbUserRepository {
 
             List<User> users = new ArrayList<>();
             for (Document doc : docs) {
-                users.add(jacksonMapper.convertValue(doc, User.class));
+                try {
+                    users.add(documentToUser(doc));
+                } catch (Exception e) {
+                    System.err.println("Помилка маппінгу User: " + e.getMessage());
+                }
             }
             return users;
         } catch (Exception e) {

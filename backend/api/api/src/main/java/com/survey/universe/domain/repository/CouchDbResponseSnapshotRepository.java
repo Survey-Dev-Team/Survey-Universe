@@ -74,9 +74,13 @@ public class CouchDbResponseSnapshotRepository {
 
             List<UserResponseStatsSnapshot> list = new ArrayList<>();
             for (Document doc : docs) {
-                if (doc.get("responseId") != null || doc.get("response_id") != null) {
-                    list.add(jacksonMapper.convertValue(doc, UserResponseStatsSnapshot.class));
-                }
+                try {
+                    Map<String, Object> props = new java.util.HashMap<>(doc.getProperties() != null ? doc.getProperties() : Map.of());
+                    props.put("_id", doc.getId());
+                    props.put("_rev", doc.getRev());
+                    String json = jacksonMapper.writeValueAsString(props);
+                    list.add(jacksonMapper.readValue(json, UserResponseStatsSnapshot.class));
+                } catch (Exception e) { /* skip */ }
             }
             return list;
         } catch (Exception e) {

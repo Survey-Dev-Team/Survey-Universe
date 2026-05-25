@@ -109,7 +109,7 @@ public class CouchDbSurveyService implements SurveyService {
 
 		boolean activeShowDeleted = Boolean.TRUE.equals(showDeleted);
 
-		return getAll().stream().filter(s -> allowedStatuses.contains(s.getStatus()))
+		return getAll().stream().filter(s -> s.getStatus() != null && allowedStatuses.contains(s.getStatus()))
 				.filter(s -> !s.isDeleted() || activeShowDeleted)
 				.filter(s -> surveyType == null || surveyType.equals(s.getSurveyType()))
 				.filter(s -> status == null || status.equals(s.getStatus()))

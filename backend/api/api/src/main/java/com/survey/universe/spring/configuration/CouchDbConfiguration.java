@@ -14,7 +14,7 @@ public class CouchDbConfiguration {
 				.build();
 
 		Cloudant client = new Cloudant("CouchDB-Service", authenticator);
-		client.setServiceUrl("http://localhost:5984");
+		client.setServiceUrl("http://database:5984");
 
 		return client;
 	}
