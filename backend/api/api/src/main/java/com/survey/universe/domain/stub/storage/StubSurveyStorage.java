@@ -62,7 +62,8 @@ public class StubSurveyStorage {
 	}
 
 	public Optional<Survey> findBySlugId(String slugId) {
-		List<Survey> slugCandidates = surveyStorage.values().stream().filter(s -> s.getSlugId().equals(slugId)).toList();
+		List<Survey> slugCandidates = surveyStorage.values().stream().filter(s -> s.getSlugId().equals(slugId))
+				.toList();
 		return slugCandidates.size() == 0 ? Optional.empty() : Optional.of(slugCandidates.getFirst());
 	}
 }

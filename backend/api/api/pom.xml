@@ -111,6 +111,14 @@
 			<artifactId>tomcat-juli</artifactId>
 			<version>11.0.21</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.ibm.cloud</groupId>
+			<artifactId>cloudant</artifactId>
+			<version>0.10.18</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

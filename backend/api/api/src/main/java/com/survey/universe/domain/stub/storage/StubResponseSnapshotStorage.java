@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -14,12 +15,11 @@ import com.survey.universe.domain.model.UserResponseStatsSnapshot;
 @Profile("test")
 public class StubResponseSnapshotStorage {
 	
-	private Map<String, UserResponseStatsSnapshot> snapshots = new HashMap<>();
+	private final Map<String, UserResponseStatsSnapshot> snapshots = new ConcurrentHashMap<>();
 	
 	public UserResponseStatsSnapshot add(UserResponseStatsSnapshot snapshot) {
 		snapshots.put(snapshot.getResponseId(), snapshot);
 		return snapshot;
-		
 	}
 
 	public Optional<UserResponseStatsSnapshot> findByResponse(String responseId) {
@@ -32,10 +32,15 @@ public class StubResponseSnapshotStorage {
 	}
 	
 	public List<UserResponseStatsSnapshot> findByUser(String userId) {
-		return snapshots.values().stream().filter(s -> s.getUserId().equals(userId)).toList();
+		return snapshots.values().stream()
+				.filter(s -> userId.equals(s.getUserId())) // Безпечно проти NullPointerException
+				.toList();
 	}
 	
 	public List<UserResponseStatsSnapshot> findBySurvey(String surveyId) {
-		return snapshots.values().stream().filter(s -> s.getSurveyId().equals(surveyId)).toList();
+		return snapshots.values().stream()
+				.filter(s -> surveyId.equals(s.getSurveyId()))
+				.toList();
 	}
 }
+

@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Profile;
@@ -148,11 +149,14 @@ public class StubSurveyDetailsFacadeService implements SurveyDetailsFacadeServic
 		default -> Comparator.comparing(Survey::getCreatedAt).reversed();
 		};
 
-		return toPaged.toPagedResponse(filtered, comparator, page, size,
-				s -> surveyToDto.toAdminSummaryDto(s,
-						userService.findById(s.getCreatorId())
-								.orElseThrow(() -> new ResourceNotFoundException("Resource not found")),
-						responseCounts.get(s.getId())));
+		Set<String> creatorIds = filtered.stream().map(Survey::getCreatorId).filter(id -> id != null && !id.isBlank())
+				.collect(Collectors.toSet());
+
+		Map<String, User> creatorCache = userService.getAll().stream().filter(u -> creatorIds.contains(u.getId()))
+				.collect(Collectors.toMap(User::getId, u -> u, (u1, u2) -> u1));
+
+		return toPaged.toPagedResponse(filtered, comparator, page, size, s -> surveyToDto.toAdminSummaryDto(s,
+				creatorCache.get(s.getCreatorId()), responseCounts.get(s.getId())));
 	}
 
 	@Override
