@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class StubSurveyResponseSnapshotService implements SurveyResponseSnapshotService {
 
-	private StubResponseSnapshotStorage snapshots;
+	private final StubResponseSnapshotStorage snapshots;
 	
 	@Override
 	public Optional<UserResponseStatsSnapshot> add(UserResponseStatsSnapshot snapshot) {
@@ -25,6 +25,7 @@ public class StubSurveyResponseSnapshotService implements SurveyResponseSnapshot
 			return Optional.empty();
 		}
 		snapshot.setRevision("1-stub");
+		snapshots.add(snapshot); 
 		return Optional.of(snapshot);		
 	}
 
@@ -47,5 +48,5 @@ public class StubSurveyResponseSnapshotService implements SurveyResponseSnapshot
 	public List<UserResponseStatsSnapshot> findBySurvey(String surveyId) {
 		return snapshots.findBySurvey(surveyId);
 	}
-
 }
+

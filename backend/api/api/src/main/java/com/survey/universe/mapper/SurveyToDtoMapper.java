@@ -19,6 +19,12 @@ public class SurveyToDtoMapper {
 	private QuestionToDetailsDtoMapper questionToDtoDetails;
 
 	public SurveyDetailsSummaryDto toAdminSummaryDto(Survey survey, User creator, Integer responseCount) {
+		if (creator == null) {
+			return new SurveyDetailsSummaryDto(survey.getId(), survey.getSlugId(), null, null, null, survey.getTitle(),
+					survey.getDescription(), survey.getIcon(), survey.getCategory(), survey.getEstimatedTime(),
+					survey.getPublishedAt(), survey.getClosedAt(), survey.getCreatedAt(), survey.getModifiedAt(),
+					survey.getStatus(), survey.getPassThreshold(), survey.isDeleted(), responseCount);
+		}
 
 		return new SurveyDetailsSummaryDto(survey.getId(), survey.getSlugId(), creator.getId(), creator.getSlugId(),
 				creator.getFirstName() + " " + creator.getLastName(), survey.getTitle(), survey.getDescription(),
@@ -34,9 +40,15 @@ public class SurveyToDtoMapper {
 	}
 
 	public SurveyReadSummaryDto toReadSummaryDto(Survey survey, User creator) {
-		return new SurveyReadSummaryDto(survey.getSlugId(), creator.getSlugId(), survey.getTitle(),
-				survey.getDescription(), survey.getIcon(), survey.getCategory(), survey.getEstimatedTime(),
-				survey.getPublishedAt(), survey.getSurveyType());
+		if (creator == null) {
+			return new SurveyReadSummaryDto(survey.getSlugId(), null, null, survey.getTitle(), survey.getDescription(),
+					survey.getIcon(), survey.getCategory(), survey.getEstimatedTime(), survey.getPublishedAt(),
+					survey.getSurveyType());
+		}
+		return new SurveyReadSummaryDto(survey.getSlugId(), creator.getSlugId(),
+				creator.getFirstName() + " " + creator.getLastName(), survey.getTitle(), survey.getDescription(),
+				survey.getIcon(), survey.getCategory(), survey.getEstimatedTime(), survey.getPublishedAt(),
+				survey.getSurveyType());
 	}
 
 	public SurveyReadResponseDto toReadResponseDto(Survey survey, User creator) {

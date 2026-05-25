@@ -50,7 +50,7 @@ public class StubAuthFacadeService implements UserAuthService {
 				user.getId());
 
 		return userToDto.toAuthDto(accessToken, refreshToken, "Bearer", jwtTokenUtil.getAccessTokenExpirationTime(),
-				user, base64Url.encode(user.getId(), DocType.USER));
+				user, user.getSlugId());
 	}
 
 	@Override
