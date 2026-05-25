@@ -15,7 +15,7 @@ import { ToastModule } from 'primeng/toast';
 import { ROUTES } from '../../shared/models/routes.constants';
 import { MySurveysTab, CreatedSurveyStatus, PrimeIcon } from '../../shared/models/enums';
 import { CompletedSurvey, SurveyStats, CreatedSurvey } from './my-surveys.model';
-import { SURVEY_STATS_MOCK } from './my-surveys.mock';
+import { AggregationApiService } from '../../shared/services/aggregation/aggregation-api.service';
 import {
   MY_SURVEYS_TAB_CONFIG,
   CREATED_STATUS_LABELS,
@@ -37,9 +37,10 @@ import { SurveyCreateRequest, SurveyDetailsSummary, SurveyDetailsResponse } from
 export class MySurveys implements OnInit {
   private usersApi     = inject(UsersApiService);
   private userStore    = inject(UserStoreService);
-  private surveysApi   = inject(SurveysApiService);
-  private router       = inject(Router);
-  private toastService = inject(ToastService);
+  private surveysApi      = inject(SurveysApiService);
+  private aggregationApi  = inject(AggregationApiService);
+  private router          = inject(Router);
+  private toastService    = inject(ToastService);
 
   readonly routes              = ROUTES;
   readonly MySurveysTab        = MySurveysTab;
@@ -50,7 +51,7 @@ export class MySurveys implements OnInit {
 
   // ── Data ──────────────────────────────────────────────────────────────────
   readonly completedSurveys = signal<CompletedSurvey[]>([]);
-  readonly surveyStats      = signal<SurveyStats[]>(SURVEY_STATS_MOCK);
+  readonly surveyStats      = signal<SurveyStats[]>([]);
   readonly createdSurveys   = signal<CreatedSurvey[]>([]);
   readonly savingForm       = signal(false);
 
@@ -83,6 +84,31 @@ export class MySurveys implements OnInit {
 
     this.surveysApi.getMySurveys().subscribe({
       next: (page) => this.createdSurveys.set(page.content.map(s => this._mapSummaryToCreated(s))),
+    });
+
+    this.aggregationApi.getActiveAssessments().subscribe({
+      next: (data) => this.surveyStats.set([
+        ...data.surveys.map(s => ({
+          id:               s.urlId,
+          type:             'survey' as const,
+          title:            s.title,
+          coverImage:       '',
+          category:         s.category,
+          totalRespondents: s.respondents,
+          lastActivityAt:   s.formattedDate,
+          avgScore:         s.avgCompletionRate,
+        })),
+        ...data.tests.map(t => ({
+          id:               t.urlId,
+          type:             'test' as const,
+          title:            t.title,
+          coverImage:       '',
+          category:         t.category,
+          totalRespondents: t.respondents,
+          lastActivityAt:   t.formattedDate,
+          avgScore:         t.avgScore,
+        })),
+      ]),
     });
   }
 
