@@ -27,6 +27,8 @@ public interface SurveyService {
 	public List<Survey> findAllHome();
 
 	public List<Survey> findByStatus(SurveyStatus status);
+	
+	public Optional<Survey> findBySlugId(String slugId);
 
 	public List<Survey> filter(List<SurveyStatus> allowedStatuses, SurveyType surveyType, SurveyStatus status,
 			String creator, String search, String category, Boolean showDeleted, TimeRange timeRange);

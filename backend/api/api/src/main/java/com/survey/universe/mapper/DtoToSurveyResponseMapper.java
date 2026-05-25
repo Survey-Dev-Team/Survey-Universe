@@ -26,6 +26,7 @@ public class DtoToSurveyResponseMapper {
 			return a;
 		}).toList();
 		response.setResponseAnswers(answers);
+		response.setIsComplete(submitDto.isComplete());
 		return response;
 	}
 

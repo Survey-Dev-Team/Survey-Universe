@@ -14,4 +14,6 @@ public interface SurveyResponseService {
 	public Optional<SurveyResponse> findByResponseId(String id);
 
 	public List<SurveyResponse> findAllByRespondentId(String respondentId);
+
+	public List<SurveyResponse> getAll();
 }

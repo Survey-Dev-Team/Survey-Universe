@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.survey.universe.domain.model.User;
+import com.survey.universe.domain.model.survey.Survey;
 
 @Component
 @Profile("test")
@@ -39,9 +40,14 @@ public class StubUserStorage {
 		}
 		return Optional.empty();
 	}
-	
+
 	public List<User> getAll() {
 		return userStorage.values().stream().toList();
+	}
+
+	public Optional<User> findBySlugId(String slugId) {
+		List<User> slugCandidates = userStorage.values().stream().filter(u -> u.getSlugId().equals(slugId)).toList();
+		return slugCandidates.size() == 0 ? Optional.empty() : Optional.of(slugCandidates.getFirst());
 	}
 
 }

@@ -17,5 +17,7 @@ public interface UserService {
 	
 	public List<User> getAll();
 
+	public Optional<User> findBySlugId(String slugId);
+	
 	public List<User> filter(String search, Boolean isDeleted);
 }

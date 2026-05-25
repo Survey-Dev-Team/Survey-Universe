@@ -73,8 +73,15 @@ public class Survey {
     @JsonProperty("creator_id")
     private String creatorId;
     
+    @NotBlank
+    @JsonProperty("slug_id")
+    private String slugId;
+    
     @Valid 
     @JsonProperty("questions")
     private List<Question> questions = new ArrayList<>();
+
+	@JsonProperty("pass_threshold")
+	private Integer passThreshold;
 }
 

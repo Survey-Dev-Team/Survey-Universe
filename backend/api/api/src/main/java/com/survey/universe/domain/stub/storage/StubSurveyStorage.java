@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.survey.universe.domain.constant.SurveyStatus;
 import com.survey.universe.domain.model.survey.Survey;
 
-
 @Service
 @Profile("test")
 public class StubSurveyStorage {
@@ -60,5 +59,10 @@ public class StubSurveyStorage {
 
 	public List<Survey> getAll() {
 		return new ArrayList<>(surveyStorage.values());
+	}
+
+	public Optional<Survey> findBySlugId(String slugId) {
+		List<Survey> slugCandidates = surveyStorage.values().stream().filter(s -> s.getSlugId().equals(slugId)).toList();
+		return slugCandidates.size() == 0 ? Optional.empty() : Optional.of(slugCandidates.getFirst());
 	}
 }

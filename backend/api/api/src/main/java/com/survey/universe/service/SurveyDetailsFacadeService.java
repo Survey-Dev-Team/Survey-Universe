@@ -10,6 +10,7 @@ import com.survey.universe.web.dto.generic.MessageDto;
 import com.survey.universe.web.dto.generic.PagedResponseDto;
 import com.survey.universe.web.dto.generic.RevisionMessageDto;
 import com.survey.universe.web.dto.generic.RevisionRecordDto;
+import com.survey.universe.web.dto.request.survey.AdminSurveyCreateRequestDto;
 import com.survey.universe.web.dto.request.survey.SurveyCreateRequestDto;
 import com.survey.universe.web.dto.request.survey.SurveyDetailsResponseDto;
 import com.survey.universe.web.dto.request.survey.SurveyUpdateRequestDto;
@@ -37,5 +38,7 @@ public interface SurveyDetailsFacadeService {
 	public RevisionMessageDto draftSurvey(String urlId, RevisionRecordDto revision);
 
 	public RevisionMessageDto setHome(String urlId, SurveyHomePatchDto revision);
+
+	public SurveyDetailsResponseDto createSurvey(AdminSurveyCreateRequestDto surveyCreateDto);
 
 }

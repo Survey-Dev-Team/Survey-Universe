@@ -26,6 +26,10 @@ public class StubSurveyResponsesProvider {
 		} catch (IOException e) {
 			throw new RuntimeException("Не вдалося завантажити стіби користувачів", e);
 		}
+		
+		for (SurveyResponse response : stubResponses) {
+			response.setIsComplete(true);
+		}
 	}
 
 	public List<SurveyResponse> getAll() {

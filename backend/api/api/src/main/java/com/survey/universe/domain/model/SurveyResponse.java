@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -33,6 +34,9 @@ public class SurveyResponse {
     
     @JsonProperty("submitted_at")
     private Instant submittedAt;
+    
+    @JsonProperty("is_complete")
+    private Boolean isComplete;
     
     @JsonProperty("response_answers")
     private List<ResponseAnswer> responseAnswers = new ArrayList<>();

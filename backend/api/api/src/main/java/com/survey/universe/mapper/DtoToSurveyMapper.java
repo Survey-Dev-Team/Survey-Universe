@@ -21,10 +21,11 @@ public class DtoToSurveyMapper {
 		Optional.ofNullable(updateDto.isHome()).ifPresent(survey::setHome);
 		Optional.ofNullable(updateDto.questions()).ifPresent(survey::setQuestions);
 		Optional.ofNullable(updateDto.icon()).ifPresent(survey::setIcon);
+		Optional.ofNullable(updateDto.passThreshold()).ifPresent(survey::setPassThreshold);
 	}
 
 	
-	public Survey mapPost(SurveyCreateRequestDto surveyCreateDto, String id, String userId) {
+	public Survey mapPost(SurveyCreateRequestDto surveyCreateDto, String id, String userId, SurveyStatus status) {
 		Survey survey = new Survey();
 
 		survey.setId(id);
@@ -33,12 +34,12 @@ public class DtoToSurveyMapper {
 		survey.setCategory(surveyCreateDto.category());
 		survey.setEstimatedTime(surveyCreateDto.estimatedTime());
 		survey.setHome(false);
-		survey.setStatus(SurveyStatus.DRAFT);
+		survey.setStatus(status);
 		survey.setIcon(surveyCreateDto.icon());
 		survey.setCreatorId(userId);
 		survey.setCreatedAt(Instant.now());
 		survey.setQuestions(surveyCreateDto.questions());
-		
+		survey.setPassThreshold(surveyCreateDto.passThreshold());	
 		return survey;
 	}
 }

@@ -1,7 +1,7 @@
 package com.survey.universe.domain.constant;
 
 public enum DocType {
-	USER("user:"), SURVEY("survey:"), RESPOSNSE("response:");
+	USER("user:"), SURVEY("survey:"), RESPOSNSE("response:"), SNAPSHOT("shapshot");
 
 	private final String prefix;
 

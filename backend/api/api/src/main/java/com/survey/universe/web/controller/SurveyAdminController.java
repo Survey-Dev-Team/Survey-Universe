@@ -26,7 +26,7 @@ import com.survey.universe.web.dto.generic.MessageDto;
 import com.survey.universe.web.dto.generic.PagedResponseDto;
 import com.survey.universe.web.dto.generic.RevisionMessageDto;
 import com.survey.universe.web.dto.generic.RevisionRecordDto;
-import com.survey.universe.web.dto.request.survey.SurveyCreateRequestDto;
+import com.survey.universe.web.dto.request.survey.AdminSurveyCreateRequestDto;
 import com.survey.universe.web.dto.request.survey.SurveyDetailsResponseDto;
 import com.survey.universe.web.dto.request.survey.SurveyUpdateRequestDto;
 
@@ -63,7 +63,7 @@ public class SurveyAdminController {
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<SurveyDetailsResponseDto> createSurvey(
-			@Valid @RequestBody SurveyCreateRequestDto surveyCreateDto) {
+			@Valid @RequestBody AdminSurveyCreateRequestDto surveyCreateDto) {
 		System.out.println("Here");
 		return ResponseEntity.status(HttpStatus.CREATED).body(surveyService.createSurvey(surveyCreateDto));
 	}
