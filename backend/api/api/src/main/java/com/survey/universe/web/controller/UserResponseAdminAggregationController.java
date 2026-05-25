@@ -3,6 +3,7 @@ package com.survey.universe.web.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,11 +24,13 @@ public class UserResponseAdminAggregationController {
 
 	
 	@GetMapping("/summary")
+	@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserTableSummaryDto>> getUsersTableSummary() {
         return ResponseEntity.ok(statsService.getUsersTableSummary());
     }
 
     @GetMapping("/{userId}/report")
+	@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserReportDto> getUserReport(@PathVariable String userId) {
         return ResponseEntity.ok(statsService.getUserActivityReport(userId));
     }
