@@ -1,5 +1,6 @@
 package com.survey.universe.domain.stub.storage;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -29,5 +30,9 @@ public class StubSurveyResponseStorage {
 
 	public List<SurveyResponse> findAllByRedspondentId(String respondentId) {
 		return responseStorage.values().stream().filter(r -> r.getRespondentId().equals(respondentId)).toList();
+	}
+
+	public List<SurveyResponse> getAll() {
+		return new ArrayList<>(responseStorage.values());
 	}
 }

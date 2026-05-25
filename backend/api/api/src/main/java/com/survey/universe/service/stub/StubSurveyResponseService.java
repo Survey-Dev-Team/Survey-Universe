@@ -66,4 +66,9 @@ public class StubSurveyResponseService implements SurveyResponseService {
 		return responseStorage.findAllByRedspondentId(respondentId);
 	}
 
+	@Override
+	public List<SurveyResponse> getAll() {
+		return responseStorage.getAll();
+	}
+
 }
