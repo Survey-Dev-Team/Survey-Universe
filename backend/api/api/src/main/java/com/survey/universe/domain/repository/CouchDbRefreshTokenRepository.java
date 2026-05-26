@@ -77,7 +77,7 @@ public class CouchDbRefreshTokenRepository {
 
             cloudantClient.deleteDocument(options).execute();
         } catch (Exception e) {
-            System.err.println("Помилка видалення токена: " + e.getMessage());
+            System.err.println("Error deleting Token: " + e.getMessage());
         }
     }
 }

@@ -80,7 +80,7 @@ public class CouchDbResponseSnapshotRepository {
                     props.put("_rev", doc.getRev());
                     String json = jacksonMapper.writeValueAsString(props);
                     list.add(jacksonMapper.readValue(json, UserResponseStatsSnapshot.class));
-                } catch (Exception e) { /* skip */ }
+                } catch (Exception e) {  }
             }
             return list;
         } catch (Exception e) {
@@ -98,7 +98,7 @@ public class CouchDbResponseSnapshotRepository {
 
             cloudantClient.deleteDocument(options).execute();
         } catch (Exception e) {
-            System.err.println("Помилка видалення знімка: " + e.getMessage());
+            System.err.println("Error deleting a snapshot: " + e.getMessage());
         }
     }
 }

@@ -53,7 +53,7 @@ public class CouchDbSurveyRepository {
             survey.setRevision(result.getRev());
             return Optional.of(survey);
         } catch (Exception e) {
-            System.err.println("Помилка збереження Survey: " + e.getMessage());
+            System.err.println("Error saving Survey: " + e.getMessage());
             return Optional.empty();
         }
     }
@@ -98,13 +98,13 @@ public class CouchDbSurveyRepository {
                     try {
                         surveys.add(documentToSurvey(row.getDoc()));
                     } catch (Exception e) {
-                        System.err.println("Помилка маппінгу Survey з View: " + e.getMessage());
+                        System.err.println("Error mapping Survey from View: " + e.getMessage());
                     }
                 }
             }
             return surveys;
         } catch (Exception e) {
-            System.err.println("Помилка виконання View " + viewName + ": " + e.getMessage());
+            System.err.println("Error executing View " + viewName + ": " + e.getMessage());
             return Collections.emptyList();
         }
     }
@@ -151,12 +151,12 @@ public class CouchDbSurveyRepository {
                 try {
                     surveys.add(documentToSurvey(doc));
                 } catch (Exception e) {
-                    System.err.println("Помилка маппінгу Survey: " + e.getMessage());
+                    System.err.println("Error mapping Survey: " + e.getMessage());
                 }
             }
             return surveys;
         } catch (Exception e) {
-            System.err.println("Помилка отримання всіх Survey: " + e.getMessage());
+            System.err.println("Error loading all Surveys: " + e.getMessage());
             return Collections.emptyList();
         }
     }

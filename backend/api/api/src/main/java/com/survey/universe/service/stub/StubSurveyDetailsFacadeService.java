@@ -111,8 +111,8 @@ public class StubSurveyDetailsFacadeService implements SurveyDetailsFacadeServic
 			return surveyToDto.toAdminResponseDto(savedSurvey, creator, responseCount);
 
 		} catch (Exception e) {
-			System.err.println("--- КРИТИЧНИЙ ЗБІЙ ПРИ СТВОРЕННІ ОПИТУВАННЯ ---");
-			System.err.println("Причина: " + e.getMessage());
+			System.err.println("--- Error saving a Survey ---");
+			System.err.println("Reason: " + e.getMessage());
 			e.printStackTrace();
 			System.err.println("----------------------------------------------");
 

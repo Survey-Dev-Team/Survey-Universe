@@ -75,8 +75,8 @@ public class UserAggregationService {
 					completionRate = ((double) completedCount / respondentCount) * 100;
 				}
 
-				surveyCards.add(new ActiveSurveyCardDto(item.getSlugId(), item.getTitle(), categoryText, formattedDate,
-						respondentCount, Math.round(completionRate * 10.0) / 10.0));
+				surveyCards.add(new ActiveSurveyCardDto(item.getSlugId(), item.getIcon(), item.getTitle(), categoryText,
+						formattedDate, respondentCount, Math.round(completionRate * 10.0) / 10.0));
 
 			} else {
 
@@ -92,8 +92,8 @@ public class UserAggregationService {
 
 				double avgScore = completedCount > 0 ? (totalScoreSum / completedCount) : 0.0;
 
-				testCards.add(new ActiveTestCardDto(item.getSlugId(), item.getTitle(), categoryText, formattedDate,
-						respondentCount, Math.round(avgScore * 10.0) / 10.0));
+				testCards.add(new ActiveTestCardDto(item.getSlugId(), item.getIcon(), item.getTitle(), categoryText,
+						formattedDate, respondentCount, Math.round(avgScore * 10.0) / 10.0));
 			}
 		}
 
@@ -157,8 +157,8 @@ public class UserAggregationService {
 						}
 					}
 
-					return new UserCompletedTestCardDto(survey.getSlugId(), survey.getTitle(), categoryText,
-							formattedDate, Math.round(userResult * 10.0) / 10.0, passStatus);
+					return new UserCompletedTestCardDto(survey.getSlugId(), survey.getIcon(), survey.getTitle(),
+							categoryText, formattedDate, Math.round(userResult * 10.0) / 10.0, passStatus);
 				}).filter(Objects::nonNull).toList();
 
 		return completedAssessments;
@@ -204,8 +204,8 @@ public class UserAggregationService {
 						calculatedMetric = completedCount > 0 ? (scoreSum / completedCount) : 0.0;
 					}
 
-					return new UserCreatedSurveyCardDto(survey.getSlugId(), survey.getTitle(), categoryText,
-							formattedDate, totalRespondents, Math.round(calculatedMetric * 10.0) / 10.0);
+					return new UserCreatedSurveyCardDto(survey.getSlugId(), survey.getIcon(), survey.getTitle(),
+							categoryText, formattedDate, totalRespondents, Math.round(calculatedMetric * 10.0) / 10.0);
 				}).toList();
 		return createdSurveys;
 
@@ -254,9 +254,9 @@ public class UserAggregationService {
 			displayMetric = completedResponsesCount > 0 ? (scoreSum / completedResponsesCount) : 0.0;
 		}
 
-		return new ActiveAssessmentCardDto(survey.getSlugId(), survey.getTitle(), typeText, categoryText,
-				totalRespondents, completedCount, Math.round(displayMetric * 10.0) / 10.0, lastActivityDate,
-				survey.getStatus() != null ? survey.getStatus().name() : "UNKNOWN");
+		return new ActiveAssessmentCardDto(survey.getSlugId(), survey.getIcon(), survey.getTitle(), typeText,
+				categoryText, totalRespondents, completedCount, Math.round(displayMetric * 10.0) / 10.0,
+				lastActivityDate, survey.getStatus() != null ? survey.getStatus().name() : "UNKNOWN");
 	}
 
 }

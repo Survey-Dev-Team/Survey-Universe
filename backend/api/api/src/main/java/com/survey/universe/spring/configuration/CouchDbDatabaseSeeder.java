@@ -75,7 +75,7 @@ public class CouchDbDatabaseSeeder implements CommandLineRunner {
             Response<List<DocumentResult>> response = cloudantClient.postBulkDocs(bulkOptions).execute();
             
             if (response.getStatusCode() == 201) {
-                System.out.println("CouchDB: Seeding duccess: " + couchDocuments.size() + " ducuments in 'survey-universe'.");
+                System.out.println("CouchDB: Seeding success: " + couchDocuments.size() + " ducuments in 'survey-universe'.");
             } else {
                 System.err.println("CouchDB: Seeding error. HTTP: " + response.getStatusCode());
             }

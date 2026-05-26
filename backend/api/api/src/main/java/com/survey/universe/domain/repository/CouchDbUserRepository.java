@@ -102,7 +102,7 @@ public class CouchDbUserRepository {
 				try {
 					users.add(mapDocumentToUser(doc));
 				} catch (Exception e) {
-					System.err.println("Помилка маппінгу User: " + e.getMessage());
+					System.err.println("Error mapping User: " + e.getMessage());
 				}
 			}
 			return users;

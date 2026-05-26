@@ -89,8 +89,8 @@ public class StubSurveyResponseFacadeService implements SurveyResponseFacadeServ
             return new MessageDto("Current answers have been saved");
 
         } catch (Exception e) {
-            System.err.println("--- КРИТИЧНИЙ ЗБІЙ ПРИ ПОДАННІ ВІДПОВІДІ ---");
-            System.err.println("Причина помилки: " + e.getMessage());
+            System.err.println("--- Error saving a Response ---");
+            System.err.println("Reason: " + e.getMessage());
             e.printStackTrace(); 
             System.err.println("-------------------------------------------");
             

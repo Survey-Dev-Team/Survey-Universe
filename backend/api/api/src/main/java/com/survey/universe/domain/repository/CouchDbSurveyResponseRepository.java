@@ -51,7 +51,7 @@ public class CouchDbSurveyResponseRepository {
             response.setRevision(result.getRev());
             return Optional.of(response);
         } catch (Exception e) {
-            System.err.println("CouchDB Репозиторій: Помилка виклику save() для відповіді: " + e.getMessage());
+            System.err.println("Error saving Responses: " + e.getMessage());
             return Optional.empty();
         }
     }
@@ -104,12 +104,12 @@ public class CouchDbSurveyResponseRepository {
                 try {
                     list.add(mapDocumentToResponse(doc));
                 } catch (Exception mapEx) {
-                    System.err.println("CouchDB Репозиторій: Помилка конвертації рядка відповіді: " + mapEx.getMessage());
+                    System.err.println("Error converting responses: " + mapEx.getMessage());
                 }
             }
             return list;
         } catch (Exception e) {
-            System.err.println("CouchDB Репозиторій: Помилка Mango-пошуку для " + fieldName + ": " + e.getMessage());
+            System.err.println("Error in MangoQuery: " + fieldName + ": " + e.getMessage());
             return Collections.emptyList();
         }
     }
@@ -138,7 +138,7 @@ public class CouchDbSurveyResponseRepository {
             }
             return list;
         } catch (Exception e) {
-            System.err.println("CouchDB Репозиторій: Помилка завантаження всіх відповідей: " + e.getMessage());
+            System.err.println("Error in loading all Responses: " + e.getMessage());
             return Collections.emptyList();
         }
     }
@@ -173,7 +173,7 @@ public class CouchDbSurveyResponseRepository {
             }
             return list;
         } catch (Exception e) {
-            System.err.println("CouchDB Помилка пошуку пари survey+respondent: " + e.getMessage());
+            System.err.println("Error searching by survey+respondent: " + e.getMessage());
             return Collections.emptyList();
         }
     }
