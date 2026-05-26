@@ -38,6 +38,12 @@
                 </span>
               }
             </div>
+            @if (statusLabel()) {
+              <span class="gt-survey-card__status" [class]="'gt-survey-card__status--' + statusClass()">
+                @if (statusIcon()) { <i [class]="statusIcon()"></i> }
+                {{ statusLabel() }}
+              </span>
+            }
           </div>
         </div>
 

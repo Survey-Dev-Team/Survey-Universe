@@ -39,7 +39,7 @@ export function mapSurveyToCard(survey: SurveyReadSummary, index: number): Surve
     coverImage: survey.icon || CARD_IMAGES[index % CARD_IMAGES.length],
     category,
     surveyType: survey.surveyType,
-    author: CREATOR_NAMES[survey.creatorUrlId] ?? 'Survey Universe',
+    author: survey.creatorName || CREATOR_NAMES[survey.creatorUrlId] || 'Survey Universe',
     date: formatted,
     estimatedTime: survey.estimatedTime ?? null,
     status: isActive ? StatStatus.Active : StatStatus.Passed,

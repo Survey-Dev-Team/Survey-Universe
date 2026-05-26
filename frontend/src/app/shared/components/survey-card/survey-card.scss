@@ -286,8 +286,11 @@
     font-weight: 600;
     align-self: flex-start;
 
-    &--draft     { background: #f1f5f9; color: #1e293b; }
-    &--pending   { background: #fef3c7; color: #92400e; }
-    &--published { background: #d1fae5; color: #064e3b; }
+    &--draft     { background: var(--sf-brand-alpha-28);         color: var(--secondary-color); }
+    &--pending   { background: var(--sf-status-warning-bg);      color: var(--sf-status-warning-text); }
+    &--published { background: var(--sf-status-active-bg);       color: var(--sf-status-active-text); }
+    &--closed    { background: var(--sf-status-danger-bg);       color: var(--sf-status-danger-text); }
+    &--active    { background: var(--sf-status-new-bg);          color: var(--sf-status-new-text); }
+    &--passed    { background: var(--sf-status-completed-bg);    color: var(--sf-status-completed-text); }
   }
 }

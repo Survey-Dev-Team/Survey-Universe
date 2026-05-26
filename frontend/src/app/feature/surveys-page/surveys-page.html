@@ -57,6 +57,8 @@
                   [surveyType]="survey.surveyType"
                   [author]="survey.author"
                   [estimatedTime]="survey.estimatedTime"
+                  [statusLabel]="survey.status || ''"
+                  [statusClass]="survey.status?.toLowerCase() || ''"
                 />
               </a>
             }
