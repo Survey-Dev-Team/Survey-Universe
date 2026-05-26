@@ -2325,5 +2325,29 @@
       }
     ],
     "pass_threshold": null
+  },
+  {
+    "_id": "token:019e6229-b139-77c9-9d64-4c2497d4e396",
+    "_rev": "1-23c2730fd5e8cdc87c17f19ce159399a",
+    "root_type": "refresh_token",
+    "user_id": "user:019e61b5-9ea4-787d-bd12-7dca9c67c078",
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiUkVGUkVTSCIsInN1YiI6Im5ld1Rlc3RVc2VyQG5ld1Rlc3RVc2VyLmNvbSIsImlhdCI6MTc3OTc2MzM2MCwiZXhwIjoxNzgwMzY4MTYwfQ.m-c7YlWbUg0o-JdX2k9MWAQK_w9fo5EL19ub-AJM_NM",
+    "expiry_date": 1780368160.0574367
+  },
+  {
+    "_id": "token:019e622f-ae8f-7688-80af-c5955bca3fd1",
+    "_rev": "1-160f34ea83e2c2a628ee6e3dc3ccdcb7",
+    "root_type": "refresh_token",
+    "user_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiUkVGUkVTSCIsInN1YiI6ImhhamFtYWcyNTdAbG9oaW5qYS5jb20iLCJpYXQiOjE3Nzk3NjM3NTIsImV4cCI6MTc4MDM2ODU1Mn0.OKvk8uXPNBqWI7U5FXuvfeBo8HptBLxBtoJSODZE6ps",
+    "expiry_date": 1780368552.591386
+  },
+  {
+    "_id": "token:019e622f-ae92-748f-84c4-0a4e8a099968",
+    "_rev": "1-effef69d743def070c37fc381d0915b6",
+    "root_type": "refresh_token",
+    "user_id": "user:019de942-9929-7fe2-a364-530aba65d8d8",
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiUkVGUkVTSCIsInN1YiI6ImhhamFtYWcyNTdAbG9oaW5qYS5jb20iLCJpYXQiOjE3Nzk3NjM3NTIsImV4cCI6MTc4MDM2ODU1Mn0.OKvk8uXPNBqWI7U5FXuvfeBo8HptBLxBtoJSODZE6ps",
+    "expiry_date": 1780368552.594277
   }
 ]
