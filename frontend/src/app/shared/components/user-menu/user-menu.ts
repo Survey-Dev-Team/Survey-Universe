@@ -6,7 +6,7 @@ import {
   signal,
   computed,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service/auth-service';
 import { UserStoreService } from '../../services/user-store-service/user-store-service';
 import { ROUTES } from '../../models/routes.constants';
@@ -22,6 +22,7 @@ export class UserMenu {
   private readonly authService = inject(AuthService);
   private readonly userStore = inject(UserStoreService);
   private readonly elRef = inject(ElementRef);
+  private readonly router = inject(Router);
 
   readonly routes = ROUTES;
   readonly isOpen = signal(false);
@@ -46,5 +47,6 @@ export class UserMenu {
   logout(): void {
     this.close();
     this.authService.logout();
+    this.router.navigate([`/${this.routes.MAIN_PAGE}`]);
   }
 }

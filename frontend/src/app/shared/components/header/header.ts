@@ -76,6 +76,6 @@ export class Header {
   logout(): void {
     this.authService.logout();
     this.closeMobileMenu();
-    this.router.navigate([`/${ROUTES.LOGIN}`]);
+    this.router.navigate([`/${ROUTES.MAIN_PAGE}`]);
   }
 }

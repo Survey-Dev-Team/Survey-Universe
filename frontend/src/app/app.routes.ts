@@ -31,7 +31,7 @@ export const routes: Routes = [
 	},
 	{
 		path: ROUTES.USER_PROFILE,
-		//canActivate: [authorizedGuard],
+		canActivate: [authorizedGuard],
 		loadComponent: () =>
 			import('./feature/user-profile/user-profile').then((m) => m.UserProfile),
 	},
@@ -58,25 +58,25 @@ export const routes: Routes = [
 	},
 	{
 		path: ROUTES.STATISTICS,
-		//canActivate: [adminGuard],
+		canActivate: [adminGuard],
 		loadComponent: () =>
 			import('./feature/admin-stats/admin-stats').then((m) => m.AdminStats),
 	},
 	{
 		path: ROUTES.ADMIN_USERS,
-		//canActivate: [adminGuard],
+		canActivate: [adminGuard],
 		loadComponent: () =>
 			import('./feature/admin-users/admin-users').then((m) => m.AdminUsers),
 	},
 	{
 		path: ROUTES.ADMIN_SURVEYS,
-		///canActivate: [adminGuard],
+		canActivate: [adminGuard],
 		loadComponent: () =>
 			import('./feature/admin-surveys/admin-surveys').then((m) => m.AdminSurveys),
 	},
 	{
 		path: ROUTES.USER_SURVEYS,
-		//
+		canActivate: [authorizedGuard],
 		loadComponent: () =>
 			import('./feature/my-surveys/my-surveys').then((m) => m.MySurveys),
 	},
