@@ -19,8 +19,8 @@ import { SurveyElement } from '../../models/survey.models';
 export class SurveySpaceElement implements ControlValueAccessor {
   readonly element = signal<SurveyElement | null>(null);
 
-  private _onChange: (val: SurveyElement) => void = () => {};
-  private _onTouched: () => void = () => {};
+  protected _onChange: (val: SurveyElement) => void = () => {};
+  protected _onTouched: () => void = () => {};
 
   writeValue(val: SurveyElement): void {
     this.element.set(val ?? null);

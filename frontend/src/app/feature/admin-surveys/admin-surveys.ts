@@ -193,6 +193,14 @@ export class AdminSurveys implements OnInit {
   }
 
   onFormSave(payload: SurveyCreateRequest): void {
+    this._doSave(payload, 'published');
+  }
+
+  onFormDraft(payload: SurveyCreateRequest): void {
+    this._doSave(payload, 'draft');
+  }
+
+  private _doSave(payload: SurveyCreateRequest, status: 'published' | 'draft'): void {
     this.savingForm.set(true);
     if (this.formMode() === 'edit' && this.editingSurveyId() && this._editingRevision) {
       const urlId = this.editingSurveyId()!;
@@ -207,14 +215,10 @@ export class AdminSurveys implements OnInit {
       );
     } else {
       this.adminService.createAdminSurvey(
-        payload as SurveyCreateRequestDto,
+        { ...(payload as SurveyCreateRequestDto), status },
         () => { this.savingForm.set(false); this.closeForm(); },
         () => { this.savingForm.set(false); },
       );
     }
-  }
-
-  onFormDraft(payload: SurveyCreateRequest): void {
-    this.onFormSave(payload);
   }
 }

@@ -57,7 +57,7 @@ export class SurveyDetail implements OnInit {
           questionsCount: surveyData.questions.length,
           estimatedTime:  s.estimatedTime ? `${s.estimatedTime} min` : '—',
           activeUntil:    'Anonymous survey',
-          author:         '—',
+          author:         s.creatorName || '—',
           authorAvatar:   '',
           participants:   stats.totalResponses,
         });

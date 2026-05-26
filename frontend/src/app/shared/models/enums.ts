@@ -135,7 +135,20 @@ export enum StatsLabel {
   // ── KPI my-surveys ─────────────────────────────────────────
   SurveysCompleted  = 'Surveys Completed',
   AvgCompletionRate = 'Avg Completion Rate',
-}
+  // ── KPI users ───────────────────────────────────────────
+  TotalUsers    = 'Total users',
+  AdminUsers    = 'Admins',
+  AvgSurveys    = 'Avg surveys created',
+  AvgTests      = 'Avg tests taken',
+
+  // ── Column headers users ────────────────────────────────
+  Name          = 'Name',
+  Email         = 'Email',
+  Role          = 'Role',
+  SurveysCount  = 'Surveys',
+  TestsCount    = 'Tests',
+  Joined        = 'Joined',
+  LastSession   = 'Last session',}
 
 // ── Table Fields ───────────────────────────────────────────
 

@@ -93,6 +93,7 @@ export interface SurveyCreateRequestDto {
   estimatedTime?: number;
   icon?:         string;
   questions:     SurveyQuestionDto[];
+  status?:       'published' | 'draft';
 }
 
 export interface SurveyUpdateRequestDto {

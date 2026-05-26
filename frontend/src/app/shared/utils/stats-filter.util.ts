@@ -1,5 +1,18 @@
 import { TimeRange } from '../models/enums';
 
+const MONTH_ORDER = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+export function filterMonthlyByRange<T extends { month: string }>(items: T[], range: TimeRange): T[] {
+  if (range === TimeRange.All || range === TimeRange.Y1) return items;
+  const n = range === TimeRange.M3 ? 3 : 6;
+  const currentIdx = new Date().getMonth();
+  const included = new Set<string>();
+  for (let i = n - 1; i >= 0; i--) {
+    included.add(MONTH_ORDER[(currentIdx - i + 12) % 12]);
+  }
+  return items.filter(m => included.has(m.month));
+}
+
 export function calcCutoff(range: TimeRange): Date | null {
   const now = new Date();
   switch (range) {

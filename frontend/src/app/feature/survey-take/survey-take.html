@@ -39,7 +39,21 @@
       } @else {
       <div class="gt-survey-take__form">
 
-        @for (q of questions(); track q.id) {
+        @if (totalPages() > 1) {
+          <div class="gt-survey-take__page-info">
+            <span>Page {{ currentPage() + 1 }} of {{ totalPages() }}</span>
+            <div class="gt-survey-take__page-dots">
+              @for (p of pages(); track $index) {
+                <span
+                  class="gt-survey-take__page-dot"
+                  [class.gt-survey-take__page-dot--active]="$index === currentPage()"
+                ></span>
+              }
+            </div>
+          </div>
+        }
+
+        @for (q of currentPageQuestions(); track q.id) {
 
           <!-- title -->
           @if (q.type === 'title') {
@@ -63,11 +77,6 @@
           <!-- space -->
           @else if (q.type === 'space') {
             <div class="gt-survey-take__q-space"></div>
-          }
-
-          <!-- page_break -->
-          @else if (q.type === 'page_break') {
-            <hr class="gt-survey-take__q-break" />
           }
 
           <!-- radio_button -->
@@ -179,18 +188,37 @@
         }
 
         <div class="gt-survey-take__actions">
-          <button
-            class="button button--primary gt-survey-take__submit"
-            type="button"
-            [disabled]="isSubmitting()"
-            (click)="submit()"
-          >
-            @if (isSubmitting()) {
-              <i class="pi pi-spin pi-spinner"></i>
-            } @else {
-              Submit
-            }
-          </button>
+          @if (!isFirstPage()) {
+            <button
+              class="button button--secondary gt-survey-take__prev"
+              type="button"
+              (click)="prevPage()"
+            >
+              <i class="pi pi-arrow-left"></i> Previous
+            </button>
+          }
+          @if (!isLastPage()) {
+            <button
+              class="button button--primary gt-survey-take__next"
+              type="button"
+              (click)="nextPage()"
+            >
+              Next <i class="pi pi-arrow-right"></i>
+            </button>
+          } @else {
+            <button
+              class="button button--primary gt-survey-take__submit"
+              type="button"
+              [disabled]="isSubmitting()"
+              (click)="submit()"
+            >
+              @if (isSubmitting()) {
+                <i class="pi pi-spin pi-spinner"></i>
+              } @else {
+                Submit
+              }
+            </button>
+          }
         </div>
 
         </div>

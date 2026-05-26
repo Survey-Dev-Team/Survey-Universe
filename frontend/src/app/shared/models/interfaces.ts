@@ -100,6 +100,7 @@ export type SurveyTimeRange = 'today' | 'week' | 'month';
 export interface SurveyReadSummary {
   urlId: string;
   creatorUrlId: string;
+  creatorName?: string;
   title: string;
   description: string;
   icon: string;

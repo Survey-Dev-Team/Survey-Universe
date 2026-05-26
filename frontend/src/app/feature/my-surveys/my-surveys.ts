@@ -17,6 +17,10 @@ import { MySurveysTab, CreatedSurveyStatus, PrimeIcon } from '../../shared/model
 import { CompletedSurvey, SurveyStats, CreatedSurvey } from './my-surveys.model';
 import { AggregationApiService } from '../../shared/services/aggregation/aggregation-api.service';
 import {
+  UserCompletedTestCardDto,
+  ActiveAssessmentCardDto,
+} from '../../shared/models/api/aggregation-api.models';
+import {
   MY_SURVEYS_TAB_CONFIG,
   CREATED_STATUS_LABELS,
 } from './my-surveys.config';
@@ -51,6 +55,7 @@ export class MySurveys implements OnInit {
 
   // ── Data ──────────────────────────────────────────────────────────────────
   readonly completedSurveys = signal<CompletedSurvey[]>([]);
+  readonly completedTests   = signal<UserCompletedTestCardDto[]>([]);
   readonly surveyStats      = signal<SurveyStats[]>([]);
   readonly createdSurveys   = signal<CreatedSurvey[]>([]);
   readonly savingForm       = signal(false);
@@ -86,29 +91,21 @@ export class MySurveys implements OnInit {
       next: (page) => this.createdSurveys.set(page.content.map(s => this._mapSummaryToCreated(s))),
     });
 
-    this.aggregationApi.getActiveAssessments().subscribe({
-      next: (data) => this.surveyStats.set([
-        ...data.surveys.map(s => ({
-          id:               s.urlId,
-          type:             'survey' as const,
-          title:            s.title,
-          coverImage:       '',
-          category:         s.category,
-          totalRespondents: s.respondents,
-          lastActivityAt:   s.formattedDate,
-          avgScore:         s.avgCompletionRate,
-        })),
-        ...data.tests.map(t => ({
-          id:               t.urlId,
-          type:             'test' as const,
-          title:            t.title,
-          coverImage:       '',
-          category:         t.category,
-          totalRespondents: t.respondents,
-          lastActivityAt:   t.formattedDate,
-          avgScore:         t.avgScore,
-        })),
-      ]),
+    this.aggregationApi.getMyCreatedSurveys().subscribe({
+      next: (data) => this.surveyStats.set(data.map(s => ({
+        id:               s.urlId,
+        type:             'survey' as const,
+        title:            s.title,
+        coverImage:       '',
+        category:         s.category,
+        totalRespondents: s.totalRespondents,
+        lastActivityAt:   s.formattedDate,
+        avgScore:         s.avgMetrics,
+      }))),
+    });
+
+    this.aggregationApi.getCompletedTests().subscribe({
+      next: (data) => this.completedTests.set(data),
     });
   }
 

@@ -42,13 +42,13 @@
     position: fixed;
     top: 0;
     right: 0;
-    bottom: 0;
-    width: min(860px, 95vw);
-    background: var(--background-color);
+    width: 100vw;
+    height: 100dvh;
+    background: var(--basic-white);
     z-index: 101;
     display: flex;
     flex-direction: column;
-    box-shadow: -8px 0 40px var(--overlay-black-35);
+    overflow: hidden;
     animation: slideInRight 0.55s cubic-bezier(0.4, 0, 0.2, 1) both;
 
     &--closing {
@@ -63,7 +63,6 @@
     padding: $space-20 $space-24;
     border-bottom: 1px solid var(--border-color);
     flex-shrink: 0;
-    background: var(--basic-white);
   }
 
   &__form-title {

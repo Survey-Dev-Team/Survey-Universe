@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
@@ -36,6 +36,52 @@ export class SurveyTake implements OnInit {
   readonly summary           = signal<SurveyReadSummary | null>(null);
   readonly questions         = signal<QuestionBase[]>([]);
   readonly answers           = signal<Map<string, AnswerSubmit>>(new Map());
+
+  // ── Pagination ──────────────────────────────────────────────────────────────
+  readonly currentPage = signal(0);
+
+  readonly pages = computed(() => {
+    const result: QuestionBase[][] = [];
+    let current: QuestionBase[] = [];
+    for (const q of this.questions()) {
+      if (q.type === 'page_break') {
+        result.push(current);
+        current = [];
+      } else {
+        current.push(q);
+      }
+    }
+    result.push(current);
+    return result.filter(p => p.length > 0);
+  });
+
+  readonly currentPageQuestions = computed(() => this.pages()[this.currentPage()] ?? []);
+  readonly totalPages            = computed(() => this.pages().length);
+  readonly isFirstPage           = computed(() => this.currentPage() === 0);
+  readonly isLastPage            = computed(() => this.currentPage() === this.totalPages() - 1);
+
+  nextPage(): void {
+    const unanswered = this.currentPageQuestions().filter(q => {
+      if (!q.is_required || NON_ANSWER_TYPES.has(q.type)) return false;
+      const ans = this.answers().get(q.id);
+      if (!ans) return true;
+      if (q.type === 'radio_button' || q.type === 'checkbox') return (ans.options ?? []).length === 0;
+      return !ans.value?.trim();
+    });
+
+    if (unanswered.length > 0) {
+      this.toast.showToast({ severity: 'warn', message: 'Required fields', detail: 'Please answer all required questions on this page.', life: 4000 });
+      return;
+    }
+
+    this.currentPage.update(p => p + 1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  prevPage(): void {
+    this.currentPage.update(p => p - 1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id') ?? '';
