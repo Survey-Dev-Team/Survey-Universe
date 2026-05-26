@@ -13,7 +13,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.*;
 
-
 @Repository
 @AllArgsConstructor
 public class CouchDbSurveyResponseRepository {
@@ -23,17 +22,19 @@ public class CouchDbSurveyResponseRepository {
 
     private static final String DB_NAME = "survey-universe";
 
-    private SurveyResponse documentToResponse(Document doc) throws Exception {
-        Map<String, Object> props = new java.util.HashMap<>(doc.getProperties() != null ? doc.getProperties() : Map.of());
-        props.put("_id", doc.getId());
-        props.put("_rev", doc.getRev());
-        String json = jacksonMapper.writeValueAsString(props);
-        return jacksonMapper.readValue(json, SurveyResponse.class);
+    private SurveyResponse mapDocumentToResponse(Document doc) {
+        Map<String, Object> properties = doc.getProperties();
+        Map<String, Object> map = new HashMap<>(properties != null ? properties : Map.of());
+        
+        map.put("_id", doc.getId());
+        map.put("_rev", doc.getRev());
+        
+        return jacksonMapper.convertValue(map, SurveyResponse.class);
     }
 
     public Optional<SurveyResponse> save(SurveyResponse response) {
         try {
-            response.setRootType("response"); 
+            response.setRootType("response");
             byte[] jsonBytes = jacksonMapper.writeValueAsBytes(response);
             InputStream inputStream = new ByteArrayInputStream(jsonBytes);
 
@@ -45,10 +46,12 @@ public class CouchDbSurveyResponseRepository {
                     .build();
 
             DocumentResult result = cloudantClient.putDocument(options).execute().getResult();
+            
             response.setId(result.getId());
             response.setRevision(result.getRev());
             return Optional.of(response);
         } catch (Exception e) {
+            System.err.println("CouchDB Репозиторій: Помилка виклику save() для відповіді: " + e.getMessage());
             return Optional.empty();
         }
     }
@@ -62,14 +65,19 @@ public class CouchDbSurveyResponseRepository {
 
             Response<InputStream> responseStream = cloudantClient.getDocumentAsStream(options).execute();
             InputStream body = responseStream.getResult();
+            
             if (body == null) return Optional.empty();
 
             SurveyResponse resp = jacksonMapper.readValue(body, SurveyResponse.class);
+            
             return "response".equals(resp.getRootType()) ? Optional.of(resp) : Optional.empty();
+        } catch (com.ibm.cloud.sdk.core.service.exception.NotFoundException e) {
+            return Optional.empty();
         } catch (Exception e) {
             return Optional.empty();
         }
     }
+
 
     public List<SurveyResponse> findAllByField(String fieldName, Object value) {
         try {
@@ -81,26 +89,36 @@ public class CouchDbSurveyResponseRepository {
             PostFindOptions options = new PostFindOptions.Builder()
                     .db(DB_NAME)
                     .selector(selector)
-                    .limit(5000L)
+                    .limit(5000L) 
                     .build();
 
             FindResult result = cloudantClient.postFind(options).execute().getResult();
             List<Document> docs = result.getDocs();
-            if (docs == null) return Collections.emptyList();
+
+            if (docs == null || docs.isEmpty()) {
+                return Collections.emptyList();
+            }
 
             List<SurveyResponse> list = new ArrayList<>();
             for (Document doc : docs) {
-                try { list.add(documentToResponse(doc)); } catch (Exception e) { /* skip */ }
+                try {
+                    list.add(mapDocumentToResponse(doc));
+                } catch (Exception mapEx) {
+                    System.err.println("CouchDB Репозиторій: Помилка конвертації рядка відповіді: " + mapEx.getMessage());
+                }
             }
             return list;
         } catch (Exception e) {
+            System.err.println("CouchDB Репозиторій: Помилка Mango-пошуку для " + fieldName + ": " + e.getMessage());
             return Collections.emptyList();
         }
     }
 
+   
     public List<SurveyResponse> getAll() {
         try {
             Map<String, Object> selector = Map.of("root_type", "response");
+            
             PostFindOptions options = new PostFindOptions.Builder()
                     .db(DB_NAME)
                     .selector(selector)
@@ -113,11 +131,51 @@ public class CouchDbSurveyResponseRepository {
 
             List<SurveyResponse> list = new ArrayList<>();
             for (Document doc : docs) {
-                try { list.add(documentToResponse(doc)); } catch (Exception e) { /* skip */ }
+                try {
+                    list.add(mapDocumentToResponse(doc));
+                } catch (Exception mapEx) {
+                }
             }
             return list;
         } catch (Exception e) {
+            System.err.println("CouchDB Репозиторій: Помилка завантаження всіх відповідей: " + e.getMessage());
             return Collections.emptyList();
         }
     }
+    
+    public List<SurveyResponse> findBySurveyAndRespondent(String surveyId, String respondentId) {
+        try {
+            Map<String, Object> selector = Map.of(
+                    "root_type", "response",
+                    "survey_id", surveyId,
+                    "respondent_id", respondentId
+            );
+            
+            PostFindOptions options = new PostFindOptions.Builder()
+                    .db("survey-universe")
+                    .selector(selector)
+                    .limit(10L)
+                    .build();
+
+            FindResult result = cloudantClient.postFind(options).execute().getResult();
+            List<Document> docs = result.getDocs();
+
+            if (docs == null || docs.isEmpty()) {
+                return Collections.emptyList();
+            }
+
+            List<SurveyResponse> list = new ArrayList<>();
+            for (Document doc : docs) {
+                Map<String, Object> map = new HashMap<>(doc.getProperties() != null ? doc.getProperties() : Map.of());
+                map.put("_id", doc.getId());
+                map.put("_rev", doc.getRev());
+                list.add(jacksonMapper.convertValue(map, SurveyResponse.class));
+            }
+            return list;
+        } catch (Exception e) {
+            System.err.println("CouchDB Помилка пошуку пари survey+respondent: " + e.getMessage());
+            return Collections.emptyList();
+        }
+    }
+
 }

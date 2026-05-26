@@ -52,13 +52,18 @@ public class StubAuthFacadeService implements UserAuthService {
 
 	@Override
 	public UserRegisterResponseDto registerUser(UserRegisterRequestDto registerDto) {
+		if (userService.findByEmail(registerDto.email()).isPresent()) {
+			throw new InternalConflictException("User with this email already exists.");
+		}
+
 		String generatedId = "user:" + uuidGenerator.generateUUIDv7();
 
 		User user = dtoToUser.toRegisteredUser(generatedId, passwordEncoder.encode(registerDto.password()),
 				registerDto);
+		user.setRootType("user");
 
-		userService.add(user).orElseThrow(() -> new InternalConflictException(
-				"User with these primary credentials already exists or could not be registered at the time, please try again"));
+		userService.add(user)
+				.orElseThrow(() -> new InternalConflictException("Could not register user due to a system conflict."));
 
 		return userToDto.toRegisterDto(user);
 	}
@@ -69,7 +74,7 @@ public class StubAuthFacadeService implements UserAuthService {
 				.orElseThrow(() -> new InvalidCredentialsException("Invalid login credentials"));
 
 		if (userFromIndex.isDeleted()) {
-			throw new UnauthorizedException("User unauthorized to perform this action");
+			throw new UnauthorizedException("User account is deleted.");
 		}
 
 		if (!passwordEncoder.matches(loginDto.password(), userFromIndex.getPassword())) {
@@ -81,7 +86,7 @@ public class StubAuthFacadeService implements UserAuthService {
 
 		freshDbUser.setLastSession(Instant.now());
 		User updatedUser = userService.update(freshDbUser)
-				.orElseThrow(() -> new InternalConflictException("Internal error while logging in, try again later"));
+				.orElseThrow(() -> new InternalConflictException("Error updating user session."));
 
 		return authorize(updatedUser);
 	}
@@ -95,16 +100,15 @@ public class StubAuthFacadeService implements UserAuthService {
 		}
 
 		String email = jwtTokenUtil.getEmail(refreshToken);
-
 		User userFromIndex = userService.findByEmail(email)
 				.orElseThrow(() -> new InvalidCredentialsException("User not found"));
 
 		if (userFromIndex.isDeleted()) {
-			throw new UnauthorizedException("User unauthorized to perform this action");
+			throw new UnauthorizedException("User account is deleted.");
 		}
 
-		RefreshToken oldRefreshToken = refreshTokens.findByToken(refreshToken).orElseThrow(
-				() -> new InvalidCredentialsException("Refresh token does not exist for the user or is expired"));
+		RefreshToken oldRefreshToken = refreshTokens.findByToken(refreshToken)
+				.orElseThrow(() -> new InvalidCredentialsException("Refresh token does not exist or is expired"));
 		refreshTokens.delete(oldRefreshToken);
 
 		User freshDbUser = userService.findById(userFromIndex.getId())

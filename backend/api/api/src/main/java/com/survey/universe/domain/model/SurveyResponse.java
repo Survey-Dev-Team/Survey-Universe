@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.NotBlank;
@@ -18,6 +19,7 @@ public class SurveyResponse {
     private String id;
 
     @JsonProperty("_rev")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY) 
     private String revision;
 
     @JsonProperty("root_type")

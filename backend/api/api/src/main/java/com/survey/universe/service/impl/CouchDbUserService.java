@@ -54,14 +54,15 @@ public class CouchDbUserService implements UserService {
             return Optional.empty();
         }
         
-        User currentDbUser = foundUserOpt.get();
-        
+        User currentDbUser = foundUserOpt.get();        
         user.setRevision(currentDbUser.getRevision());
-        
         user.setCreatedAt(currentDbUser.getCreatedAt());
+        
+        user.setRootType("user");
 
         return userRepository.save(user);
     }
+
 
     @Override
     public Optional<User> findById(String id) {

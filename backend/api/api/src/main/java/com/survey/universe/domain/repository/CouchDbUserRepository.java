@@ -17,107 +17,97 @@ import com.ibm.cloud.sdk.core.http.Response;
 @AllArgsConstructor
 public class CouchDbUserRepository {
 
-    private final Cloudant cloudantClient;
-    private final ObjectMapper jacksonMapper;
+	private final Cloudant cloudantClient;
+	private final ObjectMapper jacksonMapper;
 
-    private static final String DB_NAME = "survey-universe";
+	private static final String DB_NAME = "survey-universe";
 
-    private User documentToUser(Document doc) throws Exception {
-        Map<String, Object> props = new java.util.HashMap<>(doc.getProperties() != null ? doc.getProperties() : Map.of());
-        props.put("_id", doc.getId());
-        props.put("_rev", doc.getRev());
-        String json = jacksonMapper.writeValueAsString(props);
-        return jacksonMapper.readValue(json, User.class);
-    }
+	private User mapDocumentToUser(Document doc) {
+		Map<String, Object> properties = doc.getProperties();
 
-    public Optional<User> save(User user) {
-        try {
-            user.setRootType("user");
-            byte[] jsonBytes = jacksonMapper.writeValueAsBytes(user);
-            InputStream inputStream = new ByteArrayInputStream(jsonBytes);
+		Map<String, Object> map = new HashMap<>(properties != null ? properties : Map.of());
 
-            PutDocumentOptions options = new PutDocumentOptions.Builder()
-                    .db(DB_NAME)
-                    .docId(user.getId())
-                    .body(inputStream)
-                    .contentType("application/json")
-                    .build();
+		map.put("_id", doc.getId());
+		map.put("_rev", doc.getRev());
 
-            DocumentResult result = cloudantClient.putDocument(options).execute().getResult();
-            user.setId(result.getId());
-            user.setRevision(result.getRev());
-            return Optional.of(user);
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-    }
+		return jacksonMapper.convertValue(map, User.class);
+	}
 
-    public Optional<User> findById(String id) {
-        try {
-            GetDocumentOptions options = new GetDocumentOptions.Builder()
-                    .db(DB_NAME)
-                    .docId(id)
-                    .build();
+	public Optional<User> save(User user) {
+		try {
+			user.setRootType("user");
+			byte[] jsonBytes = jacksonMapper.writeValueAsBytes(user);
+			InputStream inputStream = new ByteArrayInputStream(jsonBytes);
 
-            Response<InputStream> response = cloudantClient.getDocumentAsStream(options).execute();
-            InputStream responseStream = response.getResult();
-            if (responseStream == null) return Optional.empty();
+			PutDocumentOptions options = new PutDocumentOptions.Builder().db(DB_NAME).docId(user.getId())
+					.body(inputStream).contentType("application/json").build();
 
-            User user = jacksonMapper.readValue(responseStream, User.class);
-            return "user".equals(user.getRootType()) ? Optional.of(user) : Optional.empty();
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-    }
+			DocumentResult result = cloudantClient.putDocument(options).execute().getResult();
+			user.setId(result.getId());
+			user.setRevision(result.getRev());
+			return Optional.of(user);
+		} catch (Exception e) {
+			return Optional.empty();
+		}
+	}
 
-    public Optional<User> findByField(String fieldName, Object value) {
-        try {
-            Map<String, Object> selector = Map.of(
-                    "root_type", "user",
-                    fieldName, value
-            );
+	public Optional<User> findById(String id) {
+		try {
+			GetDocumentOptions options = new GetDocumentOptions.Builder().db(DB_NAME).docId(id).build();
 
-            PostFindOptions options = new PostFindOptions.Builder()
-                    .db(DB_NAME)
-                    .selector(selector)
-                    .limit(1L)
-                    .build();
+			Response<InputStream> response = cloudantClient.getDocumentAsStream(options).execute();
+			InputStream responseStream = response.getResult();
+			if (responseStream == null)
+				return Optional.empty();
 
-            FindResult result = cloudantClient.postFind(options).execute().getResult();
-            List<Document> docs = result.getDocs();
+			User user = jacksonMapper.readValue(responseStream, User.class);
+			return "user".equals(user.getRootType()) ? Optional.of(user) : Optional.empty();
+		} catch (Exception e) {
+			return Optional.empty();
+		}
+	}
 
-            if (docs == null || docs.isEmpty()) return Optional.empty();
-            return Optional.of(documentToUser(docs.get(0)));
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-    }
+	public Optional<User> findByField(String fieldName, Object value) {
+		try {
+			Map<String, Object> selector = Map.of("root_type", "user", fieldName, value);
 
-    public List<User> getAll() {
-        try {
-            Map<String, Object> selector = Map.of("root_type", "user");
-            
-            PostFindOptions options = new PostFindOptions.Builder()
-                    .db(DB_NAME)
-                    .selector(selector)
-                    .limit(10000L)
-                    .build();
+			PostFindOptions options = new PostFindOptions.Builder().db(DB_NAME).selector(selector).limit(1L).build();
 
-            FindResult result = cloudantClient.postFind(options).execute().getResult();
-            List<Document> docs = result.getDocs();
-            if (docs == null) return Collections.emptyList();
+			FindResult result = cloudantClient.postFind(options).execute().getResult();
+			List<Document> docs = result.getDocs();
 
-            List<User> users = new ArrayList<>();
-            for (Document doc : docs) {
-                try {
-                    users.add(documentToUser(doc));
-                } catch (Exception e) {
-                    System.err.println("Помилка маппінгу User: " + e.getMessage());
-                }
-            }
-            return users;
-        } catch (Exception e) {
-            return Collections.emptyList();
-        }
-    }
+			if (docs == null || docs.isEmpty())
+				return Optional.empty();
+
+			return Optional.of(mapDocumentToUser(docs.get(0)));
+		} catch (Exception e) {
+			return Optional.empty();
+		}
+	}
+
+	public List<User> getAll() {
+		try {
+			Map<String, Object> selector = Map.of("root_type", "user");
+
+			PostFindOptions options = new PostFindOptions.Builder().db(DB_NAME).selector(selector).limit(10000L)
+					.build();
+
+			FindResult result = cloudantClient.postFind(options).execute().getResult();
+			List<Document> docs = result.getDocs();
+			if (docs == null)
+				return Collections.emptyList();
+
+			List<User> users = new ArrayList<>();
+			for (Document doc : docs) {
+				try {
+					users.add(mapDocumentToUser(doc));
+				} catch (Exception e) {
+					System.err.println("Помилка маппінгу User: " + e.getMessage());
+				}
+			}
+			return users;
+		} catch (Exception e) {
+			return Collections.emptyList();
+		}
+	}
 }
