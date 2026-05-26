@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.survey.universe.domain.constant.DocType;
 import com.survey.universe.domain.model.RefreshToken;
 import com.survey.universe.domain.model.User;
 import com.survey.universe.exception.type.InternalConflictException;
@@ -18,7 +17,6 @@ import com.survey.universe.service.RefreshTokenService;
 import com.survey.universe.service.UserAuthService;
 import com.survey.universe.service.UserService;
 import com.survey.universe.spring.configuration.bean.UUIDGenerator;
-import com.survey.universe.spring.util.Base64UrlUtil;
 import com.survey.universe.spring.util.JwtTokenUtil;
 import com.survey.universe.web.dto.auth.request.TokenRefreshRequestDto;
 import com.survey.universe.web.dto.auth.request.UserLoginRequestDto;
@@ -38,7 +36,6 @@ public class StubAuthFacadeService implements UserAuthService {
 	private final JwtTokenUtil jwtTokenUtil;
 	private final PasswordEncoder passwordEncoder;
 	private final RefreshTokenService refreshTokens;
-	private final Base64UrlUtil base64Url;
 	private final DtoToUserMapper dtoToUser;
 	private final UserToDtoMapper userToDto;
 
@@ -55,9 +52,10 @@ public class StubAuthFacadeService implements UserAuthService {
 
 	@Override
 	public UserRegisterResponseDto registerUser(UserRegisterRequestDto registerDto) {
+		String generatedId = "user:" + uuidGenerator.generateUUIDv7();
 
-		User user = dtoToUser.toRegisteredUser(DocType.USER.join(uuidGenerator.generateUUIDv7()),
-				passwordEncoder.encode(registerDto.password()), registerDto);
+		User user = dtoToUser.toRegisteredUser(generatedId, passwordEncoder.encode(registerDto.password()),
+				registerDto);
 
 		userService.add(user).orElseThrow(() -> new InternalConflictException(
 				"User with these primary credentials already exists or could not be registered at the time, please try again"));
@@ -67,36 +65,41 @@ public class StubAuthFacadeService implements UserAuthService {
 
 	@Override
 	public UserAuthResponseDto loginUser(UserLoginRequestDto loginDto) {
-		User user = userService.findByEmail(loginDto.email())
+		User userFromIndex = userService.findByEmail(loginDto.email())
 				.orElseThrow(() -> new InvalidCredentialsException("Invalid login credentials"));
 
-		if (user.isDeleted()) {
+		if (userFromIndex.isDeleted()) {
 			throw new UnauthorizedException("User unauthorized to perform this action");
 		}
-		
-		if (!passwordEncoder.matches(loginDto.password(), user.getPassword())) {
+
+		if (!passwordEncoder.matches(loginDto.password(), userFromIndex.getPassword())) {
 			throw new InvalidCredentialsException("Invalid login credentials");
 		}
 
-		user.setLastSession(Instant.now());
-		user = userService.update(user)
+		User freshDbUser = userService.findById(userFromIndex.getId())
+				.orElseThrow(() -> new InvalidCredentialsException("Invalid login credentials"));
+
+		freshDbUser.setLastSession(Instant.now());
+		User updatedUser = userService.update(freshDbUser)
 				.orElseThrow(() -> new InternalConflictException("Internal error while logging in, try again later"));
 
-		return authorize(user);
+		return authorize(updatedUser);
 	}
 
 	@Override
 	public UserAuthResponseDto refreshAccessToken(TokenRefreshRequestDto refreshDto) {
 		String refreshToken = refreshDto.refreshToken();
-		if (!jwtTokenUtil.validateRefreshToken(refreshDto.refreshToken())) {
+
+		if (!jwtTokenUtil.validateRefreshToken(refreshToken)) {
 			throw new InvalidCredentialsException("Refresh token is expired or invalid");
 		}
-		
+
 		String email = jwtTokenUtil.getEmail(refreshToken);
 
-		User user = userService.findByEmail(email).orElseThrow(() -> new InvalidCredentialsException("User not found"));
+		User userFromIndex = userService.findByEmail(email)
+				.orElseThrow(() -> new InvalidCredentialsException("User not found"));
 
-		if (user.isDeleted()) {
+		if (userFromIndex.isDeleted()) {
 			throw new UnauthorizedException("User unauthorized to perform this action");
 		}
 
@@ -104,7 +107,9 @@ public class StubAuthFacadeService implements UserAuthService {
 				() -> new InvalidCredentialsException("Refresh token does not exist for the user or is expired"));
 		refreshTokens.delete(oldRefreshToken);
 
+		User freshDbUser = userService.findById(userFromIndex.getId())
+				.orElseThrow(() -> new InvalidCredentialsException("User not found"));
 
-		return authorize(user);
+		return authorize(freshDbUser);
 	}
 }

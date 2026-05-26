@@ -32,6 +32,8 @@ public class CouchDbSurveyRepository {
         String json = jacksonMapper.writeValueAsString(props);
         return jacksonMapper.readValue(json, Survey.class);
     }
+    
+    
 
     public Optional<Survey> save(Survey survey) {
         try {
@@ -70,10 +72,13 @@ public class CouchDbSurveyRepository {
 
             Survey survey = jacksonMapper.readValue(responseStream, Survey.class);
             return "survey".equals(survey.getRootType()) ? Optional.of(survey) : Optional.empty();
+        } catch (com.ibm.cloud.sdk.core.service.exception.NotFoundException e) {
+            return Optional.empty(); 
         } catch (Exception e) {
             return Optional.empty();
         }
     }
+
 
     public List<Survey> findByView(String viewName, Object key) {
         try {

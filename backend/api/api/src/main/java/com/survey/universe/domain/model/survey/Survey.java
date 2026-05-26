@@ -2,6 +2,7 @@ package com.survey.universe.domain.model.survey;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.survey.universe.domain.constant.SurveyStatus;
 import com.survey.universe.domain.constant.SurveyType;
@@ -25,6 +26,7 @@ public class Survey {
     private String id;
 
     @JsonProperty("_rev")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY) 
     private String revision;
 
     @JsonProperty("root_type")
