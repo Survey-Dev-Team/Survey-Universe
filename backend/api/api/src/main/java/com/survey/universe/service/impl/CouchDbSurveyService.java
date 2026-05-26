@@ -45,21 +45,19 @@ public class CouchDbSurveyService implements SurveyService {
 
 	@Override
 	public Optional<Survey> add(Survey survey) {
-		if (survey.getId() != null && findById(survey.getId()).isPresent()) {
-			return Optional.empty();
-		}
+	    if (survey.getId() == null || survey.getId().isBlank()) {
+	        survey.setId(DocType.SURVEY.join(uuidGenerator.generateUUIDv7()));
+	    }
 
-		if (survey.getId() == null || survey.getId().isBlank()) {
-			survey.setId(DocType.SURVEY.join(uuidGenerator.generateUUIDv7()));
-		}
+	    survey.setRevision(null); 
+	    
+	    survey.setSlugId(slugGenerator.generate());
+	    survey.setCreatedAt(Instant.now());
+	    survey.setModifiedAt(Instant.now());
 
-		survey.setRevision(null);
-		survey.setSlugId(slugGenerator.generate());
-		survey.setCreatedAt(Instant.now());
-		survey.setModifiedAt(Instant.now());
-
-		return surveyRepository.save(survey);
+	    return surveyRepository.save(survey);
 	}
+
 
 	@Override
 	public Optional<Survey> update(Survey survey) {
@@ -109,7 +107,7 @@ public class CouchDbSurveyService implements SurveyService {
 
 		boolean activeShowDeleted = Boolean.TRUE.equals(showDeleted);
 
-		return getAll().stream().filter(s -> allowedStatuses.contains(s.getStatus()))
+		return getAll().stream().filter(s -> s.getStatus() != null && allowedStatuses.contains(s.getStatus()))
 				.filter(s -> !s.isDeleted() || activeShowDeleted)
 				.filter(s -> surveyType == null || surveyType.equals(s.getSurveyType()))
 				.filter(s -> status == null || status.equals(s.getStatus()))

@@ -125,7 +125,7 @@ public class StubSurveyService implements SurveyService {
 			String creator, String search, String category, Boolean showDeleted, TimeRange timeRange) {
 		
 		
-		return getAll().stream().filter(s -> allowedStatuses.contains(s.getStatus()))
+		return getAll().stream().filter(s -> s.getStatus() != null && allowedStatuses.contains(s.getStatus()))
 				.filter(s -> s.isDeleted() == false || s.isDeleted() == showDeleted)
 				.filter(s -> surveyType == null ||  surveyType.equals(s.getSurveyType()))
 				.filter(s -> status == null || status.equals(s.getStatus()))

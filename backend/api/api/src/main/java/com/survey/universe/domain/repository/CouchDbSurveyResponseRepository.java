@@ -23,6 +23,14 @@ public class CouchDbSurveyResponseRepository {
 
     private static final String DB_NAME = "survey-universe";
 
+    private SurveyResponse documentToResponse(Document doc) throws Exception {
+        Map<String, Object> props = new java.util.HashMap<>(doc.getProperties() != null ? doc.getProperties() : Map.of());
+        props.put("_id", doc.getId());
+        props.put("_rev", doc.getRev());
+        String json = jacksonMapper.writeValueAsString(props);
+        return jacksonMapper.readValue(json, SurveyResponse.class);
+    }
+
     public Optional<SurveyResponse> save(SurveyResponse response) {
         try {
             response.setRootType("response"); 
@@ -82,7 +90,7 @@ public class CouchDbSurveyResponseRepository {
 
             List<SurveyResponse> list = new ArrayList<>();
             for (Document doc : docs) {
-                list.add(jacksonMapper.convertValue(doc, SurveyResponse.class));
+                try { list.add(documentToResponse(doc)); } catch (Exception e) { /* skip */ }
             }
             return list;
         } catch (Exception e) {
@@ -105,7 +113,7 @@ public class CouchDbSurveyResponseRepository {
 
             List<SurveyResponse> list = new ArrayList<>();
             for (Document doc : docs) {
-                list.add(jacksonMapper.convertValue(doc, SurveyResponse.class));
+                try { list.add(documentToResponse(doc)); } catch (Exception e) { /* skip */ }
             }
             return list;
         } catch (Exception e) {

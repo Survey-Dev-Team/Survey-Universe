@@ -48,7 +48,7 @@ public class User {
     private String slugId;
     
     @NotBlank
-    @JsonProperty(value = "password", access = Access.WRITE_ONLY)
+    @JsonProperty(value = "password")
     private String password;
     
     @JsonProperty("role")

@@ -57,7 +57,11 @@ public class CouchDbRefreshTokenRepository {
             List<Document> docs = result.getDocs();
 
             if (docs == null || docs.isEmpty()) return Optional.empty();
-            return Optional.of(jacksonMapper.convertValue(docs.get(0), RefreshToken.class));
+            Map<String, Object> props = new java.util.HashMap<>(docs.get(0).getProperties() != null ? docs.get(0).getProperties() : Map.of());
+            props.put("_id", docs.get(0).getId());
+            props.put("_rev", docs.get(0).getRev());
+            String json = jacksonMapper.writeValueAsString(props);
+            return Optional.of(jacksonMapper.readValue(json, RefreshToken.class));
         } catch (Exception e) {
             return Optional.empty();
         }

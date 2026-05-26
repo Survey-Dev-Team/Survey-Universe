@@ -1,5 +1,6 @@
 package com.survey.universe.service.stub;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -90,9 +91,19 @@ public class StubSurveyReadFacadeService implements SurveyReadFacadeService {
 
 	@Override
 	public List<SurveyReadSummaryDto> getHomeSurveys() {
-		return surveyService.findAllHome().stream().map(s -> {
-			User creator = userService.findById(s.getCreatorId())
-					.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+		List<Survey> homeSurveys = surveyService.findAllHome();
+		if (homeSurveys.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		Set<String> creatorIds = homeSurveys.stream().map(Survey::getCreatorId)
+				.filter(id -> id != null && !id.isBlank()).collect(Collectors.toSet());
+
+		Map<String, User> creatorCache = userService.getAll().stream().filter(u -> creatorIds.contains(u.getId()))
+				.collect(Collectors.toMap(User::getId, u -> u, (u1, u2) -> u1));
+
+		return homeSurveys.stream().map(s -> {
+			User creator = creatorCache.get(s.getCreatorId());
 			return surveyToDto.toReadSummaryDto(s, creator);
 		}).toList();
 	}

@@ -25,6 +25,16 @@ public class CouchDbSurveyRepository {
     private static final String DB_NAME = "survey-universe";
     private static final String DESIGN_DOC = "surveys";
 
+    private Survey documentToSurvey(Document doc) throws Exception {
+        Map<String, Object> props = new java.util.HashMap<>(doc.getProperties() != null ? doc.getProperties() : Map.of());
+        props.put("_id", doc.getId());
+        props.put("_rev", doc.getRev());
+        String json = jacksonMapper.writeValueAsString(props);
+        return jacksonMapper.readValue(json, Survey.class);
+    }
+    
+    
+
     public Optional<Survey> save(Survey survey) {
         try {
             survey.setRootType("survey");
@@ -62,10 +72,13 @@ public class CouchDbSurveyRepository {
 
             Survey survey = jacksonMapper.readValue(responseStream, Survey.class);
             return "survey".equals(survey.getRootType()) ? Optional.of(survey) : Optional.empty();
+        } catch (com.ibm.cloud.sdk.core.service.exception.NotFoundException e) {
+            return Optional.empty(); 
         } catch (Exception e) {
             return Optional.empty();
         }
     }
+
 
     public List<Survey> findByView(String viewName, Object key) {
         try {
@@ -82,7 +95,11 @@ public class CouchDbSurveyRepository {
 
             for (ViewResultRow row : result.getRows()) {
                 if (row.getDoc() != null) {
-                    surveys.add(jacksonMapper.convertValue(row.getDoc(), Survey.class));
+                    try {
+                        surveys.add(documentToSurvey(row.getDoc()));
+                    } catch (Exception e) {
+                        System.err.println("Помилка маппінгу Survey з View: " + e.getMessage());
+                    }
                 }
             }
             return surveys;
@@ -109,7 +126,7 @@ public class CouchDbSurveyRepository {
             List<Document> docs = result.getDocs();
 
             if (docs == null || docs.isEmpty()) return Optional.empty();
-            return Optional.of(jacksonMapper.convertValue(docs.get(0), Survey.class));
+            return Optional.of(documentToSurvey(docs.get(0)));
         } catch (Exception e) {
             return Optional.empty();
         }
@@ -131,7 +148,11 @@ public class CouchDbSurveyRepository {
 
             List<Survey> surveys = new ArrayList<>();
             for (Document doc : docs) {
-                surveys.add(jacksonMapper.convertValue(doc, Survey.class));
+                try {
+                    surveys.add(documentToSurvey(doc));
+                } catch (Exception e) {
+                    System.err.println("Помилка маппінгу Survey: " + e.getMessage());
+                }
             }
             return surveys;
         } catch (Exception e) {

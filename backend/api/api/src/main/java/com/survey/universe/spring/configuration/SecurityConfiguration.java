@@ -32,7 +32,7 @@ public class SecurityConfiguration {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(request -> {
-					request.requestMatchers("/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
+					request.requestMatchers("/auth/**", "/auth/login", "/auth/register", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
 							.permitAll().requestMatchers(HttpMethod.GET, "/surveys/home").permitAll()
 							.requestMatchers(HttpMethod.GET, "/surveys").permitAll()
 							.requestMatchers(HttpMethod.GET, "/surveys/{urlId}").permitAll()
