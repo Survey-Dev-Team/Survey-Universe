@@ -1,0 +1,59 @@
+package com.survey.universe.spring.configuration;
+
+import java.util.List;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.survey.universe.spring.filter.JwtTokenFilter;
+import lombok.AllArgsConstructor;
+
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
+@AllArgsConstructor
+public class SecurityConfiguration {
+
+	private final JwtTokenFilter jwtTokenFilter;
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		return http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable)
+				.authorizeHttpRequests(request -> {
+					request.requestMatchers("/auth/**", "/auth/login", "/auth/register", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
+							.permitAll().requestMatchers(HttpMethod.GET, "/surveys/home").permitAll()
+							.requestMatchers(HttpMethod.GET, "/surveys").permitAll()
+							.requestMatchers(HttpMethod.GET, "/surveys/{urlId}").permitAll()
+							.requestMatchers("/surveys/**").authenticated().requestMatchers("/users/**").authenticated()
+							.anyRequest().authenticated();
+				}).sessionManagement(sessionManagementCustomizer -> {
+					sessionManagementCustomizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				}).addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class).build();
+	}
+
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+		configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+		configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+		configuration.setExposedHeaders(List.of("Authorization"));
+		configuration.setAllowCredentials(true);
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
+}

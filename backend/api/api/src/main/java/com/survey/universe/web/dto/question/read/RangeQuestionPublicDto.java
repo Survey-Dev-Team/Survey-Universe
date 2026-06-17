@@ -1,0 +1,22 @@
+package com.survey.universe.web.dto.question.read;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class RangeQuestionPublicDto extends QuestionPublicDto {
+
+	@JsonProperty("min")
+	private Integer min;
+
+	@JsonProperty("max")
+	private Integer max;
+
+	@JsonProperty("step")
+	private Integer step;
+}

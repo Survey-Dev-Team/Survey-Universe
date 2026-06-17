@@ -1,0 +1,1297 @@
+[
+    {
+        "_id": "survey:019de9f1-0001-7001-b001-c3d4e5f60101",
+        "root_type": "survey",
+        "title": "Do We Rely Too Much on Technology?",
+        "description": "Explore how dependent modern society has become on digital tools — and whether that dependence is leading us somewhere we actually want to go.",
+        "status": "published",
+        "category": [
+            "society",
+            "technology",
+            "digital"
+        ],
+        "is_home": true,
+        "icon": null,
+        "estimated_time": "5",
+        "survey_type": "questionnaire",
+        "created_at": "2026-05-14T10:00:00Z",
+        "modified_at": "2026-05-14T10:00:00Z",
+        "closed_at": null,
+        "published_at": "2026-05-14T10:00:00Z",
+        "is_deleted": false,
+        "creator_id": "user:alex-monroe",
+        "questions": [
+            {
+                "id": "q1",
+                "label": "How many hours per day do you spend on digital devices outside of work?",
+                "sort_order": 1,
+                "type": "radio_button",
+                "is_required": true,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Less than 2 hours",
+                        "sort_order": 1
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "2–4 hours",
+                        "sort_order": 2
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "4–6 hours",
+                        "sort_order": 3
+                    },
+                    {
+                        "id": "opt4",
+                        "label": "More than 6 hours",
+                        "sort_order": 4
+                    }
+                ]
+            },
+            {
+                "id": "q2",
+                "label": "Which aspects of daily life feel impossible without technology for you?",
+                "sort_order": 2,
+                "type": "checkbox",
+                "is_required": false,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Navigation",
+                        "sort_order": 1
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Social interaction",
+                        "sort_order": 2
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "Work",
+                        "sort_order": 3
+                    },
+                    {
+                        "id": "opt4",
+                        "label": "Entertainment",
+                        "sort_order": 4
+                    },
+                    {
+                        "id": "opt5",
+                        "label": "Shopping",
+                        "sort_order": 5
+                    }
+                ]
+            },
+            {
+                "id": "q3",
+                "label": "How dependent on technology do you think modern society is? (0 = not at all, 10 = completely)",
+                "sort_order": 3,
+                "type": "range",
+                "min": 0,
+                "max": 10,
+                "step": 1,
+                "is_required": true,
+                "options": []
+            },
+            {
+                "id": "q4",
+                "label": "What would you change about your own relationship with technology?",
+                "sort_order": 4,
+                "type": "text_area",
+                "placeholder": "Share your thoughts",
+                "is_required": false,
+                "options": []
+            }
+        ]
+    },
+    {
+        "_id": "survey:019de9f2-0001-7001-b002-c3d4e5f60102",
+        "root_type": "survey",
+        "title": "Is Space Exploration Worth the Cost?",
+        "description": "Humanity spends billions reaching for the stars. Share your perspective on whether that investment makes sense — or where it should go instead.",
+        "status": "published",
+        "category": [
+            "science",
+            "space",
+            "society"
+        ],
+        "is_home": true,
+        "icon": null,
+        "estimated_time": "4",
+        "survey_type": "questionnaire",
+        "created_at": "2026-05-10T14:00:00Z",
+        "modified_at": "2026-05-10T14:00:00Z",
+        "closed_at": null,
+        "published_at": "2026-05-10T14:00:00Z",
+        "is_deleted": false,
+        "creator_id": "user:lena-oris",
+        "questions": [
+            {
+                "id": "q1",
+                "label": "Do you think space exploration is worth its current level of funding?",
+                "sort_order": 1,
+                "type": "radio_button",
+                "is_required": true,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Absolutely yes",
+                        "sort_order": 1
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Yes, but funding should be reduced",
+                        "sort_order": 2
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "Neutral",
+                        "sort_order": 3
+                    },
+                    {
+                        "id": "opt4",
+                        "label": "No, the money is better spent on Earth",
+                        "sort_order": 4
+                    }
+                ]
+            },
+            {
+                "id": "q2",
+                "label": "Which goals of space exploration matter most to you?",
+                "sort_order": 2,
+                "type": "checkbox",
+                "is_required": false,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Finding life beyond Earth",
+                        "sort_order": 1
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Colonising other planets",
+                        "sort_order": 2
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "Scientific discoveries",
+                        "sort_order": 3
+                    },
+                    {
+                        "id": "opt4",
+                        "label": "Advancing technology for life on Earth",
+                        "sort_order": 4
+                    }
+                ]
+            },
+            {
+                "id": "q3",
+                "label": "How likely is it that humanity will establish a permanent base on Mars within 50 years? (0 = impossible, 10 = certain)",
+                "sort_order": 3,
+                "type": "range",
+                "min": 0,
+                "max": 10,
+                "step": 1,
+                "is_required": true,
+                "options": []
+            },
+            {
+                "id": "q4",
+                "label": "Any other thoughts on the future of space exploration?",
+                "sort_order": 4,
+                "type": "text_area",
+                "placeholder": "Share your perspective",
+                "is_required": false,
+                "options": []
+            }
+        ]
+    },
+    {
+        "_id": "survey:019de9f3-0001-7001-b003-c3d4e5f60103",
+        "root_type": "survey",
+        "title": "What Shapes Who We Are?",
+        "description": "Nature, environment, or chance — what do you believe has the greatest influence on a person's identity? No wrong answers.",
+        "status": "published",
+        "category": [
+            "psychology",
+            "philosophy",
+            "science"
+        ],
+        "is_home": true,
+        "icon": null,
+        "estimated_time": "7",
+        "survey_type": "questionnaire",
+        "created_at": "2026-05-06T09:00:00Z",
+        "modified_at": "2026-05-06T09:00:00Z",
+        "closed_at": null,
+        "published_at": "2026-05-06T09:00:00Z",
+        "is_deleted": false,
+        "creator_id": "user:mark-vega",
+        "questions": [
+            {
+                "id": "q1",
+                "label": "What do you believe has the biggest influence on who a person becomes?",
+                "sort_order": 1,
+                "type": "radio_button",
+                "is_required": true,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Genetics and biology",
+                        "sort_order": 1
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Upbringing and environment",
+                        "sort_order": 2
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "Personal choices",
+                        "sort_order": 3
+                    },
+                    {
+                        "id": "opt4",
+                        "label": "A combination of all",
+                        "sort_order": 4
+                    }
+                ]
+            },
+            {
+                "id": "q2",
+                "label": "Which of these do you think can be fundamentally changed in adulthood?",
+                "sort_order": 2,
+                "type": "checkbox",
+                "is_required": false,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Core values",
+                        "sort_order": 1
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Personality traits",
+                        "sort_order": 2
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "Emotional patterns",
+                        "sort_order": 3
+                    },
+                    {
+                        "id": "opt4",
+                        "label": "Beliefs and worldview",
+                        "sort_order": 4
+                    }
+                ]
+            },
+            {
+                "id": "q3",
+                "label": "How much has your childhood shaped the person you are today? (0 = not at all, 10 = entirely)",
+                "sort_order": 3,
+                "type": "range",
+                "min": 0,
+                "max": 10,
+                "step": 1,
+                "is_required": true,
+                "options": []
+            },
+            {
+                "id": "q4",
+                "label": "Is there something specific that shaped you most — an event, a person, a place?",
+                "sort_order": 4,
+                "type": "text_area",
+                "placeholder": "Share if you'd like",
+                "is_required": false,
+                "options": []
+            }
+        ]
+    },
+    {
+        "_id": "survey:019de9f4-0001-7001-b004-c3d4e5f60104",
+        "root_type": "survey",
+        "title": "Myths & Facts: The Human Brain",
+        "description": "We only use 10% of our brains. Or do we? Separate common misconceptions from science in this quick knowledge test.",
+        "status": "published",
+        "category": [
+            "science",
+            "quiz",
+            "learning"
+        ],
+        "is_home": true,
+        "icon": null,
+        "estimated_time": "8",
+        "survey_type": "test",
+        "created_at": "2026-04-12T09:30:00Z",
+        "modified_at": "2026-04-12T09:30:00Z",
+        "closed_at": null,
+        "published_at": "2026-04-12T09:30:00Z",
+        "is_deleted": false,
+        "creator_id": "user:sofia-lane",
+        "questions": [
+            {
+                "id": "q1",
+                "label": "True or false: humans only use about 10% of their brain.",
+                "sort_order": 1,
+                "type": "radio_button",
+                "is_required": true,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "True",
+                        "sort_order": 1,
+                        "correct": false
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "False",
+                        "sort_order": 2,
+                        "correct": true
+                    }
+                ]
+            },
+            {
+                "id": "q2",
+                "label": "Which of the following are genuine functions of sleep for the brain?",
+                "sort_order": 2,
+                "type": "checkbox",
+                "is_required": true,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Memory consolidation",
+                        "sort_order": 1,
+                        "correct": true
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Toxin clearance",
+                        "sort_order": 2,
+                        "correct": true
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "Generating new neurons from scratch",
+                        "sort_order": 3,
+                        "correct": false
+                    },
+                    {
+                        "id": "opt4",
+                        "label": "Emotional processing",
+                        "sort_order": 4,
+                        "correct": true
+                    }
+                ]
+            },
+            {
+                "id": "q3",
+                "label": "How many neurons does the average adult human brain contain?",
+                "sort_order": 3,
+                "type": "radio_button",
+                "is_required": true,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Around 86 billion",
+                        "sort_order": 1,
+                        "correct": true
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Around 1 billion",
+                        "sort_order": 2,
+                        "correct": false
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "Around 500 million",
+                        "sort_order": 3,
+                        "correct": false
+                    },
+                    {
+                        "id": "opt4",
+                        "label": "Around 200 billion",
+                        "sort_order": 4,
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "id": "q4",
+                "label": "What is the term for the brain's ability to reorganise itself by forming new connections?",
+                "sort_order": 4,
+                "type": "input",
+                "input_type": "text",
+                "placeholder": "Enter the term",
+                "is_required": true,
+                "correct_answer": "neuroplasticity",
+                "options": []
+            }
+        ]
+    },
+    {
+        "_id": "survey:019de95c-3401-7001-a1b2-c3d4e5f60001",
+        "root_type": "survey",
+        "title": "How Do You Handle Stress?",
+        "description": "Stress is part of modern life — but how we handle it varies widely. Share your coping strategies and what genuinely works for you.",
+        "status": "published",
+        "category": [
+            "psychology",
+            "wellbeing",
+            "society"
+        ],
+        "is_home": false,
+        "icon": null,
+        "estimated_time": "5",
+        "created_at": "2026-05-01T09:00:00Z",
+        "modified_at": "2026-05-01T10:30:00Z",
+        "closed_at": null,
+        "survey_type": "questionnaire",
+        "published_at": "2026-05-01T09:30:00Z",
+        "is_deleted": false,
+        "creator_id": "user:ivan-petrov",
+        "questions": [
+            {
+                "id": "q1",
+                "label": "On a typical week, how often do you feel stressed? (0 = never, 10 = constantly)",
+                "sort_order": 1,
+                "type": "range",
+                "min": 0,
+                "max": 10,
+                "step": 1,
+                "is_required": true,
+                "options": []
+            },
+            {
+                "id": "q2",
+                "label": "Which of these do you use to manage stress?",
+                "sort_order": 2,
+                "type": "checkbox",
+                "is_required": false,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Physical exercise",
+                        "sort_order": 1
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Meditation or breathing",
+                        "sort_order": 2
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "Talking to someone",
+                        "sort_order": 3
+                    }
+                ]
+            },
+            {
+                "id": "q3",
+                "label": "What genuinely helps you feel better when you're overwhelmed?",
+                "sort_order": 3,
+                "type": "text_area",
+                "placeholder": "Share what works for you",
+                "is_required": false,
+                "options": []
+            }
+        ]
+    },
+    {
+        "_id": "survey:019de96a-0001-7000-8000-c3d4e5f60001",
+        "root_type": "survey",
+        "title": "How Do You Learn Best?",
+        "description": "Everyone absorbs information differently. Help us understand what makes learning click — your preferred formats, timing, and goals.",
+        "category": [
+            "psychology",
+            "education",
+            "learning"
+        ],
+        "estimated_time": "10",
+        "survey_type": "questionnaire",
+        "is_home": false,
+        "icon": null,
+        "created_at": "2026-04-30T09:00:00Z",
+        "modified_at": "2026-04-30T10:30:00Z",
+        "closed_at": null,
+        "published_at": "2026-04-30T09:30:00Z",
+        "is_deleted": false,
+        "creator_id": "user:dana-kol",
+        "status": "published",
+        "questions": [
+            {
+                "id": "q1",
+                "label": "Which learning format works best for you?",
+                "type": "search_select",
+                "sort_order": 1,
+                "is_required": true,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Video lectures",
+                        "sort_order": 1
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Books and reading",
+                        "sort_order": 2
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "Hands-on practice",
+                        "sort_order": 3
+                    },
+                    {
+                        "id": "opt4",
+                        "label": "Group discussion",
+                        "sort_order": 4
+                    }
+                ]
+            },
+            {
+                "id": "q2",
+                "label": "When do you feel most focused and ready to learn?",
+                "type": "radio_button",
+                "sort_order": 2,
+                "is_required": true,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Early morning",
+                        "sort_order": 1
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Mid-morning",
+                        "sort_order": 2
+                    }
+                ]
+            },
+            {
+                "id": "q3",
+                "label": "How motivated are you to learn something new right now? (0 = not at all, 10 = very motivated)",
+                "type": "range",
+                "min": 0,
+                "max": 10,
+                "step": 1,
+                "sort_order": 3,
+                "is_required": true,
+                "options": []
+            },
+            {
+                "id": "q4",
+                "label": "When do you plan to start your next learning goal?",
+                "type": "date_pick",
+                "sort_order": 4,
+                "is_required": false,
+                "options": []
+            },
+            {
+                "id": "q5",
+                "label": "What topic would you most like to explore this year?",
+                "type": "text_area",
+                "placeholder": "Share your learning goal",
+                "sort_order": 5,
+                "is_required": false,
+                "options": []
+            }
+        ]
+    },
+    {
+        "_id": "survey:019ded05-5fbc-7e45-919f-ea20c34a34ac",
+        "root_type": "survey",
+        "title": "Sleep & Your Daily Energy",
+        "description": "Sleep shapes everything — mood, focus, productivity. Tell us about your sleep habits and what you wish you could change.",
+        "category": [
+            "psychology",
+            "science",
+            "wellbeing"
+        ],
+        "estimated_time": "7",
+        "status": "published",
+        "survey_type": "questionnaire",
+        "is_home": false,
+        "icon": null,
+        "creator_id": "user:alex-monroe",
+        "created_at": "2026-04-20T10:00:00Z",
+        "modified_at": "2026-04-20T10:00:00Z",
+        "closed_at": null,
+        "published_at": "2026-04-20T10:00:00Z",
+        "is_deleted": false,
+        "questions": [
+            {
+                "id": "q1",
+                "type": "image",
+                "placeholder": "How well do you really sleep?",
+                "link": null,
+                "sort_order": 1
+            },
+            {
+                "id": "q2",
+                "type": "radio_button",
+                "label": "How many hours of sleep do you usually get on weeknights?",
+                "is_required": true,
+                "sort_order": 1,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Less than 5 hours",
+                        "sort_order": 1
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "5–6 hours",
+                        "sort_order": 2
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "7–8 hours",
+                        "sort_order": 3
+                    }
+                ]
+            },
+            {
+                "id": "q3",
+                "type": "checkbox",
+                "label": "What tends to disrupt your sleep?",
+                "is_required": false,
+                "sort_order": 2,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Stress or anxiety",
+                        "sort_order": 1
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Screen time before bed",
+                        "sort_order": 2
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "Irregular schedule",
+                        "sort_order": 3
+                    }
+                ]
+            },
+            {
+                "id": "q4",
+                "type": "input",
+                "label": "What is one thing you'd change about your sleep routine?",
+                "placeholder": "Share your thoughts",
+                "input_type": "text",
+                "is_required": true,
+                "sort_order": 3,
+                "options": []
+            }
+        ]
+    },
+    {
+        "_id": "survey:019de95c-3401-7001-a1b2-c3d4e5f60003",
+        "root_type": "survey",
+        "title": "If You Could Ask the World One Question",
+        "category": [
+            "philosophy",
+            "society"
+        ],
+        "estimated_time": null,
+        "is_home": false,
+        "icon": null,
+        "description": "Draft concept: if every person on Earth could answer one question you asked, what would it be?",
+        "status": "draft",
+        "survey_type": "questionnaire",
+        "created_at": "2026-04-25T14:20:00Z",
+        "modified_at": "2026-04-25T14:20:00Z",
+        "creator_id": "user:lena-oris",
+        "closed_at": null,
+        "published_at": "2026-04-25T14:20:00Z",
+        "is_deleted": false,
+        "questions": [
+            {
+                "id": "q1",
+                "label": "What one question would you ask every person on Earth?",
+                "sort_order": 1,
+                "type": "input",
+                "placeholder": "Write your question here",
+                "input_type": "text",
+                "is_required": true,
+                "options": []
+            }
+        ]
+    },
+    {
+        "_id": "survey:019ded10-b3a3-7bc1-a0bc-7a31ff091616",
+        "root_type": "survey",
+        "title": "The Human Body: Fact or Fiction?",
+        "category": [
+            "science",
+            "biology",
+            "quiz"
+        ],
+        "estimated_time": "10",
+        "description": "How well do you know your own body? Test your knowledge of human biology with these quick questions.",
+        "status": "published",
+        "survey_type": "test",
+        "is_home": false,
+        "icon": null,
+        "creator_id": "user:mark-vega",
+        "created_at": "2026-04-25T11:00:00Z",
+        "modified_at": "2026-04-25T11:00:00Z",
+        "closed_at": null,
+        "published_at": "2026-04-25T11:00:00Z",
+        "is_deleted": false,
+        "questions": [
+            {
+                "id": "q1",
+                "label": "True or false: the human heart beats roughly 100,000 times a day.",
+                "type": "radio_button",
+                "sort_order": 1,
+                "is_required": true,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "True",
+                        "sort_order": 1,
+                        "correct": true
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "False",
+                        "sort_order": 2,
+                        "correct": false
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "It depends on the person",
+                        "sort_order": 3,
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "id": "q2",
+                "label": "Which of these are genuine functions of the liver?",
+                "type": "checkbox",
+                "sort_order": 2,
+                "is_required": true,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Producing bile",
+                        "sort_order": 1,
+                        "correct": true
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Filtering blood",
+                        "sort_order": 2,
+                        "correct": true
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "Generating electrical impulses",
+                        "sort_order": 3,
+                        "correct": false
+                    },
+                    {
+                        "id": "opt4",
+                        "label": "Breaking down toxins",
+                        "sort_order": 4,
+                        "correct": true
+                    }
+                ]
+            },
+            {
+                "id": "q3",
+                "label": "What is the longest bone in the human body?",
+                "sort_order": 3,
+                "is_required": true,
+                "type": "input",
+                "placeholder": "Enter the bone name",
+                "input_type": "text",
+                "correct_answer": "femur",
+                "options": []
+            }
+        ]
+    },
+    {
+        "_id": "survey:019ded10-74bd-7a6e-8cc1-50de7ba23977",
+        "root_type": "survey",
+        "title": "Our Planet: Environmental Basics",
+        "survey_type": "test",
+        "category": [
+            "science",
+            "environment",
+            "quiz"
+        ],
+        "estimated_time": 10,
+        "is_home": false,
+        "icon": null,
+        "description": "How much do you know about Earth's environment? A draft quiz on climate, ecosystems, and sustainability.",
+        "status": "draft",
+        "creator_id": "user:sofia-lane",
+        "created_at": "2026-04-25T11:47:00Z",
+        "modified_at": "2026-05-03T13:00:00Z",
+        "closed_at": null,
+        "published_at": "2026-05-03T13:00:00Z",
+        "is_deleted": false,
+        "questions": [
+            {
+                "id": "q1",
+                "label": "Which of these are greenhouse gases?",
+                "type": "checkbox",
+                "sort_order": 1,
+                "is_required": true,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Carbon dioxide (CO₂)",
+                        "sort_order": 1,
+                        "correct": true
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Oxygen (O₂)",
+                        "sort_order": 2,
+                        "correct": false
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "Methane (CH₄)",
+                        "sort_order": 3,
+                        "correct": true
+                    },
+                    {
+                        "id": "opt4",
+                        "label": "Nitrous oxide (N₂O)",
+                        "sort_order": 4,
+                        "correct": true
+                    }
+                ]
+            },
+            {
+                "id": "q2",
+                "label": "Which layer of the atmosphere contains the ozone layer?",
+                "type": "search_select",
+                "sort_order": 2,
+                "is_required": true,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Troposphere",
+                        "sort_order": 1,
+                        "correct": false
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Stratosphere",
+                        "sort_order": 2,
+                        "correct": true
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "Mesosphere",
+                        "sort_order": 3,
+                        "correct": false
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "_id": "survey:019ded26-cabe-71af-bc58-ac1b804617c0",
+        "root_type": "survey",
+        "title": "Great Thinkers: Know Your Philosophy?",
+        "survey_type": "test",
+        "category": [
+            "philosophy",
+            "history",
+            "quiz",
+            "learning",
+            "society"
+        ],
+        "estimated_time": "15",
+        "is_home": false,
+        "icon": null,
+        "description": "From Socrates to Nietzsche — how much do you know about the world's most influential philosophical ideas?",
+        "status": "published",
+        "creator_id": "user:ivan-petrov",
+        "created_at": "2026-04-29T11:47:00Z",
+        "modified_at": "2026-05-03T11:47:01Z",
+        "closed_at": null,
+        "published_at": "2026-05-03T11:47:01Z",
+        "is_deleted": false,
+        "questions": [
+            {
+                "id": "q1",
+                "label": "Which philosopher is credited with the statement 'I think, therefore I am'?",
+                "type": "radio_button",
+                "sort_order": 1,
+                "is_required": true,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Aristotle",
+                        "sort_order": 1,
+                        "correct": false
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "René Descartes",
+                        "sort_order": 2,
+                        "correct": true
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "John Locke",
+                        "sort_order": 3,
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "id": "q2",
+                "label": "Which of these thinkers are considered Stoic philosophers?",
+                "type": "checkbox",
+                "sort_order": 2,
+                "is_required": true,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Marcus Aurelius",
+                        "sort_order": 1,
+                        "correct": true
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Plato",
+                        "sort_order": 2,
+                        "correct": false
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "Epictetus",
+                        "sort_order": 3,
+                        "correct": true
+                    },
+                    {
+                        "id": "opt4",
+                        "label": "Seneca",
+                        "sort_order": 4,
+                        "correct": true
+                    }
+                ]
+            },
+            {
+                "id": "q3",
+                "label": "What term describes Plato's concept of perfect, non-physical forms that physical objects imitate?",
+                "sort_order": 3,
+                "is_required": true,
+                "type": "search_select",
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Theory of Forms",
+                        "sort_order": 1,
+                        "correct": true
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Allegory of the Cave",
+                        "sort_order": 2,
+                        "correct": false
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "The Dialectic",
+                        "sort_order": 3,
+                        "correct": false
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "_id": "survey:019ded3a-dead-beef-8888-c3d4e5f60001",
+        "root_type": "survey",
+        "title": "Digital Wellbeing Check — Winter 2026",
+        "survey_type": "questionnaire",
+        "category": [
+            "wellbeing",
+            "technology",
+            "society"
+        ],
+        "estimated_time": "7",
+        "description": "A snapshot of how digital habits affected our community's wellbeing at the start of 2026. Now closed.",
+        "status": "closed",
+        "is_home": false,
+        "icon": null,
+        "created_at": "2026-01-10T09:00:00Z",
+        "modified_at": "2026-01-20T17:00:00Z",
+        "closed_at": "2026-01-20T17:00:00Z",
+        "published_at": "2026-01-10T17:00:00Z",
+        "is_deleted": false,
+        "creator_id": "user:dana-kol",
+        "questions": [
+            {
+                "id": "q1",
+                "label": "How would you rate your overall digital wellbeing in January 2026? (0 = very poor, 10 = excellent)",
+                "type": "range",
+                "min": 0,
+                "max": 10,
+                "step": 1,
+                "sort_order": 1,
+                "is_required": true,
+                "options": []
+            },
+            {
+                "id": "q2",
+                "label": "Which digital habits did you practice regularly?",
+                "type": "checkbox",
+                "sort_order": 2,
+                "is_required": true,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Setting screen time limits",
+                        "sort_order": 1
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Taking regular breaks",
+                        "sort_order": 2
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "Managing notifications",
+                        "sort_order": 3
+                    }
+                ]
+            },
+            {
+                "id": "q3",
+                "label": "What digital habit most improved your quality of life?",
+                "type": "text_area",
+                "placeholder": "Share your experience",
+                "sort_order": 3,
+                "is_required": false,
+                "options": []
+            }
+        ]
+    },
+    {
+        "_id": "survey:019deda9-096f-7d0c-825e-226ce4c946ff",
+        "root_type": "survey",
+        "title": "A Place That Changed You",
+        "description": "We all have places that shaped who we are — a city, a room, a corner of the world. Share yours.",
+        "status": "published",
+        "category": [
+            "society",
+            "travel",
+            "psychology"
+        ],
+        "estimated_time": "5",
+        "is_home": false,
+        "survey_type": "questionnaire",
+        "icon": null,
+        "created_at": "2026-05-02T09:00:00Z",
+        "modified_at": "2026-05-02T17:00:00Z",
+        "closed_at": null,
+        "published_at": "2026-05-02T17:00:00Z",
+        "is_deleted": false,
+        "creator_id": "user:alex-monroe",
+        "questions": [
+            {
+                "id": "q1",
+                "label": "Name a place that had a significant impact on your life.",
+                "type": "input",
+                "input_type": "text",
+                "placeholder": "City, village, building — anything counts",
+                "sort_order": 1,
+                "is_required": true,
+                "options": []
+            },
+            {
+                "id": "q2",
+                "label": "What made that place so meaningful to you?",
+                "type": "input",
+                "input_type": "text",
+                "placeholder": "Describe in a few words",
+                "sort_order": 2,
+                "is_required": true,
+                "options": []
+            },
+            {
+                "id": "q3",
+                "label": "Share a photo of that place if you have one.",
+                "type": "file_upload",
+                "link": null,
+                "placeholder": "Upload your photo here",
+                "sort_order": 3,
+                "is_required": true,
+                "options": []
+            }
+        ]
+    },
+    {
+        "_id": "survey:019df434-1423-76e1-9e23-2808d5d51fbf",
+        "root_type": "survey",
+        "title": "Survey Universe Community Profile",
+        "description": "Help us understand our community better. Tell us about yourself and the topics you care about most.",
+        "status": "published",
+        "category": [
+            "society",
+            "community",
+            "wellbeing"
+        ],
+        "estimated_time": "15",
+        "is_home": false,
+        "icon": null,
+        "survey_type": "questionnaire",
+        "created_at": "2026-05-01T09:00:00Z",
+        "modified_at": "2026-05-02T17:00:00Z",
+        "closed_at": null,
+        "published_at": "2026-05-02T17:00:00Z",
+        "is_deleted": false,
+        "creator_id": "user:lena-oris",
+        "questions": [
+            {
+                "id": "q1",
+                "type": "title",
+                "label": "About You",
+                "sort_order": 1
+            },
+            {
+                "id": "q2",
+                "label": "Enter your contact email.",
+                "type": "input",
+                "input_type": "email",
+                "placeholder": "email@example.com",
+                "sort_order": 2,
+                "is_required": true,
+                "options": []
+            },
+            {
+                "id": "q3",
+                "label": "Enter your first name.",
+                "type": "input",
+                "input_type": "text",
+                "placeholder": "Your first name",
+                "sort_order": 3,
+                "is_required": true,
+                "options": []
+            },
+            {
+                "id": "q4",
+                "label": "Enter your last name.",
+                "type": "input",
+                "input_type": "text",
+                "placeholder": "Your last name",
+                "sort_order": 4,
+                "is_required": true,
+                "options": []
+            },
+            {
+                "id": "q5",
+                "label": "What is your main area of interest?",
+                "type": "search_select",
+                "sort_order": 5,
+                "is_required": true,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Science & Technology",
+                        "sort_order": 1
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Arts & Culture",
+                        "sort_order": 2
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "Philosophy & Ethics",
+                        "sort_order": 3
+                    },
+                    {
+                        "id": "opt4",
+                        "label": "Society & People",
+                        "sort_order": 4
+                    }
+                ]
+            },
+            {
+                "id": "q6",
+                "type": "page_break",
+                "sort_order": 6
+            },
+            {
+                "id": "q7",
+                "type": "title",
+                "label": "Your Survey Preferences",
+                "sort_order": 7
+            },
+            {
+                "id": "q8",
+                "type": "text",
+                "label": "Tell us what kinds of surveys you'd like to see more of",
+                "sort_order": 8
+            },
+            {
+                "id": "q9",
+                "label": "Enter an alternative contact email (optional).",
+                "type": "input",
+                "input_type": "email",
+                "sort_order": 9,
+                "is_required": false,
+                "options": []
+            },
+            {
+                "id": "q10",
+                "label": "How often do you take surveys?",
+                "type": "search_select",
+                "sort_order": 10,
+                "is_required": true,
+                "options": [
+                    {
+                        "id": "opt1",
+                        "label": "Daily",
+                        "sort_order": 1
+                    },
+                    {
+                        "id": "opt2",
+                        "label": "Weekly",
+                        "sort_order": 2
+                    },
+                    {
+                        "id": "opt3",
+                        "label": "Monthly",
+                        "sort_order": 3
+                    },
+                    {
+                        "id": "opt4",
+                        "label": "Rarely",
+                        "sort_order": 4
+                    }
+                ]
+            },
+            {
+                "id": "q11",
+                "type": "space",
+                "sort_order": 11
+            },
+            {
+                "id": "q12",
+                "label": "Upload a profile picture (optional).",
+                "type": "file_upload",
+                "placeholder": "Upload your photo here",
+                "link": null,
+                "sort_order": 12,
+                "options": []
+            }
+        ]
+    }
+]
